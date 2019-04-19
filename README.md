@@ -1,6 +1,12 @@
 # unanet-summarizer
 A JavaScript file that powers a bookmarklet to summarize some time-keeping helpers.
 
+## Get the Bookmarklet
+
+Drag this link to your browser's bookmarks or bookmark toolbar (you can then rename the title to what you want)
+
+<a href="javascript:(function(){ if(!window.summarizeUnanetTime){var s=document.createElement('script');s.setAttribute('src','https://excellalabs.github.io/unanet-summarizer/unanet-summarizer.js');document.getElementsByTagName('body')[0].appendChild(s)} window.summarizeUnanetTime()})();">Summarize Unanet</a>
+
 ## How the tool works
 
 * This script scrapes the DOM for the time entries and places them into an array
@@ -16,12 +22,7 @@ Once you add the bookmarklet, you can click it while you're editing a Unanet tim
 * We then served that from GitHub pages (thanks, GitHub!)
 * We then created a bookmarklet that can load the script and execute it
 
-## Get the bookmarklet
-
-Drag this link to your browser's bookmarks or bookmark toolbar (you can then rename the title to what you want)
-
-<a href="javascript:(function(){ if(!window.summarizeUnanetTime){var s=document.createElement('script');s.setAttribute('src','https://excellalabs.github.io/unanet-summarizer/unanet-summarizer.js');document.getElementsByTagName('body')[0].appendChild(s)} window.summarizeUnanetTime()})();">Summarize Unanet</a>
-
+## Explaining the Bookmarklet
 The contents of the link are:
 
 ```
