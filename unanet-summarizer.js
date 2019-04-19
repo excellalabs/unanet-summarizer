@@ -1,8 +1,10 @@
 // in its current form, this is meant to be something copied / pasted into a browser console. 
 
 var isReadOnlyTimesheet = function() {
+    console.log('checking readonly')
     // if there are no inputs, the timesheet is readonly
-    return document.querySelectorAll('input').length === 0;
+    var inputs = document.querySelectorAll('input');
+    return inputs.length == 0;
 }
 
 var obtainTimeEntryRows = function() { 
@@ -14,9 +16,15 @@ var obtainTimeEntryRows = function() {
             var projectType;
             var timeValue;
         
-            if (isReadOnlyTimesheet()){
+            var readOnly = isReadOnlyTimesheet()
+            if (readOnly){
+                projectType = timesheetRow.querySelector(':nth-child(4)').textContent;
+                timeValue = timesheetRow.querySelector('last-child').textContent;
+                console.log('readonly timesheet: projectType', projectType);
+                console.log('readonly timesheet: timeValue', timeValue);
             }
             else {
+                console.log('not readonly')
                projectType = timesheetRow.querySelector("td.project-type > select > option:checked").text;  
                timeValue = parseFloat(timesheetRow.querySelector('td.total > input').getAttribute('value')) || parseFloat(0.0); 
             }
@@ -80,13 +88,18 @@ var docTemplateGeneration = function(hoursByProjectTypeArray, totalPlus, totalNo
 }
 // Execution 
 window.summarizeUnanetTime = function() { 
+    console.log('running');
     var resultArray = obtainTimeEntryRows();
+    
+    console.log('resultArray', resultArray);
 
+    console.log('running reducers');
     var hoursByProjectType = resultArray.reduce(totalHoursByProjectType, []);
     var totalPlusHoursResult = resultArray.reduce(totalPlusHours, 0.0);
     var totalNonPlusHoursResult = resultArray.reduce(totalNonPlusHours, 0.0);
     var totalHoursResult = resultArray.reduce(totalHoursReduceFunction, 0.0);
 
+    console.log('displaying the window');
     var bmWindow = window.open('');
     bmWindow.document.open();
     bmWindow.document.write(docTemplateGeneration(hoursByProjectType, totalPlusHoursResult, totalNonPlusHoursResult, totalHoursResult));
