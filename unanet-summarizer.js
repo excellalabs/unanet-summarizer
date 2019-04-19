@@ -1,25 +1,35 @@
 // in its current form, this is meant to be something copied / pasted into a browser console. 
 
 var isReadOnlyTimesheet = function() {
-    console.log('checking readonly')
+    console.log('checking readonly');
     // if there are no inputs, the timesheet is readonly
     var inputs = document.querySelectorAll('input');
-    return inputs.length == 0;
+    return inputs.length === 0;
 }
 
 var obtainTimeEntryRows = function() { 
     var arrayToReturn = []; 
 
-    document.querySelectorAll("#timesheet > tbody:first-of-type > tr")
-        .forEach(function(timesheetRow){ 
-           
+    var readOnly = isReadOnlyTimesheet();
+    console.log('readOnly: ', readOnly);
+    var rows;
+    if (readOnly){ 
+        rows = document.querySelectorAll("table.timesheet > tbody:first-of-type > tr");
+    }
+    else {
+        rows = document.querySelectorAll("#timesheet > tbody:first-of-type > tr");
+    }
+
+    rows.forEach(function(timesheetRow){ 
+           console.log('processing a timesheet row');
             var projectType;
             var timeValue;
         
-            var readOnly = isReadOnlyTimesheet()
             if (readOnly){
-                projectType = timesheetRow.querySelector(':nth-child(4)').textContent;
-                timeValue = timesheetRow.querySelector('last-child').textContent;
+                console.log('readonly');
+                projectType = timesheetRow.querySelector(':nth-child(4)').textContent || "";
+                timeValue = parseFloat(timesheetRow.querySelector(':last-child').textContent) || parseFloat(0.0);
+                if(!projectType || projectType ===""){return;}
                 console.log('readonly timesheet: projectType', projectType);
                 console.log('readonly timesheet: timeValue', timeValue);
             }
