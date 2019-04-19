@@ -1,13 +1,38 @@
 // in its current form, this is meant to be something copied / pasted into a browser console. 
 
+var isReadOnlyTimesheet = function() {
+    // if there are no inputs, the timesheet is readonly
+    var inputs = document.querySelectorAll('input');
+    return inputs.length === 0;
+}
+
 var obtainTimeEntryRows = function() { 
     var arrayToReturn = []; 
 
-    document.querySelectorAll("#timesheet > tbody:first-of-type > tr")
-        .forEach(function(timesheetRow){ 
-           var projectType = timesheetRow.querySelector("td.project-type > select > option:checked").text; 
-           var timeValue = parseFloat(timesheetRow.querySelector('td.total > input').getAttribute('value')) || parseFloat(0.0); 
+    var readOnly = isReadOnlyTimesheet();
+    console.log('readOnly: ', readOnly);
+    var rows;
+    if (readOnly){ 
+        rows = document.querySelectorAll("table.timesheet > tbody:first-of-type > tr");
+    }
+    else {
+        rows = document.querySelectorAll("#timesheet > tbody:first-of-type > tr");
+    }
 
+    rows.forEach(function(timesheetRow){ 
+            var projectType;
+            var timeValue;
+        
+            if (readOnly){
+                projectType = timesheetRow.querySelector(':nth-child(4)').textContent || "";
+                timeValue = parseFloat(timesheetRow.querySelector(':last-child').textContent) || parseFloat(0.0);
+                if(!projectType || projectType ===""){return;}
+            }
+            else {
+               projectType = timesheetRow.querySelector("td.project-type > select > option:checked").text;  
+               timeValue = parseFloat(timesheetRow.querySelector('td.total > input').getAttribute('value')) || parseFloat(0.0); 
+            }
+        
            arrayToReturn.push({ projectType: projectType, timeValue: timeValue})
          });
     
@@ -68,7 +93,7 @@ var docTemplateGeneration = function(hoursByProjectTypeArray, totalPlus, totalNo
 // Execution 
 window.summarizeUnanetTime = function() { 
     var resultArray = obtainTimeEntryRows();
-
+    
     var hoursByProjectType = resultArray.reduce(totalHoursByProjectType, []);
     var totalPlusHoursResult = resultArray.reduce(totalPlusHours, 0.0);
     var totalNonPlusHoursResult = resultArray.reduce(totalNonPlusHours, 0.0);
