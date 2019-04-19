@@ -66,15 +66,16 @@ var docTemplateGeneration = function(hoursByProjectTypeArray, totalPlus, totalNo
     
 }
 // Execution 
+export function summarizeUnanetTime() { 
+    var resultArray = obtainTimeEntryRows();
 
-var resultArray = obtainTimeEntryRows();
+    var hoursByProjectType = resultArray.reduce(totalHoursByProjectType, []);
+    var totalPlusHoursResult = resultArray.reduce(totalPlusHours, 0.0);
+    var totalNonPlusHoursResult = resultArray.reduce(totalNonPlusHours, 0.0);
+    var totalHoursResult = resultArray.reduce(totalHoursReduceFunction, 0.0);
 
-var hoursByProjectType = resultArray.reduce(totalHoursByProjectType, []);
-var totalPlusHoursResult = resultArray.reduce(totalPlusHours, 0.0);
-var totalNonPlusHoursResult = resultArray.reduce(totalNonPlusHours, 0.0);
-var totalHoursResult = resultArray.reduce(totalHoursReduceFunction, 0.0);
-
-var bmWindow = window.open('');
-bmWindow.document.open();
-bmWindow.document.write(docTemplateGeneration(hoursByProjectType, totalPlusHoursResult, totalNonPlusHoursResult, totalHoursResult));
-bmWindow.document.close();
+    var bmWindow = window.open('');
+    bmWindow.document.open();
+    bmWindow.document.write(docTemplateGeneration(hoursByProjectType, totalPlusHoursResult, totalNonPlusHoursResult, totalHoursResult));
+    bmWindow.document.close();
+}
