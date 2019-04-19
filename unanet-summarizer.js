@@ -1,13 +1,26 @@
 // in its current form, this is meant to be something copied / pasted into a browser console. 
 
+var isReadOnlyTimesheet = function() {
+    // if there are no inputs, the timesheet is readonly
+    return document.querySelectorAll('input').length === 0;
+}
+
 var obtainTimeEntryRows = function() { 
     var arrayToReturn = []; 
 
     document.querySelectorAll("#timesheet > tbody:first-of-type > tr")
         .forEach(function(timesheetRow){ 
-           var projectType = timesheetRow.querySelector("td.project-type > select > option:checked").text; 
-           var timeValue = parseFloat(timesheetRow.querySelector('td.total > input').getAttribute('value')) || parseFloat(0.0); 
-
+           
+            var projectType;
+            var timeValue;
+        
+            if (isReadOnlyTimesheet()){
+            }
+            else {
+               projectType = timesheetRow.querySelector("td.project-type > select > option:checked").text;  
+               timeValue = parseFloat(timesheetRow.querySelector('td.total > input').getAttribute('value')) || parseFloat(0.0); 
+            }
+        
            arrayToReturn.push({ projectType: projectType, timeValue: timeValue})
          });
     
