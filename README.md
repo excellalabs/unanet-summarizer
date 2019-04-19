@@ -20,7 +20,7 @@ Once you add the bookmarklet, you can click it while you're editing a Unanet tim
 
 Drag this link to your browser's bookmarks or bookmark toolbar (you can then rename the title to what you want)
 
-[Summarize Unanet](javascript:(function(){ if(!window.summarizeUnanetTime){var s=document.createElement('script');s.setAttribute('src','https://excellalabs.github.io/unanet-summarizer/unanet-summarizer.js');document.getElementsByTagName('body')[0].appendChild(s)} window.summarizeUnanetTime()})();)
+<a href="javascript:(function(){ if(!window.summarizeUnanetTime){var s=document.createElement('script');s.setAttribute('src','https://excellalabs.github.io/unanet-summarizer/unanet-summarizer.js');document.getElementsByTagName('body')[0].appendChild(s)} window.summarizeUnanetTime()})();">Summarize Unanet</a>
 
 The contents of the link are:
 
