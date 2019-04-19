@@ -1,5 +1,5 @@
 # unanet-summarizer
-A JavaScript module that powers a bookmarklet to summarize some time-keeping helpers.
+A JavaScript file that powers a bookmarklet to summarize some time-keeping helpers.
 
 ## How the tool works
 
@@ -11,7 +11,17 @@ A JavaScript module that powers a bookmarklet to summarize some time-keeping hel
 ## How We're Deploying This 
 
 * We first developed a JavaScript that could be executed in the browser's console
-* We then turned that into a JavaScript module (`.mjs`) 
-* We then served that from GitHub pages
+* We then served that from GitHub pages (thanks, GitHub!)
+* We then created a bookmarklet that can load the script and execute it
 
-Next up: we'd like to figure out how to consume this Javascript module from the browser console. If we do that, we can figure out how to turn it into a bookmarklet that serves this up from the `master` branch, so that users can copy it once and always be up to date.
+## Get the bookmarklet
+
+[Drag this link to your browser toolbar](javascript:(function(){ if(!window.summarizeUnanetTime){var s=document.createElement('script');s.setAttribute('src','https://excellalabs.github.io/unanet-summarizer/unanet-summarizer.js');document.getElementsByTagName('body')[0].appendChild(s)} window.summarizeUnanetTime()})();)
+
+The contents of the link are:
+
+```
+javascript:(function(){ if(!window.summarizeUnanetTime){var s=document.createElement('script');s.setAttribute('src','https://excellalabs.github.io/unanet-summarizer/unanet-summarizer.js');document.getElementsByTagName('body')[0].appendChild(s)} window.summarizeUnanetTime()})();
+```
+
+This bookmarklet adds injects the JavaScript file if it doesn't exist, and then calls the `summarizeUnanetTime()` function that it contains.
