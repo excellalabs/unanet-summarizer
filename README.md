@@ -8,6 +8,8 @@ A JavaScript file that powers a bookmarklet to summarize some time-keeping helpe
 * It uses some rudimentary string templates to put together some contents
 * It then puts those contents into a new document which it opens in a new tab.
 
+Once you add the bookmarklet, you can click it while you're editing a Unanet timesheet and see the summary.
+
 ## How We're Deploying This 
 
 * We first developed a JavaScript that could be executed in the browser's console
@@ -16,7 +18,9 @@ A JavaScript file that powers a bookmarklet to summarize some time-keeping helpe
 
 ## Get the bookmarklet
 
-[Drag this link to your browser toolbar](javascript:(function(){ if(!window.summarizeUnanetTime){var s=document.createElement('script');s.setAttribute('src','https://excellalabs.github.io/unanet-summarizer/unanet-summarizer.js');document.getElementsByTagName('body')[0].appendChild(s)} window.summarizeUnanetTime()})();)
+Drag this link to your browser's bookmarks or bookmark toolbar (you can then rename the title to what you want)
+
+[Summarize Unanet](javascript:(function(){ if(!window.summarizeUnanetTime){var s=document.createElement('script');s.setAttribute('src','https://excellalabs.github.io/unanet-summarizer/unanet-summarizer.js');document.getElementsByTagName('body')[0].appendChild(s)} window.summarizeUnanetTime()})();)
 
 The contents of the link are:
 
