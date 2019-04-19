@@ -30,3 +30,11 @@ javascript:(function(){ if(!window.summarizeUnanetTime){var s=document.createEle
 ```
 
 This bookmarklet adds injects the JavaScript file if it doesn't exist, and then calls the `summarizeUnanetTime()` function that it contains.
+
+## Developers: how to test locally
+
+* open unanet
+* edit a timesheet
+* open the browser console
+* paste the contents of the script
+* call `window.summarizeUnanetTime()`
