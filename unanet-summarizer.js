@@ -101,7 +101,5 @@ window.summarizeUnanetTime = function() {
 
     var summaryDoc = docTemplateGeneration(hoursByProjectType, totalPlusHoursResult, totalNonPlusHoursResult, totalHoursResult);
 
-    var container = document.createElement('div');
-    container.innerHTML = summaryDoc;
-    document.body.prepend(container);
+    document.body.insertBefore(document.createElement('div'), document.body.firstChild).innerHTML = summaryDoc;
 }
