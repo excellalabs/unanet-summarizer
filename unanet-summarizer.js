@@ -128,6 +128,7 @@ window.summarizeUnanetTime = function() {
     var newDiv = document.createElement('div');
     newDiv.id = "unanet-summary";
     newDiv.setAttribute('style', 'margin-bottom: 20px;');
+    newDiv.innerHTML = "<h2>Unanet Time Summary</h2>";
     newDiv.appendChild(summaryDoc);
 
     var unanetSummaryExists = (document.querySelectorAll("#unanet-summary").length > 0);
