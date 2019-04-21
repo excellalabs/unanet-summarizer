@@ -4,7 +4,7 @@ var isReadOnlyTimesheet = function() {
     // if there are no inputs, the timesheet is readonly
     var inputs = document.querySelectorAll('input');
     return inputs.length === 0;
-}
+};
 
 var obtainTimeEntryRows = function() { 
     var arrayToReturn = []; 
@@ -33,48 +33,48 @@ var obtainTimeEntryRows = function() {
                timeValue = parseFloat(timesheetRow.querySelector('td.total > input').getAttribute('value')) || parseFloat(0.0); 
             }
         
-           arrayToReturn.push({ projectType: projectType, timeValue: timeValue})
+           arrayToReturn.push({ projectType: projectType, timeValue: timeValue});
          });
     
     return arrayToReturn;
-}
+};
 
 var totalHoursReduceFunction = function(acc, obj) {
     return acc + obj.timeValue;
-}
+};
 
 
 var totalHoursByProjectType = function(acc, obj){ 
-    if(!acc.find(function(element){return element.projectType === obj.projectType})){
+    if(!acc.find(function(element){return element.projectType === obj.projectType;})){
         acc.push({projectType: obj.projectType, totalHours: 0.0});
     }
     
-    var entry = acc.find(function(element){return element.projectType === obj.projectType});
+    var entry = acc.find(function(element){return element.projectType === obj.projectType;});
     entry.totalHours += obj.timeValue;
     
     return acc;
-}
+};
 
 var totalPlusHours = function(acc, obj){
     if (obj.projectType.includes("+")){
         acc = acc + obj.timeValue;
     }
     return acc;
-}
+};
 
 var totalNonPlusHours = function(acc, obj){
     if (!obj.projectType.includes("+")){
         acc = acc + obj.timeValue;
     }
     return acc;
-}
+};
 
 var docTemplate = '<h2>Unanet Hours Summary</h2><p><strong>By Project Type:</strong> {$PROJECT_TYPES}</p><p><strong>Totals:</strong> Total + Hours: {$TOTAL_PLUS} | Total other hours: {$TOTAL_NON_PLUS} | Total hours: {$TOTAL_HOURS}</p>';
 var projectTypeTemplate = '{$PROJECT_TYPE}: {$PROJECT_TYPE_HOURS} | ';
 
 var projectTypeTemplateGeneration = function(projectType, projectTypeHours){
     return projectTypeTemplate.replace("{$PROJECT_TYPE}", projectType).replace("{$PROJECT_TYPE_HOURS}", projectTypeHours);
-}
+};
 
 var docTemplateGeneration = function(hoursByProjectTypeArray, totalPlus, totalNonPlus, totalHours){
     var projectsList = '';
@@ -89,7 +89,8 @@ var docTemplateGeneration = function(hoursByProjectTypeArray, totalPlus, totalNo
         .replace("{$TOTAL_NON_PLUS}", totalNonPlus)
         .replace("{$TOTAL_HOURS}", totalHours);
     
-}
+};
+
 // Execution 
 window.summarizeUnanetTime = function() { 
     var resultArray = obtainTimeEntryRows();
@@ -113,4 +114,4 @@ window.summarizeUnanetTime = function() {
     else {
         document.querySelector("#unanet-summary").innerHTML = summaryDoc;
     }
-}
+};
