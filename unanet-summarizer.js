@@ -93,6 +93,7 @@ var docTemplateGeneration = function(hoursByProjectTypeArray, totalPlus, totalNo
     hoursByProjectTypeArray.forEach(function(timeItem){
         var newCell = dataRow.insertCell(-1);
         newCell.textContent = timeItem.totalHours;
+        newCell.setAttribute('style', 'text-align: center;');
     });
 
     var totalPlusCell = dataRow.insertCell(-1);
@@ -100,8 +101,13 @@ var docTemplateGeneration = function(hoursByProjectTypeArray, totalPlus, totalNo
     var totalHoursCell = dataRow.insertCell(-1);
 
     totalPlusCell.textContent = totalPlus;
+    totalPlusCell.setAttribute('style', 'text-align: center;');
+
     totalNonPlusCell.textContent = totalNonPlus;
+    totalNonPlusCell.setAttribute('style', 'text-align: center;');
+    
     totalHoursCell.textContent = totalHours;
+    totalHoursCell.setAttribute('style', 'text-align: center;');
 
     tableBody.appendChild(dataRow);
 
