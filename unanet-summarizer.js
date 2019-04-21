@@ -1,5 +1,3 @@
-// in its current form, this is meant to be something copied / pasted into a browser console. 
-
 var isReadOnlyTimesheet = function() {
     // if there are no inputs, the timesheet is readonly
     var inputs = document.querySelectorAll('input');
