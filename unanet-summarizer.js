@@ -88,8 +88,8 @@ window.summarizeUnanetTime = (function() {
             hoursHeading = hoursHeading + '<th>' + timeItem.projectType + '</th>';
         });
 
-        bottomHeaderRow.innerHTML = bottomHeaderRow.innerHTML + hoursHeading;
-        bottomHeaderRow.innerHTML = bottomHeaderRow.innerHTML + '<th>+ Hours</th><th>Non + Hours</th><th>Grand Total</th>';
+        bottomHeaderRow.innerHTML += hoursHeading;
+        bottomHeaderRow.innerHTML += '<th>+ Hours</th><th>Non + Hours</th><th>Grand Total</th>';
 
         var tableBody = document.createElement('tbody');
         var dataRow = document.createElement('tr');
