@@ -69,7 +69,7 @@ var totalNonPlusHours = function(acc, obj){
     return acc;
 }
 
-var docTemplate = '<html><head></head><body><h1>Unanet Hours Summary</h1><h3>By Project Type</h3><ul>{$PROJECT_TYPES}</ul><h3>Totals</h3><ul><li>Total + Hours: {$TOTAL_PLUS}</li><li>Total other hours: {$TOTAL_NON_PLUS}</li><li>Total hours: {$TOTAL_HOURS}</li></ul></body></html>'
+var docTemplate = '<h2>Unanet Hours Summary</h2><h3>By Project Type</h3><ul>{$PROJECT_TYPES}</ul><h3>Totals</h3><ul><li>Total + Hours: {$TOTAL_PLUS}</li><li>Total other hours: {$TOTAL_NON_PLUS}</li><li>Total hours: {$TOTAL_HOURS}</li></ul>'
 var projectTypeTemplate = '<li>{$PROJECT_TYPE}: {$PROJECT_TYPE_HOURS}</li>'
 
 var projectTypeTemplateGeneration = function(projectType, projectTypeHours){
@@ -99,8 +99,7 @@ window.summarizeUnanetTime = function() {
     var totalNonPlusHoursResult = resultArray.reduce(totalNonPlusHours, 0.0);
     var totalHoursResult = resultArray.reduce(totalHoursReduceFunction, 0.0);
 
-    var bmWindow = window.open('');
-    bmWindow.document.open();
-    bmWindow.document.write(docTemplateGeneration(hoursByProjectType, totalPlusHoursResult, totalNonPlusHoursResult, totalHoursResult));
-    bmWindow.document.close();
+    var summaryDoc = docTemplateGeneration(hoursByProjectType, totalPlusHoursResult, totalNonPlusHoursResult, totalHoursResult);
+
+    document.body.insertBefore(document.createElement('div'), document.body.firstChild).innerHTML = summaryDoc;
 }
