@@ -69,8 +69,8 @@ var totalNonPlusHours = function(acc, obj){
     return acc;
 }
 
-var docTemplate = '<h2>Unanet Hours Summary</h2><h3>By Project Type</h3><ul>{$PROJECT_TYPES}</ul><h3>Totals</h3><ul><li>Total + Hours: {$TOTAL_PLUS}</li><li>Total other hours: {$TOTAL_NON_PLUS}</li><li>Total hours: {$TOTAL_HOURS}</li></ul>'
-var projectTypeTemplate = '<li>{$PROJECT_TYPE}: {$PROJECT_TYPE_HOURS}</li>'
+var docTemplate = '<h2>Unanet Hours Summary</h2><p><strong>By Project Type:</strong> {$PROJECT_TYPES}</p><p><strong>Totals:</strong> Total + Hours: {$TOTAL_PLUS} | Total other hours: {$TOTAL_NON_PLUS} | Total hours: {$TOTAL_HOURS}</p>';
+var projectTypeTemplate = '{$PROJECT_TYPE}: {$PROJECT_TYPE_HOURS} | ';
 
 var projectTypeTemplateGeneration = function(projectType, projectTypeHours){
     return projectTypeTemplate.replace("{$PROJECT_TYPE}", projectType).replace("{$PROJECT_TYPE_HOURS}", projectTypeHours);
