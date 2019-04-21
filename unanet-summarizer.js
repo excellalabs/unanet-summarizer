@@ -67,13 +67,6 @@ var totalNonPlusHours = function(acc, obj){
     return acc;
 };
 
-var docTemplate = '<h2>Unanet Hours Summary</h2><p><strong>By Project Type:</strong> {$PROJECT_TYPES}</p><p><strong>Totals:</strong> Total + Hours: {$TOTAL_PLUS} | Total other hours: {$TOTAL_NON_PLUS} | Total hours: {$TOTAL_HOURS}</p>';
-var projectTypeTemplate = '{$PROJECT_TYPE}: {$PROJECT_TYPE_HOURS} | ';
-
-var projectTypeTemplateGeneration = function(projectType, projectTypeHours){
-    return projectTypeTemplate.replace("{$PROJECT_TYPE}", projectType).replace("{$PROJECT_TYPE_HOURS}", projectTypeHours);
-};
-
 var docTemplateGeneration = function(hoursByProjectTypeArray, totalPlus, totalNonPlus, totalHours){
 
     var resultTable = document.createElement('table');
@@ -117,13 +110,6 @@ var docTemplateGeneration = function(hoursByProjectTypeArray, totalPlus, totalNo
     resultTable.appendChild(tableHeader);
     resultTable.appendChild(tableBody);
 
-
-    var projectsList = '';
-    
-    hoursByProjectTypeArray.forEach(function (value, i) {
-        projectsList = projectsList.concat(projectTypeTemplateGeneration(value.projectType, value.totalHours));
-    });
-    
     return resultTable;
 };
 
