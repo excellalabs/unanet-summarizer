@@ -124,7 +124,7 @@ window.summarizeUnanetTime = (function() {
         container.style = 'margin-bottom: 20px;';
         return document.body.insertBefore(container, document.body.firstChild);
     };
-    // Execution 
+
     var getContainer = function() {
         return document.getElementById(CONTAINER_ID) || createContainer();
     };
