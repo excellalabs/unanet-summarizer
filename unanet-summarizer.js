@@ -129,6 +129,8 @@ window.summarizeUnanetTime = (function() {
         return document.getElementById(CONTAINER_ID) || createContainer();
     };
 
+    // This function returns an object with a reducer function (a way of reducing an array of hours which we'll pass later)
+    // and the starting state of the accumulators that those reducers will use. 
     var getReducers = function() {
         return {
             hoursByProjectType: [ totalHoursByProjectType, [] ],
@@ -142,6 +144,8 @@ window.summarizeUnanetTime = (function() {
         var timeEntries = obtainTimeEntryRows();        
         var reducers = getReducers();
 
+        // Takes each reducer function name and function, calls reduce using that function,
+        // and sets the result on an object that we reference in our document generation.
         var properties = Object.keys(reducers).reduce(function(acc, property) {
             acc[property] = [].reduce.apply(timeEntries, reducers[property]);
             return acc;
