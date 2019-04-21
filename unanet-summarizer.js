@@ -100,6 +100,17 @@ window.summarizeUnanetTime = function() {
     var totalHoursResult = resultArray.reduce(totalHoursReduceFunction, 0.0);
 
     var summaryDoc = docTemplateGeneration(hoursByProjectType, totalPlusHoursResult, totalNonPlusHoursResult, totalHoursResult);
+    
+    var newDiv = document.createElement('div');
+    newDiv.id = "unanet-summary";
+    newDiv.innerHTML = summaryDoc;
 
-    document.body.insertBefore(document.createElement('div'), document.body.firstChild).innerHTML = summaryDoc;
+    var unanetSummaryExists = (document.querySelectorAll("#unanet-summary").length > 0);
+
+    if (!unanetSummaryExists){
+        document.body.insertBefore(newDiv, document.body.firstChild);
+    }
+    else {
+        document.querySelector("#unanet-summary").innerHTML = summaryDoc;
+    }
 }
