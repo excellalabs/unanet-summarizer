@@ -67,26 +67,51 @@ var totalNonPlusHours = function(acc, obj){
     return acc;
 };
 
-var docTemplate = '<h2>Unanet Hours Summary</h2><p><strong>By Project Type:</strong> {$PROJECT_TYPES}</p><p><strong>Totals:</strong> Total + Hours: {$TOTAL_PLUS} | Total other hours: {$TOTAL_NON_PLUS} | Total hours: {$TOTAL_HOURS}</p>';
-var projectTypeTemplate = '{$PROJECT_TYPE}: {$PROJECT_TYPE_HOURS} | ';
-
-var projectTypeTemplateGeneration = function(projectType, projectTypeHours){
-    return projectTypeTemplate.replace("{$PROJECT_TYPE}", projectType).replace("{$PROJECT_TYPE_HOURS}", projectTypeHours);
-};
-
 var docTemplateGeneration = function(hoursByProjectTypeArray, totalPlus, totalNonPlus, totalHours){
-    var projectsList = '';
-    
-    hoursByProjectTypeArray.forEach(function (value, i) {
-        projectsList = projectsList.concat(projectTypeTemplateGeneration(value.projectType, value.totalHours));
+
+    var resultTable = document.createElement('table');
+    resultTable.setAttribute('style', 'border: 2px solid;');
+
+    var tableHeader = document.createElement('thead');
+
+    var topHeaderRow = document.createElement('tr');
+    topHeaderRow.innerHTML = "<th colspan='" + hoursByProjectTypeArray.length + "'>Project Types</th><th colspan ='3'>Totals</th>";
+
+    var bottomHeaderRow = document.createElement('tr');
+
+    var hoursHeading = '';
+    hoursByProjectTypeArray.forEach(function(timeItem){
+        hoursHeading = hoursHeading + '<th>' + timeItem.projectType + '</th>';
     });
-    
-    return docTemplate
-        .replace("{$PROJECT_TYPES}", projectsList)
-        .replace("{$TOTAL_PLUS}", totalPlus)
-        .replace("{$TOTAL_NON_PLUS}", totalNonPlus)
-        .replace("{$TOTAL_HOURS}", totalHours);
-    
+
+    bottomHeaderRow.innerHTML = bottomHeaderRow.innerHTML + hoursHeading;
+    bottomHeaderRow.innerHTML = bottomHeaderRow.innerHTML + '<th>+ Hours</th><th>Non + Hours</th><th>Grand Total</th>';
+
+    var tableBody = document.createElement('tbody');
+    var dataRow = document.createElement('tr');
+
+    hoursByProjectTypeArray.forEach(function(timeItem){
+        var newCell = dataRow.insertCell(-1);
+        newCell.textContent = timeItem.totalHours;
+    });
+
+    var totalPlusCell = dataRow.insertCell(-1);
+    var totalNonPlusCell = dataRow.insertCell(-1);
+    var totalHoursCell = dataRow.insertCell(-1);
+
+    totalPlusCell.textContent = totalPlus;
+    totalNonPlusCell.textContent = totalNonPlus;
+    totalHoursCell.textContent = totalHours;
+
+    tableBody.appendChild(dataRow);
+
+    tableHeader.appendChild(topHeaderRow);
+    tableHeader.appendChild(bottomHeaderRow);
+
+    resultTable.appendChild(tableHeader);
+    resultTable.appendChild(tableBody);
+
+    return resultTable;
 };
 
 // Execution 
@@ -102,7 +127,9 @@ window.summarizeUnanetTime = function() {
     
     var newDiv = document.createElement('div');
     newDiv.id = "unanet-summary";
-    newDiv.innerHTML = summaryDoc;
+    newDiv.setAttribute('style', 'margin-bottom: 20px;');
+    newDiv.innerHTML = "<h2>Unanet Time Summary</h2>";
+    newDiv.appendChild(summaryDoc);
 
     var unanetSummaryExists = (document.querySelectorAll("#unanet-summary").length > 0);
 
@@ -110,6 +137,6 @@ window.summarizeUnanetTime = function() {
         document.body.insertBefore(newDiv, document.body.firstChild);
     }
     else {
-        document.querySelector("#unanet-summary").innerHTML = summaryDoc;
+        document.querySelector("#unanet-summary").replaceWith(newDiv);
     }
 };
