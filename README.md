@@ -1,6 +1,8 @@
 # unanet-summarizer
 A JavaScript file that powers a bookmarklet to summarize some time-keeping helpers.
 
+![screenshot of the tool in action](summarizer-screenshot.png)
+
 ## Get the Bookmarklet
 
 Drag this link to your browser's bookmarks or bookmark toolbar (you can then rename the title to what you want)
