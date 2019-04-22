@@ -27,8 +27,8 @@ window.summarizeUnanetTime = (function() {
     const SUMMARIZER_ROOT = 'https://excellalabs.github.io/unanet-summarizer/';
     const SUMMARIZER_STYLESHEET = SUMMARIZER_ROOT + '/summarizer-style.css';
 
-    const CONTAINER_ID = 'unanet-summary';
-    const STYLESHEET_ID = 'unanet-style';
+    const CONTAINER_ID = 'unanet-summarizer';
+    const STYLESHEET_ID = 'unanet-summarizer-style';
     const CSS_CLASS = 'unanet-summary';
 
     const CONTAINER_TEMPLATE = Template(
