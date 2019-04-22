@@ -142,6 +142,15 @@ window.summarizeUnanetTime = (function() {
         };
     };
 
+    var getWeekdaysInTimesheet = function(){
+        if (IsReadOnly) {
+            document.querySelectorAll('table.timesheet > tbody > tr:first-of-type > td.weekday').length;
+        }
+        else {
+            return document.querySelectorAll('#timesheet > tbody > tr:first-of-type > td.weekday-hours').length;
+        }
+    };
+
     return function() { 
         var timeEntries = obtainTimeEntryRows();        
         var reducers = getReducers();
