@@ -144,6 +144,20 @@ window.summarizeUnanetTime = (function() {
         };
     };
 
+
+    var getBusinessDatesCount = function(startDate, endDate) {
+        // provided from https://stackoverflow.com/a/37069277/316847
+        var count = 0;
+        var curDate = startDate;
+        while (curDate <= endDate) {
+            var dayOfWeek = curDate.getDay();
+            if(!((dayOfWeek == 6) || (dayOfWeek == 0)))
+               count++;
+            curDate.setDate(curDate.getDate() + 1);
+        }
+        return count;
+    };
+
     var getWeekdaysInTimesheet = function(){
         if (IsReadOnly) {
             return document.querySelectorAll('table.timesheet > tbody > tr:first-of-type > td.weekday').length;
@@ -152,6 +166,20 @@ window.summarizeUnanetTime = (function() {
             return document.querySelectorAll('#timesheet > tbody > tr:first-of-type > td.weekday-hours').length;
         }
     };
+
+    var getDaysLeftInTimesheet = function() {
+        if (IsReadOnly){ return 0; }
+        else {
+            var dateElements = document.querySelectorAll('span.dom');
+            var lastDateOnTimesheet = parseInt(dateElements[dateElements.length - 1].textContent);
+        
+            var today = new Date();
+            var fullLastDate = new Date(today.getFullYear(), today.getMonth(), lastDateOnTimesheet);
+            var fullTodayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+            return getBusinessDatesCount(fullTodayDate, fullLastDate);
+        }
+    }
 
     return function() { 
         var timeEntries = obtainTimeEntryRows();        
@@ -164,6 +192,10 @@ window.summarizeUnanetTime = (function() {
             acc[property] = timeEntries.reduce(config.fn, config.init);
             return acc;
         }, {});
+
+        console.log('number of workable days:', getWeekdaysInTimesheet()); // TODO: remove
+
+        console.log('daysLeft:', getDaysLeftInTimesheet());  // TODO: remove
         
         var container = document.getElementById(CONTAINER_ID) || createContainer();
         container.innerHTML = CONTAINER_TEMPLATE.apply(properties);
