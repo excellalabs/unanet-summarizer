@@ -7,15 +7,17 @@ window.summarizeUnanetTime = (function() {
         return inputs.length === 0;
     };
 
+    const IsReadOnly = isReadOnlyTimesheet();
+
+
     var obtainTimeEntryRows = function() { 
         var arrayToReturn = []; 
-        var readOnly = isReadOnlyTimesheet();
 
-        console.log('readOnly: ', readOnly);
+        console.log('readOnly: ', IsReadOnly);
 
         var rows;
 
-        if (readOnly){ 
+        if (IsReadOnly){ 
             rows = document.querySelectorAll("table.timesheet > tbody:first-of-type > tr");
         } else {
             rows = document.querySelectorAll("#timesheet > tbody:first-of-type > tr");
@@ -25,7 +27,7 @@ window.summarizeUnanetTime = (function() {
             var projectType;
             var timeValue;
         
-            if (readOnly) {
+            if (IsReadOnly) {
                 projectType = timesheetRow.querySelector(':nth-child(4)').textContent || "";
                 timeValue = parseFloat(timesheetRow.querySelector(':last-child').textContent) || parseFloat(0.0);
                 if (!projectType || projectType === "") {
@@ -139,7 +141,7 @@ window.summarizeUnanetTime = (function() {
             totalHoursResult: [ totalHoursReduceFunction, 0.0 ]
         };
     };
-    
+
     return function() { 
         var timeEntries = obtainTimeEntryRows();        
         var reducers = getReducers();
