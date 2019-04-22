@@ -33,6 +33,7 @@ window.summarizeUnanetTime = (function() {
           '<tr>' +
             '<th colspan="<% this.hoursByProjectType.length %>">Project Types</th>' +
             '<th colspan="3">Totals</th>' +
+            '<th colspan="3">Monthly Tracking</th>' +
           '</tr>' +
           '<tr>' +
             '<% for (var i in this.hoursByProjectType) { %>' +
@@ -41,6 +42,9 @@ window.summarizeUnanetTime = (function() {
             '<th>+ Hours</th>' +
             '<th>Non + Hours</th>' +
             '<th>Grand Total</th>' +
+            '<th>Potential Hours</th>' +
+            '<th>Your + Hours</th>' +
+            '<th>Tracking</th>' +
           '</tr>' +
         '</thead>' +
         '<tbody>' +
@@ -51,6 +55,9 @@ window.summarizeUnanetTime = (function() {
             '<td><% this.totalPlusHoursResult %></td>' +
             '<td><% this.totalNonPlusHoursResult %></td>' +
             '<td><% this.totalHoursResult %></td>' +
+            '<td><% this.hoursTargetForPayPeriod %></td>' +
+            '<td><% this.totalPlusHoursResult %></td>' +
+            '<td><% this.hoursForTracking %></td>' +
           '</tr>' +
         '</tbody>' +
       '</table>'
