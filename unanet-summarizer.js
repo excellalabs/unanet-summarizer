@@ -1,5 +1,6 @@
 window.summarizeUnanetTime = (function() {
     const CONTAINER_ID = 'unanet-summary';
+    const ASSUMED_HOURS_PER_DAY = 8;
 
     var isReadOnlyTimesheet = function() {
         // if there are no inputs, the timesheet is readonly
@@ -81,7 +82,7 @@ window.summarizeUnanetTime = (function() {
         var tableHeader = document.createElement('thead');
 
         var topHeaderRow = document.createElement('tr');
-        topHeaderRow.innerHTML = "<th colspan='" + props.hoursByProjectType.length + "'>Project Types</th><th colspan ='3'>Totals</th>";
+        topHeaderRow.innerHTML = "<th colspan='" + props.hoursByProjectType.length + "'>Project Types</th><th colspan ='3'>Totals</th><th colspan='2'>For the Month</th>";
 
         var bottomHeaderRow = document.createElement('tr');
 
@@ -91,7 +92,7 @@ window.summarizeUnanetTime = (function() {
         });
 
         bottomHeaderRow.innerHTML += hoursHeading;
-        bottomHeaderRow.innerHTML += '<th>+ Hours</th><th>Non + Hours</th><th>Grand Total</th>';
+        bottomHeaderRow.innerHTML += '<th>+ Hours</th><th>Non + Hours</th><th>Grand Total</th><td>Target + Hours</td><td>Tracking</td>';
 
         var tableBody = document.createElement('tbody');
         var dataRow = document.createElement('tr');
@@ -104,10 +105,14 @@ window.summarizeUnanetTime = (function() {
         var totalPlusCell = dataRow.insertCell(-1);
         var totalNonPlusCell = dataRow.insertCell(-1);
         var totalHoursCell = dataRow.insertCell(-1);
+        var targetPlusHoursCell = dataRow.insertCell(-1);
+        var trackingHoursCell = dataRow.insertCell(-1);
 
         totalPlusCell.textContent = props.totalPlusHoursResult;
         totalNonPlusCell.textContent = props.totalNonPlusHoursResult;
         totalHoursCell.textContent = props.totalHoursResult;
+        targetPlusHoursCell.textContent = props.weekdayHoursInPayPeriod;
+        trackingHoursCell.textContent = ""; // TODO 
 
         tableBody.appendChild(dataRow);
 
@@ -144,7 +149,7 @@ window.summarizeUnanetTime = (function() {
 
     var getWeekdaysInTimesheet = function(){
         if (IsReadOnly) {
-            document.querySelectorAll('table.timesheet > tbody > tr:first-of-type > td.weekday').length;
+            return document.querySelectorAll('table.timesheet > tbody > tr:first-of-type > td.weekday').length;
         }
         else {
             return document.querySelectorAll('#timesheet > tbody > tr:first-of-type > td.weekday-hours').length;
@@ -161,6 +166,8 @@ window.summarizeUnanetTime = (function() {
             acc[property] = [].reduce.apply(timeEntries, reducers[property]);
             return acc;
         }, {});
+
+        properties.weekdayHoursInPayPeriod = getWeekdaysInTimesheet() * ASSUMED_HOURS_PER_DAY;
 
         var summaryDoc = docTemplateGeneration(properties);
         
