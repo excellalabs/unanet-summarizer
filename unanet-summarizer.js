@@ -84,8 +84,6 @@ window.summarizeUnanetTime = (function() {
     var obtainTimeEntryRows = function() { 
         var arrayToReturn = []; 
 
-        console.log('readOnly: ', IsReadOnly);
-
         var rows = toArray(IsReadOnly ?
           document.querySelectorAll("table.timesheet > tbody:first-of-type > tr")
           : document.querySelectorAll("#timesheet > tbody:first-of-type > tr")
