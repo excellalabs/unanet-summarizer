@@ -1,6 +1,60 @@
 window.summarizeUnanetTime = (function() {
+    // see: http://krasimirtsonev.com/blog/article/Javascript-template-engine-in-just-20-line
+    var Template = function(html) {
+        var re = /<%([^%>]+)?%>/g,
+            reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g,
+            code = 'var r=[];\n',
+            cursor = 0,
+            match;
+
+        var add = function(line, js) {
+            js ? (code += line.match(reExp) ? line + '\n' : 'r.push(' + line + ');\n')
+               : (code += line != '' ? 'r.push("' + line.replace(/"/g, '\\"') + '");\n' : '');
+            return add;
+        };
+
+        while(match = re.exec(html)) {
+            add(html.slice(cursor, match.index))(match[1], true);
+            cursor = match.index + match[0].length;
+        }
+
+        add(html.substr(cursor, html.length - cursor));
+        code += 'return r.join("");';
+
+        return new Function(code.replace(/[\r\t\n]/g, ''));
+    };
+
     const CONTAINER_ID = 'unanet-summary';
     const ASSUMED_HOURS_PER_DAY = 8;
+    const CONTAINER_TEMPLATE = Template(
+      '<h2>Unanet Time Summary</h2>' +
+      '<table style="border: 2px solid; margin-bottom: 20px;">' +
+        '<thead>' +
+          '<tr>' +
+            '<th colspan="<% this.hoursByProjectType.length %>">Project Types</th>' +
+            '<th colspan="3">Totals</th>' +
+          '</tr>' +
+          '<tr>' +
+            '<% for (var i in this.hoursByProjectType) { %>' +
+              '<th><% this.hoursByProjectType[i].projectType %></th>' +
+            '<% } %>' +
+            '<th>+ Hours</th>' +
+            '<th>Non + Hours</th>' +
+            '<th>Grand Total</th>' +
+          '</tr>' +
+        '</thead>' +
+        '<tbody>' +
+          '<tr>' +
+            '<% for (var i in this.hoursByProjectType) { %>' +
+              '<td><% this.hoursByProjectType[i].totalHours %></td>' +
+            '<% } %>' +
+            '<td><% this.totalPlusHoursResult %></td>' +
+            '<td><% this.totalNonPlusHoursResult %></td>' +
+            '<td><% this.totalHoursResult %></td>' +
+          '</tr>' +
+        '</tbody>' +
+      '</table>'
+    );
 
     var isReadOnlyTimesheet = function() {
         // if there are no inputs, the timesheet is readonly
@@ -73,60 +127,9 @@ window.summarizeUnanetTime = (function() {
         return acc;
     };
 
-    var docTemplateGeneration = function(props) {
-        var resultTable = document.createElement('table');
-        resultTable.setAttribute('style', 'border: 2px solid;');
-
-        var tableHeader = document.createElement('thead');
-
-        var topHeaderRow = document.createElement('tr');
-        topHeaderRow.innerHTML = "<th colspan='" + props.hoursByProjectType.length + "'>Project Types</th><th colspan ='3'>Totals</th><th colspan='2'>For the Month</th>";
-
-        var bottomHeaderRow = document.createElement('tr');
-
-        var hoursHeading = '';
-        props.hoursByProjectType.forEach(function(timeItem){
-            hoursHeading = hoursHeading + '<th>' + timeItem.projectType + '</th>';
-        });
-
-        bottomHeaderRow.innerHTML += hoursHeading;
-        bottomHeaderRow.innerHTML += '<th>+ Hours</th><th>Non + Hours</th><th>Grand Total</th><td>Target + Hours</td><td>Tracking</td>';
-
-        var tableBody = document.createElement('tbody');
-        var dataRow = document.createElement('tr');
-
-        props.hoursByProjectType.forEach(function(timeItem){
-            var newCell = dataRow.insertCell(-1);
-            newCell.textContent = timeItem.totalHours;
-        });
-
-        var totalPlusCell = dataRow.insertCell(-1);
-        var totalNonPlusCell = dataRow.insertCell(-1);
-        var totalHoursCell = dataRow.insertCell(-1);
-        var targetPlusHoursCell = dataRow.insertCell(-1);
-        var trackingHoursCell = dataRow.insertCell(-1);
-
-        totalPlusCell.textContent = props.totalPlusHoursResult;
-        totalNonPlusCell.textContent = props.totalNonPlusHoursResult;
-        totalHoursCell.textContent = props.totalHoursResult;
-        targetPlusHoursCell.textContent = props.weekdayHoursInPayPeriod;
-        trackingHoursCell.textContent = ""; // TODO 
-
-        tableBody.appendChild(dataRow);
-
-        tableHeader.appendChild(topHeaderRow);
-        tableHeader.appendChild(bottomHeaderRow);
-
-        resultTable.appendChild(tableHeader);
-        resultTable.appendChild(tableBody);
-
-        return resultTable;
-    };
-
     var createContainer = function() {
         var container = document.createElement('div');
         container.id = CONTAINER_ID;
-        container.style = 'margin-bottom: 20px;';
         return document.body.insertBefore(container, document.body.firstChild);
     };
 
@@ -161,13 +164,8 @@ window.summarizeUnanetTime = (function() {
             acc[property] = timeEntries.reduce(config.fn, config.init);
             return acc;
         }, {});
-
-        properties.weekdayHoursInPayPeriod = getWeekdaysInTimesheet() * ASSUMED_HOURS_PER_DAY;
-
-        var summaryDoc = docTemplateGeneration(properties);
         
         var container = document.getElementById(CONTAINER_ID) || createContainer();
-        container.innerHTML = '<h2>Unanet Time Summary</h2>';
-        container.appendChild(summaryDoc);
+        container.innerHTML = CONTAINER_TEMPLATE.apply(properties);
     };
 })();
