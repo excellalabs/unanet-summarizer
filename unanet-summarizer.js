@@ -24,10 +24,16 @@ window.summarizeUnanetTime = (function() {
         return new Function(code.replace(/[\r\t\n]/g, ''));
     };
 
-    const CONTAINER_ID = 'unanet-summary';
+    const SUMMARIZER_ROOT = 'https://excellalabs.github.io/unanet-summarizer/';
+    const SUMMARIZER_STYLESHEET = SUMMARIZER_ROOT + '/summarizer-style.css';
+
+    const CONTAINER_ID = 'unanet-summarizer';
+    const STYLESHEET_ID = 'unanet-summarizer-style';
+    const CSS_CLASS = 'unanet-summary';
+
     const CONTAINER_TEMPLATE = Template(
       '<h2>Unanet Time Summary</h2>' +
-      '<table style="border: 2px solid; margin-bottom: 20px;">' +
+      '<table>' +
         '<thead>' +
           '<tr>' +
             '<th colspan="<% this.hoursByProjectType.length %>">Project Types</th>' +
@@ -126,7 +132,17 @@ window.summarizeUnanetTime = (function() {
     var createContainer = function() {
         var container = document.createElement('div');
         container.id = CONTAINER_ID;
+        container.className = CSS_CLASS;
         return document.body.insertBefore(container, document.body.firstChild);
+    };
+
+    var createStylesheetRef = function() {
+        var link = document.createElement('link');
+        link.id = STYLESHEET_ID;
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = SUMMARIZER_STYLESHEET;
+        return document.head.appendChild(link);
     };
 
     // This function returns an object with a reducer function (a way of reducing an array of hours which we'll pass later)
@@ -141,7 +157,12 @@ window.summarizeUnanetTime = (function() {
     };
     
     // Execution
-    return function() { 
+    return function() {
+        // inject stylesheet
+        if (!document.getElementById(STYLESHEET_ID)) {
+            createStylesheetRef();
+        }
+
         var timeEntries = obtainTimeEntryRows();        
         var reducers = getReducers();
 
