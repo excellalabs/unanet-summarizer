@@ -193,9 +193,13 @@ window.summarizeUnanetTime = (function() {
             return acc;
         }, {});
 
-        console.log('number of workable days:', getWeekdaysInTimesheet()); // TODO: remove
+        properties.hoursTargetForPayPeriod = getWeekdaysInTimesheet() * ASSUMED_HOURS_PER_DAY;
+        properties.hoursForTracking = properties.hoursTargetForPayPeriod - (getDaysLeftInTimesheet() * ASSUMED_HOURS_PER_DAY) - properties.totalPlusHoursResult;
 
+        console.log('number of workable days:', getWeekdaysInTimesheet()); // TODO: remove
         console.log('daysLeft:', getDaysLeftInTimesheet());  // TODO: remove
+        console.log('hours target: ', properties.hoursTargetForPayPeriod);
+        console.log('tracking: ', properties.hoursForTracking);
         
         var container = document.getElementById(CONTAINER_ID) || createContainer();
         container.innerHTML = CONTAINER_TEMPLATE.apply(properties);
