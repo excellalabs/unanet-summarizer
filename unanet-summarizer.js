@@ -1,6 +1,6 @@
 window.summarizeUnanetTime = (function() {
-    // see: http://krasimirtsonev.com/blog/article/Javascript-template-engine-in-just-20-line
     var Template = function(html) {
+        // see: http://krasimirtsonev.com/blog/article/Javascript-template-engine-in-just-20-line
         var re = /<%([^%>]+)?%>/g,
             reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g,
             code = 'var r=[];\n',
@@ -24,6 +24,7 @@ window.summarizeUnanetTime = (function() {
         return new Function(code.replace(/[\r\t\n]/g, ''));
     };
 
+    const ASSUMED_HOURS_PER_DAY = 8;
     const SUMMARIZER_ROOT = 'https://excellalabs.github.io/unanet-summarizer/';
     const SUMMARIZER_STYLESHEET = SUMMARIZER_ROOT + '/summarizer-style.css';
 
@@ -38,6 +39,7 @@ window.summarizeUnanetTime = (function() {
           '<tr>' +
             '<th colspan="<% this.hoursByProjectType.length %>">Project Types</th>' +
             '<th colspan="3">Totals</th>' +
+            '<th colspan="3">Monthly Tracking</th>' +
           '</tr>' +
           '<tr>' +
             '<% for (var i in this.hoursByProjectType) { %>' +
@@ -46,6 +48,9 @@ window.summarizeUnanetTime = (function() {
             '<th>+ Hours</th>' +
             '<th>Non + Hours</th>' +
             '<th>Grand Total</th>' +
+            '<th>Potential Hours</th>' +
+            '<th>Your + Hours</th>' +
+            '<th>Tracking</th>' +
           '</tr>' +
         '</thead>' +
         '<tbody>' +
@@ -56,6 +61,9 @@ window.summarizeUnanetTime = (function() {
             '<td><% this.totalPlusHoursResult %></td>' +
             '<td><% this.totalNonPlusHoursResult %></td>' +
             '<td><% this.totalHoursResult %></td>' +
+            '<td><% this.hoursTargetForPayPeriod %></td>' +
+            '<td><% this.totalPlusHoursResult %></td>' +
+            '<td><% this.hoursForTracking %></td>' +
           '</tr>' +
         '</tbody>' +
       '</table>'
@@ -70,12 +78,13 @@ window.summarizeUnanetTime = (function() {
         return [].slice.call(nodeList);        
     };
 
+    const IsReadOnly = isReadOnlyTimesheet();
+
+
     var obtainTimeEntryRows = function() { 
-        var readOnly = isReadOnlyTimesheet();
+        var arrayToReturn = []; 
 
-        console.log('readOnly: ', readOnly);
-
-        var rows = toArray(readOnly ?
+        var rows = toArray(IsReadOnly ?
           document.querySelectorAll("table.timesheet > tbody:first-of-type > tr")
           : document.querySelectorAll("#timesheet > tbody:first-of-type > tr")
         );
@@ -85,7 +94,7 @@ window.summarizeUnanetTime = (function() {
             var projectType;
             var timeValue;
         
-            if (readOnly) {
+            if (IsReadOnly) {
                 projectType = timesheetRow.querySelector(':nth-child(4)').textContent || "";
                 timeValue = parseFloat(timesheetRow.querySelector(':last-child').textContent) || parseFloat(0.0);
             } else {
@@ -155,7 +164,44 @@ window.summarizeUnanetTime = (function() {
             totalHoursResult: { fn: totalHoursReduceFunction, init: 0.0 }
         };
     };
-    
+
+
+    var getBusinessDatesCount = function(startDate, endDate) {
+        // provided from https://stackoverflow.com/a/37069277/316847
+        var count = 0;
+        var curDate = startDate;
+        while (curDate <= endDate) {
+            var dayOfWeek = curDate.getDay();
+            if(!((dayOfWeek == 6) || (dayOfWeek == 0)))
+               count++;
+            curDate.setDate(curDate.getDate() + 1);
+        }
+        return count;
+    };
+
+    var getWeekdaysInTimesheet = function(){
+        if (IsReadOnly) {
+            return document.querySelectorAll('table.timesheet > tbody > tr:first-of-type > td.weekday').length;
+        }
+        else {
+            return document.querySelectorAll('#timesheet > tbody > tr:first-of-type > td.weekday-hours').length;
+        }
+    };
+
+    var getDaysLeftInTimesheet = function() {
+        if (IsReadOnly){ return 0; }
+        else {
+            var dateElements = document.querySelectorAll('span.dom');
+            var lastDateOnTimesheet = parseInt(dateElements[dateElements.length - 1].textContent);
+        
+            var today = new Date();
+            var fullLastDate = new Date(today.getFullYear(), today.getMonth(), lastDateOnTimesheet);
+            var fullTodayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+            return getBusinessDatesCount(fullTodayDate, fullLastDate);
+        }
+    }
+
     // Execution
     return function() {
         // inject stylesheet
@@ -173,7 +219,11 @@ window.summarizeUnanetTime = (function() {
             acc[property] = timeEntries.reduce(config.fn, config.init);
             return acc;
         }, {});
-        
+
+        properties.hoursTargetForPayPeriod = getWeekdaysInTimesheet() * ASSUMED_HOURS_PER_DAY;
+        properties.hoursForTracking = -(properties.hoursTargetForPayPeriod - (getDaysLeftInTimesheet() * ASSUMED_HOURS_PER_DAY) - properties.totalPlusHoursResult);
+
+       
         var container = document.getElementById(CONTAINER_ID) || createContainer();
         container.innerHTML = CONTAINER_TEMPLATE.apply(properties);
     };
