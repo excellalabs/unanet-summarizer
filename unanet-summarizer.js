@@ -1,6 +1,6 @@
 window.summarizeUnanetTime = (function() {
-    // see: http://krasimirtsonev.com/blog/article/Javascript-template-engine-in-just-20-line
     var Template = function(html) {
+        // see: http://krasimirtsonev.com/blog/article/Javascript-template-engine-in-just-20-line
         var re = /<%([^%>]+)?%>/g,
             reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g,
             code = 'var r=[];\n',
