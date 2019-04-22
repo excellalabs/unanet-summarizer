@@ -3,43 +3,41 @@ window.summarizeUnanetTime = (function() {
 
     var isReadOnlyTimesheet = function() {
         // if there are no inputs, the timesheet is readonly
-        var inputs = document.querySelectorAll('input');
-        return inputs.length === 0;
+        return document.querySelectorAll('input').length === 0;
+    };
+
+    var toArray = function(nodeList) {
+        return [].slice.call(nodeList);        
     };
 
     var obtainTimeEntryRows = function() { 
-        var arrayToReturn = []; 
         var readOnly = isReadOnlyTimesheet();
 
         console.log('readOnly: ', readOnly);
 
-        var rows;
+        var rows = toArray(readOnly ?
+          document.querySelectorAll("table.timesheet > tbody:first-of-type > tr")
+          : document.querySelectorAll("#timesheet > tbody:first-of-type > tr")
+        );
 
-        if (readOnly){ 
-            rows = document.querySelectorAll("table.timesheet > tbody:first-of-type > tr");
-        } else {
-            rows = document.querySelectorAll("#timesheet > tbody:first-of-type > tr");
-        }
-
-        rows.forEach(function(timesheetRow){ 
+        return rows
+          .map(function(timesheetRow) {
             var projectType;
             var timeValue;
         
             if (readOnly) {
                 projectType = timesheetRow.querySelector(':nth-child(4)').textContent || "";
                 timeValue = parseFloat(timesheetRow.querySelector(':last-child').textContent) || parseFloat(0.0);
-                if (!projectType || projectType === "") {
-                    return;
-                }
             } else {
                 projectType = timesheetRow.querySelector("td.project-type > select > option:checked").text;  
                 timeValue = parseFloat(timesheetRow.querySelector('td.total > input').getAttribute('value')) || parseFloat(0.0); 
             }
         
-            arrayToReturn.push({ projectType: projectType, timeValue: timeValue});
-        });
-        
-        return arrayToReturn;
+            return (!projectType || projectType === '') ? null : { projectType: projectType, timeValue: timeValue };
+          })
+          .filter(function(timesheetRow) {
+            return timesheetRow !== null;
+          });
     };
 
     var totalHoursReduceFunction = function(acc, obj) {
@@ -72,7 +70,6 @@ window.summarizeUnanetTime = (function() {
     };
 
     var docTemplateGeneration = function(props) {
-
         var resultTable = document.createElement('table');
         resultTable.setAttribute('style', 'border: 2px solid;');
 
@@ -124,32 +121,30 @@ window.summarizeUnanetTime = (function() {
         container.style = 'margin-bottom: 20px;';
         return document.body.insertBefore(container, document.body.firstChild);
     };
-    // Execution 
-    var getContainer = function() {
-        return document.getElementById(CONTAINER_ID) || createContainer();
-    };
 
     var getReducers = function() {
         return {
-            hoursByProjectType: [ totalHoursByProjectType, [] ],
-            totalPlusHoursResult: [ totalPlusHours, 0.0 ],
-            totalNonPlusHoursResult: [ totalNonPlusHours, 0.0 ],
-            totalHoursResult: [ totalHoursReduceFunction, 0.0 ]
+            hoursByProjectType: { fn: totalHoursByProjectType, init: [] },
+            totalPlusHoursResult: { fn: totalPlusHours, init: 0.0 },
+            totalNonPlusHoursResult: { fn: totalNonPlusHours, init: 0.0 },
+            totalHoursResult: { fn: totalHoursReduceFunction, init: 0.0 }
         };
     };
     
+    // Execution
     return function() { 
         var timeEntries = obtainTimeEntryRows();        
         var reducers = getReducers();
 
         var properties = Object.keys(reducers).reduce(function(acc, property) {
-            acc[property] = [].reduce.apply(timeEntries, reducers[property]);
+            var config = reducers[property];
+            acc[property] = timeEntries.reduce(config.fn, config.init);
             return acc;
         }, {});
 
         var summaryDoc = docTemplateGeneration(properties);
         
-        var container = getContainer();
+        var container = document.getElementById(CONTAINER_ID) || createContainer();
         container.innerHTML = '<h2>Unanet Time Summary</h2>';
         container.appendChild(summaryDoc);
     };
