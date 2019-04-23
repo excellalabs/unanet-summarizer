@@ -39,7 +39,7 @@ window.summarizeUnanetTime = (function() {
           '<tr>' +
             '<th colspan="<% this.hoursByProjectType.length %>">Project Types</th>' +
             '<th colspan="3">Totals</th>' +
-            '<th colspan="3">Monthly Tracking</th>' +
+            '<th colspan="3">Pay Period Tracking</th>' +
           '</tr>' +
           '<tr>' +
             '<% for (var i in this.hoursByProjectType) { %>' +
