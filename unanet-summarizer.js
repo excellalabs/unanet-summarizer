@@ -12,8 +12,4 @@ window.summarizeUnanetTime = (function() {
         s.onload = onload;
         document.body.appendChild(s);
     }
-
-    return function() {
-        onload();
-    };
 })();
