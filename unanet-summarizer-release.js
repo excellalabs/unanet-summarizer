@@ -1,4 +1,4 @@
-window.summarizeUnanetTime = (function() {
+window.summarizeUnanetTimeForReal = (function() {
     var Template = function(html) {
         // see: http://krasimirtsonev.com/blog/article/Javascript-template-engine-in-just-20-line
         var re = /<%([^%>]+)?%>/g,
