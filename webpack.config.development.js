@@ -5,11 +5,11 @@ module.exports = Object.assign(webpackConfig, {
     mode: 'development',
     devtool: 'inline-source-map',
     devServer: {
-      contentBase: '.'
+      contentBase: './dist'
     },
     plugins: [
       new CopyPlugin([
-        { from: './src/bookmarklet.html', to: './dist/index.html' }
+        { from: './src/bookmarklet.html', to: 'index.html' }
       ])
     ]
 });

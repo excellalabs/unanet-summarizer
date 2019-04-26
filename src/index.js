@@ -3,10 +3,7 @@ const html = require('./summary-template.tpl').default;
 const css = require('./summary-style.css').default;
 const summarize = require('./unanet-summarizer');
 
-// namespace
-window.unanetSummarizer = window.unanetSummarizer || {};
-
-window.unanetSummarizer.generateSummary = (function() {
+window.summarizeUnanetTimeForReal = (function() {
   const CONTAINER_ID = 'unanet-summarizer';
   const STYLESHEET_ID = 'unanet-summarizer-style';
   const CSS_CLASS = 'unanet-summary';
@@ -36,6 +33,3 @@ window.unanetSummarizer.generateSummary = (function() {
       container.innerHTML = CONTAINER_TEMPLATE.apply(summarize());    
   };
 })();
-
-// maintain backward compatibility
-window.summarizeUnanetTime = window.unanetSummarizer.generateSummary;
