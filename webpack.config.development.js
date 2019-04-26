@@ -9,7 +9,7 @@ module.exports = Object.assign(webpackConfig, {
     },
     plugins: [
       new CopyPlugin([
-        { from: './src/bookmarklet.html', to: 'index.html' }
+        { from: './src/bookmarklet.html', to: './dist/index.html' }
       ])
     ]
 });

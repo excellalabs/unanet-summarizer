@@ -4,8 +4,8 @@ module.exports = {
     mode: 'production',
     entry: './src/index.js',
     output: {
-      path: path.resolve(__dirname),
-      filename: 'unanet-summarizer.js'
+      path: path.resolve(__dirname, 'dist'),
+      filename: 'unanet-summarizer-release.js'
     },
     module: {
       rules: [
