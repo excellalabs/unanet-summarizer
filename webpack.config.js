@@ -10,7 +10,6 @@ module.exports = {
     module: {
       rules: [
         { test: /\.css$/, use: 'raw-loader' },
-        { test: /\.tpl$/, use: 'raw-loader' },
         { test: /\.hbs$/, use: 'handlebars-loader' }       
       ]
     }
