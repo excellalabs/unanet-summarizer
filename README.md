@@ -33,10 +33,17 @@ javascript:(function(){ var onload=function(){ window.summarizeUnanetTime(); }; 
 
 This bookmarklet adds injects the JavaScript file if it doesn't exist, and then calls the `summarizeUnanetTime()` function that it contains.
 
-## Developers: how to test locally
+## For Developers
 
+### How to build locally
+
+* Pull this repository
+* `npm install` gets the dependencies
+* `npm run build` builds & outputs to `dist` folder
+
+### How to test locally
+
+* `npm start` allows you to view a bookmarklet for debug that you drag to your bookmarks bar
 * open unanet
 * edit a timesheet
-* open the browser console
-* paste the contents of the script
-* call `window.summarizeUnanetTime()`
+* click the debug bookmarklet
