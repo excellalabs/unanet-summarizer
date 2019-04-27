@@ -43,7 +43,7 @@ This bookmarklet adds injects the JavaScript file if it doesn't exist, and then 
 
 ### How to test locally
 
-* `npm run serve` allows you to view a bookmarklet for debug that you drag to your bookmarks bar
+* `npm start` allows you to view a bookmarklet for debug that you drag to your bookmarks bar
 * open unanet
 * edit a timesheet
 * click the debug bookmarklet
