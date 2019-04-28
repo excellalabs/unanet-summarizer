@@ -1,0 +1,34 @@
+<h2>Unanet Time Summary</h2>
+<table>
+  <thead>
+    <tr>
+      <th colspan="{{ hoursByProjectType.length }}">Project Types</th>
+      <th colspan="3">Totals</th>
+      <th colspan="3">Pay Period Tracking</th>
+    </tr>
+    <tr>
+      {{#each hoursByProjectType}}
+        <th>{{ this.projectType }}</th>
+      {{/each}}
+      <th>+ Hours</th>
+      <th>Non + Hours</th>
+      <th>Grand Total</th>
+      <th>Potential Hours</th>
+      <th>Your + Hours</th>
+      <th>Tracking</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {{#each hoursByProjectType}}
+        <td>{{ this.totalHours }}</td>
+      {{/each}}
+      <td>{{ totalPlusHoursResult }}</td>
+      <td>{{ totalNonPlusHoursResult }}</td>
+      <td>{{ totalHoursResult }}</td>
+      <td>{{ hoursTargetForPayPeriod }}</td>
+      <td>{{ totalPlusHoursResult }}</td>
+      <td>{{ hoursForTracking }}</td>
+    </tr>
+  </tbody>
+</table>
