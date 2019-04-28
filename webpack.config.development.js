@@ -5,7 +5,8 @@ module.exports = Object.assign(webpackConfig, {
     mode: 'development',
     devtool: 'inline-source-map',
     devServer: {
-      contentBase: './dist'
+      contentBase: './dist',
+      inline: false
     },
     plugins: [
       new CopyPlugin([
