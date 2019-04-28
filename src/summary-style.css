@@ -5,3 +5,7 @@
 .unanet-summary table {
   border: 2px solid;
 }
+
+.unanet-summary table > tbody td {
+  text-align: center;
+}
