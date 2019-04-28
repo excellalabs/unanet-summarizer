@@ -1,5 +1,4 @@
-const Template = require('./template');
-const html = require('./summary-template.tpl').default;
+const template = require('./summary-template.hbs');
 const css = require('./summary-style.css').default;
 const summarize = require('./unanet-summarizer');
 
@@ -7,7 +6,6 @@ window.summarizeUnanetTimeForReal = (function() {
   const CONTAINER_ID = 'unanet-summarizer';
   const STYLESHEET_ID = 'unanet-summarizer-style';
   const CSS_CLASS = 'unanet-summary';
-  const CONTAINER_TEMPLATE = Template(html);
 
   function createContainer() {
       var container = document.createElement('div');
@@ -30,6 +28,6 @@ window.summarizeUnanetTimeForReal = (function() {
 
       var container = document.getElementById(CONTAINER_ID) || createContainer();
 
-      container.innerHTML = CONTAINER_TEMPLATE.apply(summarize());    
+      container.innerHTML = template(summarize());    
   };
 })();
