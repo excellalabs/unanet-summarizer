@@ -13,31 +13,26 @@ module.exports = (function() {
     };
 
     var obtainTimeEntryRows = function() { 
-        var arrayToReturn = []; 
-
-        var rows = toArray(IsReadOnly ?
-          document.querySelectorAll("table.timesheet > tbody:first-of-type > tr")
-          : document.querySelectorAll("#timesheet > tbody:first-of-type > tr")
-        );
+        var rows = toArray(document.querySelectorAll('table.timesheet > tbody:first-of-type > tr'));
 
         return rows
-          .map(function(timesheetRow) {
-            var projectType;
-            var timeValue;
+            .map(function(timesheetRow) {
+                var projectType = IsReadOnly ?
+                    timesheetRow.querySelector(':nth-child(4)').textContent || ''
+                    : timesheetRow.querySelector('td.project-type > select > option:checked').text;
+
+                var hoursSelector = IsReadOnly ? 'td.weekday, td.weekend' : 'input.hours';
+                var hoursProperty = IsReadOnly ? 'textContent' : 'value';
+
+                var timeValue = toArray(timesheetRow.querySelectorAll(hoursSelector))
+                    .map(function(node) { return parseFloat(node[hoursProperty]) || 0.0; })
+                    .reduce(function(sum, hours) { return sum + hours; }, 0.0);
         
-            if (IsReadOnly) {
-                projectType = timesheetRow.querySelector(':nth-child(4)').textContent || "";
-                timeValue = parseFloat(timesheetRow.querySelector(':last-child').textContent) || parseFloat(0.0);
-            } else {
-                projectType = timesheetRow.querySelector("td.project-type > select > option:checked").text;  
-                timeValue = parseFloat(timesheetRow.querySelector('td.total > input').getAttribute('value')) || parseFloat(0.0); 
-            }
-        
-            return (!projectType || projectType === '') ? null : { projectType: projectType, timeValue: timeValue };
-          })
-          .filter(function(timesheetRow) {
-            return timesheetRow !== null;
-          });
+                return projectType && { projectType: projectType, timeValue: timeValue } || null;
+            })
+            .filter(function(timesheetRow) {
+                return timesheetRow !== null;
+            });
     };
 
     var totalHoursReduceFunction = function(acc, obj) {
