@@ -1,5 +1,5 @@
 const template = require('./summary-template.hbs');
-const css = require('./summary-style.css').default;
+const css = require('./summarizer-style.css').default;
 const summarize = require('./unanet-summarizer');
 
 window.summarizeUnanetTimeForReal = (function() {
