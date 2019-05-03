@@ -20,8 +20,15 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- task: PublishPipelineArtifact@0
-  displayName: Publish Pipeline Artifacts
+- task: CopyFiles@2
   inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)/dist
+    sourceFolder: $(Build.SourcesDirectory)/dist
+    contents: **\*
+    targetFolder: $(Build.ArtifactStagingDirectory)
+  displayName: Copy Files to Staging Directory
+
+- task: PublishPipelineArtifact@0
+  displayName: Publish Staged Artifacts
+  inputs:
+    targetPath: $(Build.ArtifactStagingDirectory)
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
