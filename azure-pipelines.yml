@@ -22,13 +22,13 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: $(Build.SourcesDirectory)/dist
+    sourceFolder: '$(Build.SourcesDirectory)/dist'
     contents: '**\*'
-    targetFolder: $(Build.ArtifactStagingDirectory)
-  displayName: Copy Files to Staging Directory
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Copy Files to Staging Directory'
 
 - task: PublishPipelineArtifact@0
-  displayName: Publish Staged Artifacts
+  displayName: 'Publish Staged Artifacts'
   inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)
+    targetPath: '$(Build.ArtifactStagingDirectory)'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
