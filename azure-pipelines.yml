@@ -16,12 +16,8 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    pwd
     npm install
     npm run build
-    ls
-    cd dist
-    ls
   displayName: 'npm install and build'
 
 - task: CopyFiles@2
