@@ -19,6 +19,7 @@ steps:
     pwd
     npm install
     npm run build
+    ls
   displayName: 'npm install and build'
 
 - task: CopyFiles@2
