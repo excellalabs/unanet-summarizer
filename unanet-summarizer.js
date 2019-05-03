@@ -1,5 +1,5 @@
 window.summarizeUnanetTime = (function() {    
-    const REDIRECT_URL = 'https://excellalabs.github.io/unanet-summarizer/unanet-summarizer-release.js';
+    const REDIRECT_URL = 'https://unanetsummarizer.blob.core.windows.net/unanet-summarizer/unanet-summarizer-release.js';
 
     var onload = function () {
         window.summarizeUnanetTimeForReal();
