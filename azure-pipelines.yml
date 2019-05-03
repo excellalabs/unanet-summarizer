@@ -16,13 +16,14 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    pwd
     npm install
     npm run build
   displayName: 'npm install and build'
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: '/home/vsts/work/1/s/dist' #For some reason, I think we need to hard-code this.
+    sourceFolder: '/home/vsts/work/1/s' #For some reason, I think we need to hard-code this.
     contents: '**\*'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy Files to Staging Directory'
