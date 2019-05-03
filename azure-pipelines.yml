@@ -25,7 +25,6 @@ steps:
 - task: CopyFiles@2
   inputs:
     sourceFolder: '/home/vsts/work/1/s' #For some reason, I think we need to hard-code this.
-    contents: '**\*'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy Files to Staging Directory'
 
