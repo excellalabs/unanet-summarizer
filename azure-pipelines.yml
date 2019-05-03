@@ -20,8 +20,14 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: '/home/vsts/work/1/s/dist' #For some reason, I think we need to hard-code this.
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Copy Files to Staging Directory'
+
 - task: PublishPipelineArtifact@0
-  displayName: Publish Pipeline Artifacts
+  displayName: 'Publish Staged Artifacts'
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
