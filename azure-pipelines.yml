@@ -23,5 +23,5 @@ steps:
 - task: PublishPipelineArtifact@0
   displayName: Publish Pipeline Artifacts
   inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)/dist
+    targetPath: '$(Build.ArtifactStagingDirectory)'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
