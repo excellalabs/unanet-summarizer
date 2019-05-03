@@ -23,7 +23,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     sourceFolder: $(Build.SourcesDirectory)/dist
-    contents: **\*
+    contents: '**\*'
     targetFolder: $(Build.ArtifactStagingDirectory)
   displayName: Copy Files to Staging Directory
 
