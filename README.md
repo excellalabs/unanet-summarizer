@@ -1,4 +1,7 @@
 # unanet-summarizer
+
+[![Build Status](https://dev.azure.com/excellaco/unanet-summarizer/_apis/build/status/excellalabs.unanet-summarizer?branchName=master)](https://dev.azure.com/excellaco/unanet-summarizer/_build/latest?definitionId=5&branchName=master)
+
 A JavaScript file that powers a bookmarklet to summarize some time-keeping helpers.
 
 ![screenshot of the tool in action](summarizer-screenshot.png)
