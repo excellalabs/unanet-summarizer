@@ -6,7 +6,7 @@
     "build": "webpack"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^5.0.2",
+    "copy-webpack-plugin": "^5.0.3",
     "handlebars": "^4.1.2",
     "handlebars-loader": "^1.7.1",
     "raw-loader": "^2.0.0",
