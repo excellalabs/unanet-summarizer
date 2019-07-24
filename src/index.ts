@@ -1,3 +1,7 @@
+interface Window { 
+    summarizeUnanetTimeForReal: any; 
+}
+
 const template = require('./summary-template.hbs');
 const css = require('./summarizer-style.css').default;
 const summarize = require('./unanet-summarizer');
@@ -8,8 +12,8 @@ window.summarizeUnanetTimeForReal = (function() {
   const CSS_CLASS = 'unanet-summary';
   const TIMESHEET_FORM_ID = 'time';
 
-  var createContainer = function() {
-      var container = document.createElement('div');
+    var createContainer = function() {
+        var container = document.createElement('div');
       container.id = CONTAINER_ID;
       container.className = CSS_CLASS;
       return document.body.insertBefore(container, document.body.firstChild);
@@ -34,7 +38,7 @@ window.summarizeUnanetTimeForReal = (function() {
       return document.getElementById(STYLESHEET_ID) || createStylesheet();
   };
 
-  var onInputChanged = function(event) {
+  var onInputChanged = function(event: { target: any; }) {
       if (event.target instanceof HTMLInputElement) {
           getContainer().innerHTML = template(summarize());
       }
