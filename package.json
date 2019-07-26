@@ -7,7 +7,7 @@
     "test": "jasmine-ts --config=jasmine.json"
   },
   "devDependencies": {
-    "@types/jasmine": "^3.3.15",
+    "@types/jasmine": "^3.3.16",
     "copy-webpack-plugin": "^5.0.3",
     "handlebars": "^4.1.2",
     "handlebars-loader": "^1.7.1",
