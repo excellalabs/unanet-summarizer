@@ -52,5 +52,4 @@ export module Summarizer {
     Internal = ProjectType.Internal,
     NonBillable = ProjectType.NonBillable
   }
-
 }
