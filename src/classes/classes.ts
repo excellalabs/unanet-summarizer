@@ -51,6 +51,10 @@ export module Summarizer {
     isPlusProjectType(): boolean {
         return Object.values(PlusProjectTypes).includes(this.projectType);
     };
+
+    totalHours(): number {
+      return this.entries.reduce((a, b) => a + b.hoursAmount, 0);
+    }
   }
 
   export enum ProjectType { 

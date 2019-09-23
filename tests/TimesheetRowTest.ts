@@ -45,5 +45,39 @@ describe('TimesheetRow', function() {
     });
   });
   describe('totaling hours', function(){
+    const legitProjectType = Summarizer.ProjectType.Bench;
+    const legitDayOfMonth = "11;"
+
+    it('returns zero with an empty list of entries', function(){
+      var sut = new Summarizer.TimesheetRow(legitProjectType, new Array<Summarizer.DateEntry>());
+      expect(sut.totalHours()).toBe(0);
+    });
+
+    it('returns the number when list has one entry', function(){
+      var array = new Array<Summarizer.DateEntry>();
+      array.push(new Summarizer.DateEntry(legitDayOfMonth, "8"));
+
+      var sut = new Summarizer.TimesheetRow(legitProjectType, array);
+      expect(sut.totalHours()).toBe(8);
+    });
+
+    it('returns the number when list has a decimal', function(){
+      var array = new Array<Summarizer.DateEntry>();
+      array.push(new Summarizer.DateEntry(legitDayOfMonth, "8.25"));
+
+      var sut = new Summarizer.TimesheetRow(legitProjectType, array);
+      expect(sut.totalHours()).toBe(8.25);
+    });
+
+    it('returns the number when list has multiple entries', function(){
+      var array = new Array<Summarizer.DateEntry>();
+      array.push(new Summarizer.DateEntry("1", "1"));
+      array.push(new Summarizer.DateEntry("2", "2"));
+      array.push(new Summarizer.DateEntry("3", "3.5"));
+
+      var sut = new Summarizer.TimesheetRow(legitProjectType, array);
+      expect(sut.totalHours()).toBe(6.5);
+    });
+
   })
 });
