@@ -27,7 +27,7 @@ export module Summarizer {
     }
     
     isPlusProjectType(): boolean {
-        return Object.values(BillableProjectTypes).includes(this.projectType);
+        return Object.values(PlusProjectTypes).includes(this.projectType);
     };
   }
 
@@ -39,13 +39,13 @@ export module Summarizer {
     NonBillable = "CLI-NB"
   }
 
-  export enum BillableProjectTypes {
+  export enum PlusProjectTypes {
     Bill = ProjectType.Bill,
     Core = ProjectType.Core,
     Bench = ProjectType.Bench
   }
 
-  export enum NonBillableProductTypes {
+  export enum NonPlusProjectTypes {
     Internal = ProjectType.Internal,
     NonBillable = ProjectType.NonBillable
   }
