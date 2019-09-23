@@ -1,10 +1,13 @@
 
 export module Summarizer {
   export class DateEntry {
-    date: Date;
+    dayOfMonth: number;
     hoursAmount: number;
 
-    constructor(date: string, hoursAmount: string){
+    constructor(dayOfMonth: string, hoursAmount: string){
+      if (dayOfMonth === null || dayOfMonth === undefined || dayOfMonth.trim().length === 0){
+        throw new Error("Day of month is null or empty. Valid day of the month must be provided.");
+      }
       if (hoursAmount === undefined || hoursAmount === null || hoursAmount.trim().length === 0){
         this.hoursAmount = 0;
       }
