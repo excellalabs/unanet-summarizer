@@ -37,9 +37,15 @@ export module Summarizer {
     projectType: ProjectType;
     entries: Array<DateEntry>
   
-    constructor(projectType: ProjectType, dateEntries: Array<DateEntry>){
+    constructor(projectType: ProjectType, dateEntries: Array<DateEntry>) {
         this.projectType = projectType;
-        this.entries = dateEntries;
+
+        if (dateEntries === null || dateEntries === undefined){
+          throw new Error("Entries array must not be null or undefined.");
+        }
+        else{
+         this.entries = dateEntries;
+        }
     }
     
     isPlusProjectType(): boolean {
