@@ -1,4 +1,3 @@
-import { stringify } from "querystring";
 
 export module Summarizer {
   export class DateEntry {
