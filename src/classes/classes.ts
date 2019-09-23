@@ -12,11 +12,24 @@ export module Summarizer {
       if (hoursAmount === undefined || hoursAmount === null || hoursAmount.trim().length === 0){
         this.hoursAmount = 0;
       }
-      else{
-        this.hoursAmount = Number.parseFloat(hoursAmount.trim());
+      else {
+        var parsedHours = Number.parseFloat(hoursAmount.trim());
+        if (Number.isNaN(parsedHours)){
+          throw new Error(`Unable to parse a valid hours amount for dayOfMonth: '${dayOfMonth}'`);
+        }
+        
+        else{
+          this.hoursAmount = parsedHours;
+        }
       }
 
-      this.dayOfMonth = Number.parseInt(dayOfMonth.trim());
+      var parsedDayOfMonth = Number.parseInt(dayOfMonth.trim());
+      if (Number.isNaN(parsedDayOfMonth)) {
+        throw new Error(`Unable to parse dayOfMonth: input was '${dayOfMonth}'`);
+      }
+      else {
+        this.dayOfMonth = parsedDayOfMonth;
+      }
     }
   }
 

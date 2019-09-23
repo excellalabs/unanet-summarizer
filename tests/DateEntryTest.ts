@@ -34,6 +34,12 @@ describe('constructor', function(){
       var entry = new Summarizer.DateEntry(validDayOfMonth, " 8.25 ");
       expect(entry.hoursAmount).toBe(8.25);
     })
+    it('throws an error if the value parsed is still not a number', function(){
+      var functionToBlowUp = function(){
+        new Summarizer.DateEntry(validDayOfMonth, "Abc");
+      }
+      expect(functionToBlowUp).toThrowError("Unable to parse a valid hours amount for dayOfMonth: '8'");
+    })
 });
 
   describe('dayOfMonth', function(){
@@ -81,6 +87,13 @@ describe('constructor', function(){
     it('ensures whole numbers', function(){
       var entry = new Summarizer.DateEntry("11.2", validWorkHours);
       expect(entry.dayOfMonth).toBe(11);
+    });
+
+    it('throws an error when it cannot be parsed', function(){
+      var shouldBlowUp = function(){
+        new Summarizer.DateEntry("Abc", validWorkHours);
+      }
+      expect(shouldBlowUp).toThrowError("Unable to parse dayOfMonth: input was 'Abc'")
     });
   })
 });
