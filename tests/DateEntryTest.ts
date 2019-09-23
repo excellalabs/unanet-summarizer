@@ -67,5 +67,20 @@ describe('constructor', function(){
       }
       expect(functionThatShouldBlowUp).toThrowError("Day of month is null or empty. Valid day of the month must be provided.")
     });
+
+    it('parses whole numbers', function(){
+      var entry = new Summarizer.DateEntry("11", validWorkHours);
+      expect(entry.dayOfMonth).toBe(11);
+    });
+
+    it('parses even with whitespace', function(){
+      var entry = new Summarizer.DateEntry(" 11 ", validWorkHours);
+      expect(entry.dayOfMonth).toBe(11);
+    });
+
+    it('ensures whole numbers', function(){
+      var entry = new Summarizer.DateEntry("11.2", validWorkHours);
+      expect(entry.dayOfMonth).toBe(11);
+    });
   })
 });
