@@ -1,7 +1,18 @@
+import { stringify } from "querystring";
+
 export module Summarizer {
   export class DateEntry {
     date: Date;
     hoursAmount: number;
+
+    constructor(date: string, hoursAmount: string){
+      if (hoursAmount === undefined || hoursAmount === null || hoursAmount.trim().length === 0){
+        this.hoursAmount = 0;
+      }
+      else{
+        this.hoursAmount = Number.parseFloat(hoursAmount.trim());
+      }
+    }
   }
 
   export class TimesheetRow { 
@@ -30,6 +41,11 @@ export module Summarizer {
     Bill = ProjectType.Bill,
     Core = ProjectType.Core,
     Bench = ProjectType.Bench
+  }
+
+  export enum NonBillableProductTypes {
+    Internal = ProjectType.Internal,
+    NonBillable = ProjectType.NonBillable
   }
 
 }

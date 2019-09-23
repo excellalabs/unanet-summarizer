@@ -23,4 +23,6 @@ describe('TimesheetRow', function() {
       expect(row.isPlusProjectType()).toBe(false);
     });
   });
+  describe('totaling hours', function(){
+  })
 });
