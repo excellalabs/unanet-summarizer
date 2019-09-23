@@ -34,9 +34,10 @@ describe('constructor', function(){
       var entry = new Summarizer.DateEntry(validDayOfMonth, " 8.25 ");
       expect(entry.hoursAmount).toBe(8.25);
     })
+});
 
-  });
   describe('dayOfMonth', function(){
+
     const validWorkHours = "8.25"
 
     it('throws exception on null string', function(){
@@ -59,6 +60,7 @@ describe('constructor', function(){
       }
       expect(functionThatShouldBlowUp).toThrowError("Day of month is null or empty. Valid day of the month must be provided.")
     });
+
     it('throws exception on whitespace string', function(){
       var functionThatShouldBlowUp = function(){
         new Summarizer.DateEntry("   ", validWorkHours);
