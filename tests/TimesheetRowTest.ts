@@ -78,6 +78,5 @@ describe('TimesheetRow', function() {
       var sut = new Summarizer.TimesheetRow(legitProjectType, array);
       expect(sut.totalHours()).toBe(6.5);
     });
-
   })
 });
