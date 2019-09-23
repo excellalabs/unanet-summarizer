@@ -19,7 +19,7 @@ module.exports = (function() {
             .map(function(timesheetRow) {
                 var projectType = IsReadOnly ?
                     timesheetRow.querySelector(':nth-child(4)').textContent || ''
-                    : timesheetRow.querySelector('td.project-type > select > option:checked').text;
+                    : timesheetRow.querySelector('td.project-type > input[type="text"]').value;
 
                 var hoursSelector = IsReadOnly ? 'td.weekday, td.weekend' : 'input.hours';
                 var hoursProperty = IsReadOnly ? 'textContent' : 'value';
