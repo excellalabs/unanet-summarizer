@@ -75,4 +75,15 @@ export module Summarizer {
     Internal = ProjectType.Internal,
     NonBillable = ProjectType.NonBillable
   }
+
+  export class Timesheet {
+    constructor(timesheetRows: Array<Summarizer.TimesheetRow>){
+      if(timesheetRows === null || timesheetRows === undefined){
+        throw new Error("Must supply a timesheet rows list.");
+      }
+      if (timesheetRows.length === 0){
+        throw new Error("timesheet rows list is empty.");
+      }
+    }
+  }
 }
