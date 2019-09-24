@@ -9,7 +9,7 @@
   "devDependencies": {
     "@types/jasmine": "^3.4.0",
     "copy-webpack-plugin": "^5.0.4",
-    "handlebars": "^4.2.1",
+    "handlebars": "^4.3.0",
     "handlebars-loader": "^1.7.1",
     "jasmine": "^3.5.0",
     "jasmine-ts": "^0.3.0",
