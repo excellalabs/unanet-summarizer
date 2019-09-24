@@ -77,12 +77,20 @@ export module Summarizer {
   }
 
   export class Timesheet {
-    constructor(timesheetRows: Array<Summarizer.TimesheetRow>){
+    timesheetRows: Array<Summarizer.TimesheetRow>
+
+    constructor(timesheetRows: Array<Summarizer.TimesheetRow>, timesheetStartDate: string){
       if(timesheetRows === null || timesheetRows === undefined){
         throw new Error("Must supply a timesheet rows list.");
       }
       if (timesheetRows.length === 0){
         throw new Error("timesheet rows list is empty.");
+      }
+
+      this.timesheetRows = timesheetRows;
+
+      if(timesheetStartDate === null || timesheetStartDate === undefined){
+        throw new Error("timesheet start date is invalid.");
       }
     }
   }
