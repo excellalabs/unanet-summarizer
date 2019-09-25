@@ -1,4 +1,4 @@
-
+import * as moment from 'moment';
 export module Summarizer {
   export class DateEntry {
     dayOfMonth: number;
@@ -78,20 +78,45 @@ export module Summarizer {
 
   export class Timesheet {
     timesheetRows: Array<Summarizer.TimesheetRow>
+    timesheetStartDate: moment.Moment;
 
     constructor(timesheetRows: Array<Summarizer.TimesheetRow>, timesheetStartDate: string){
+      this.validateTimesheetRows(timesheetRows);
+
+      this.timesheetRows = timesheetRows;
+
+      var momentFormattedDate = this.validateTimesheetStartDate(timesheetStartDate);
+
+      this.timesheetStartDate = momentFormattedDate;
+
+    }
+
+
+    validateTimesheetRows = function(timesheetRows: Array<Summarizer.TimesheetRow>){
       if(timesheetRows === null || timesheetRows === undefined){
         throw new Error("Must supply a timesheet rows list.");
       }
       if (timesheetRows.length === 0){
         throw new Error("timesheet rows list is empty.");
       }
+    }
 
-      this.timesheetRows = timesheetRows;
-
+    validateTimesheetStartDate = function (timesheetStartDate: string): moment.Moment {
       if(timesheetStartDate === null || timesheetStartDate === undefined || timesheetStartDate.trim().length === 0){
         throw new Error("timesheet start date is invalid.");
       }
+
+      var date = moment(timesheetStartDate);
+
+      if (!date.isValid()){
+        throw new Error("timesheet start date is invalid.");
+      }
+
+      if(date.year() < 2010){
+        throw new Error("timesheet start date should be after 2009.");
+      }
+
+      return date;
     }
   }
 }
