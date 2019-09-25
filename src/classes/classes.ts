@@ -79,18 +79,20 @@ export module Summarizer {
   export class Timesheet {
     timesheetRows: Array<Summarizer.TimesheetRow>
     timesheetStartDate: moment.Moment;
+    timesheetEndDate: moment.Moment;
 
-    constructor(timesheetRows: Array<Summarizer.TimesheetRow>, timesheetStartDate: string){
+    constructor(timesheetRows: Array<Summarizer.TimesheetRow>, timesheetStartDate: string, timesheetEndDate: string){
       this.validateTimesheetRows(timesheetRows);
 
       this.timesheetRows = timesheetRows;
 
-      var momentFormattedDate = this.validateTimesheetStartDate(timesheetStartDate);
+      var momentStartDate = this.validateTimesheetDate(timesheetStartDate, TimesheetDateType.Start);
+      this.timesheetStartDate = momentStartDate;
 
-      this.timesheetStartDate = momentFormattedDate;
+      var momentEndDate = this.validateTimesheetDate(timesheetEndDate, TimesheetDateType.End);
+      this.timesheetEndDate = momentEndDate;
 
     }
-
 
     validateTimesheetRows = function(timesheetRows: Array<Summarizer.TimesheetRow>){
       if(timesheetRows === null || timesheetRows === undefined){
@@ -101,22 +103,28 @@ export module Summarizer {
       }
     }
 
-    validateTimesheetStartDate = function (timesheetStartDate: string): moment.Moment {
+    validateTimesheetDate = function (timesheetStartDate: string, type: TimesheetDateType): moment.Moment {
       if(timesheetStartDate === null || timesheetStartDate === undefined || timesheetStartDate.trim().length === 0){
-        throw new Error("timesheet start date is invalid.");
+        throw new Error(`timesheet ${type} date is invalid.`);
       }
 
       var date = moment(timesheetStartDate);
 
       if (!date.isValid()){
-        throw new Error("timesheet start date is invalid.");
+        throw new Error(`timesheet ${type} date is invalid.`);
       }
 
       if(date.year() < 2010){
-        throw new Error("timesheet start date should be after 2009.");
+        throw new Error(`timesheet ${type} date should be after 2009.`);
       }
 
       return date;
     }
   }
+  
+  enum TimesheetDateType {
+    Start = "start",
+    End = "end"
+  }
+
 }
