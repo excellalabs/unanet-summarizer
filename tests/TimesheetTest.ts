@@ -44,6 +44,20 @@ describe('timesheet', function(){
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
+      it('throws an error when empty', function(){
+        var shouldBlowUp = function(){
+          new Summarizer.Timesheet(legitTimesheetRowList, "");
+        }
+
+        expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
+      });
+      it('throws an error when whitespace', function(){
+        var shouldBlowUp = function(){
+          new Summarizer.Timesheet(legitTimesheetRowList, "    ");
+        }
+
+        expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
+      });
       it('throws an error when non-formatted date', function(){
         var shouldBlowUp = function(){
           new Summarizer.Timesheet(legitTimesheetRowList, "abcd");

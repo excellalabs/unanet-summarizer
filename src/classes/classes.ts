@@ -89,7 +89,7 @@ export module Summarizer {
 
       this.timesheetRows = timesheetRows;
 
-      if(timesheetStartDate === null || timesheetStartDate === undefined){
+      if(timesheetStartDate === null || timesheetStartDate === undefined || timesheetStartDate.trim().length === 0){
         throw new Error("timesheet start date is invalid.");
       }
     }
