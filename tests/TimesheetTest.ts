@@ -162,8 +162,6 @@ describe('timesheet', function(){
     })
   })
 });
-// TODO: Start Date
-// TODO: End Date
 // TODO: Today's date  (needs it to evaluate whether this is an old timesheet or has time left)
 // TODO: Latest timesheet entry date
 // TODO: Total + Hours
