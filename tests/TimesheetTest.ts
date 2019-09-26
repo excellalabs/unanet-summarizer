@@ -644,6 +644,44 @@ describe("timesheet", function() {
     });
 
     describe("tracking a timesheet with plus hour overages", function() {
+      describe("overage on incomplete timesheet", function() {
+        var dateForToday = "2019-09-10";
+
+        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var rows = arrayBuilder
+          .plusHoursForDates([2, 3, 4, 5, 6])
+          .concat(arrayBuilder.nonPlusHoursForDates([9, 10]))
+          .concat(arrayBuilder.plusHoursForDates([2])); // 16 hours on the 2nd
+
+        var timesheet = new Summarizer.Timesheet(
+          rows,
+          timesheetStartDate,
+          timesheetEndDate,
+          dateForToday
+        );
+
+        it("totals the plus hours correctly", function() {
+          expect(timesheet.totalPlusHours()).toBe(48);
+        });
+
+        it("totals the non-plus hours correctly", function() {
+          expect(timesheet.totalNonPlusHours()).toBe(16);
+        });
+
+        it("has tracking of 8 11-13 is assumed to be 8 hours", function() {
+          expect(timesheet.plusHoursTracking()).toBe(8);
+        });
+      });
+      describe("overage on the last working day of the timesehet", function() {
+        var dateForToday = "2019-09-13";
+      });
+
+      describe("overage on the last calendar day of the timesheet", function() {
+        var dateForToday = "2019-09-15";
+      });
+      describe("overage after the timesheet is complete", function() {
+        var dateForToday = "2019-09-16";
+      });
       // TODO
     });
 
@@ -658,5 +696,10 @@ describe("timesheet", function() {
     describe("dealing with non-work days", function() {
       // TODO
     });
+  });
+  describe("trackerHoursFillIn", function() {
+    xit("returns 0 if today is later than the last calendar day in the timesheet", function() {});
+    xit("returns 0 if today is later than the last working day in the timesheet", function() {});
+    xit("returns 8 if there is one workday not filled in", function() {});
   });
 });
