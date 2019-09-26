@@ -531,46 +531,50 @@ describe("timesheet", function() {
     const timesheetStartDate = "2019-09-01";
     const timesheetEndDate = "2019-09-15";
 
-    describe("timesheet incomplete before period ends", function() {
-      const dateForToday = "2019-09-12"; // Thursday
+    describe("tracking a totally balanced timesheet", function() {
+      describe("timesheet incomplete before period ends", function() {
+        const dateForToday = "2019-09-12"; // Thursday
 
-      describe("not filled out up to today", function() {
-        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        var rows = arrayBuilder
-          .plusHoursForDates([2, 3, 4, 5, 6])
-          .concat(arrayBuilder.nonPlusHoursForDates([9, 10]));
+        describe("not filled out up to today", function() {
+          var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+          var rows = arrayBuilder
+            .plusHoursForDates([2, 3, 4, 5, 6])
+            .concat(arrayBuilder.nonPlusHoursForDates([9, 10]));
 
-        var timesheet = new Summarizer.Timesheet(
-          rows,
-          timesheetStartDate,
-          timesheetEndDate,
-          dateForToday
-        );
+          var timesheet = new Summarizer.Timesheet(
+            rows,
+            timesheetStartDate,
+            timesheetEndDate,
+            dateForToday
+          );
 
-        it("totals the plus hours correctly", function() {
-          expect(timesheet.totalPlusHours()).toBe(40);
+          it("totals the plus hours correctly", function() {
+            expect(timesheet.totalPlusHours()).toBe(40);
+          });
+
+          it("totals the non-plus hours correctly", function() {
+            expect(timesheet.totalNonPlusHours()).toBe(16);
+          });
+
+          it("has tracking of zero because it assumes 8 hours for 11th-13th", function() {
+            expect(timesheet.plusHoursTracking()).toBe(0);
+          });
         });
 
-        it("totals the non-plus hours correctly", function() {
-          expect(timesheet.totalNonPlusHours()).toBe(16);
-        });
-
-        it("has tracking of zero because it assumes 8 hours for 11th-13th", function() {
-          expect(timesheet.plusHoursTracking()).toBe(0);
+        describe("but filled out up to today", function() {
+          // TODO
         });
       });
-
-      describe("but filled out up to today", function() {});
+      describe("timesheet complete before period ends", function() {
+        const dateForToday = "2019-09-12"; // Thursday
+      });
+      describe("timesheet incomplete after period ends", function() {
+        const dateForToday = "2019-09-16"; // next day after time sheet closes
+      });
+      describe("timesheet complete after period ends", function() {
+        const dateForToday = "2019-09-16"; // next day after time sheet closes
+      });
+      describe("dealing with non-work days", function() {});
     });
-    describe("timesheet complete before period ends", function() {
-      const dateForToday = "2019-09-12"; // Thursday
-    });
-    describe("timesheet incomplete after period ends", function() {
-      const dateForToday = "2019-09-16"; // next day after time sheet closes
-    });
-    describe("timesheet complete after period ends", function() {
-      const dateForToday = "2019-09-16"; // next day after time sheet closes
-    });
-    describe("dealing with non-work days", function() {});
   });
 });
