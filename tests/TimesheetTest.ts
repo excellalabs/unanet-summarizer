@@ -84,8 +84,7 @@ describe('timesheet', function(){
       it('is fine with a valid date', function(){
         var shouldBeFine = function(){
           new TimesheetBuilder().withStartDate("2010-01-01").build();          
-          new TimesheetBuilder().withStartDate("1/1/2010").build();
-          new TimesheetBuilder().withStartDate("9/8/2019").build();
+          new TimesheetBuilder().withStartDate("2019-09-08").build();
         }
         expect(shouldBeFine).not.toThrowError();
       });
@@ -145,8 +144,7 @@ describe('timesheet', function(){
       it('is fine with a valid date', function(){
         var shouldBeFine = function(){
           new TimesheetBuilder().withEndDate("01-01-2010").build();          
-          new TimesheetBuilder().withEndDate("01/01/2010").build();
-          new TimesheetBuilder().withEndDate("9/8/2019").build();
+          new TimesheetBuilder().withEndDate("2019-09-08").build();
         }
         expect(shouldBeFine).not.toThrowError();
       });
@@ -206,9 +204,8 @@ describe('timesheet', function(){
 
       it('is fine with a valid date', function(){
         var shouldBeFine = function(){
-          new TimesheetBuilder().withTodayDate("01-01-2010").build();
-          new TimesheetBuilder().withTodayDate("01/01/2010").build();
-          new TimesheetBuilder().withTodayDate("9/8/2019").build();
+          new TimesheetBuilder().withTodayDate("2010-01-01").build();
+          new TimesheetBuilder().withTodayDate("2019-09-08").build();
         }
         expect(shouldBeFine).not.toThrowError();
       });
