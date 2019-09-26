@@ -105,17 +105,17 @@ export module Summarizer {
 
     validateTimesheetDate = function (timesheetStartDate: string, type: TimesheetDateType): moment.Moment {
       if(timesheetStartDate === null || timesheetStartDate === undefined || timesheetStartDate.trim().length === 0){
-        throw new Error(`timesheet ${type} date is invalid.`);
+        throw new Error(`${type} is invalid.`);
       }
 
       var date = moment(timesheetStartDate);
 
       if (!date.isValid()){
-        throw new Error(`timesheet ${type} date is invalid.`);
+        throw new Error(`${type} is invalid.`);
       }
 
       if(date.year() < 2010){
-        throw new Error(`timesheet ${type} date should be after 2009.`);
+        throw new Error(`${type} should be after 2009.`);
       }
 
       return date;
@@ -123,8 +123,9 @@ export module Summarizer {
   }
   
   enum TimesheetDateType {
-    Start = "start",
-    End = "end"
+    Start = "timesheet start date",
+    End = "timesheet end date",
+    Today = "today's date"
   }
 
 }
