@@ -290,6 +290,77 @@ describe("timesheet", function() {
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
   });
+  describe("totalPlusHours", function() {
+    it("returns the sum of hours across all plus rows on a timesheet", function() {
+      var rows = new Array<Summarizer.TimesheetRow>();
+
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("11", "1.0"))
+          .withProjectType(Summarizer.ProjectType.Bench)
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("12", "2.0"))
+          .withProjectType(Summarizer.ProjectType.Bill)
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("13", "3.5"))
+          .withProjectType(Summarizer.ProjectType.Core)
+          .build()
+      );
+
+      var timesheet = new TimesheetBuilder().withRows(rows).build();
+
+      expect(timesheet.totalPlusHours()).toBe(6.5);
+    });
+
+    it("doesn't count non-plus rows", function() {
+      var rows = new Array<Summarizer.TimesheetRow>();
+
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("11", "1.0"))
+          .withProjectType(Summarizer.ProjectType.Bench)
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("12", "2.0"))
+          .withProjectType(Summarizer.ProjectType.Bill)
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("13", "3.5"))
+          .withProjectType(Summarizer.ProjectType.Core)
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("13", "2"))
+          .withProjectType(Summarizer.ProjectType.Internal)
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("13", "2"))
+          .withProjectType(Summarizer.ProjectType.NonBillable)
+          .build()
+      );
+
+      var timesheet = new TimesheetBuilder().withRows(rows).build();
+
+      expect(timesheet.totalPlusHours()).toBe(6.5);
+    });
+
+    xit("returns 0 when there are no + rows", function() {});
+
+    xit("returns 0 for an empty timesheet", function() {});
+  });
 });
 
 // TODO: Total + Hours

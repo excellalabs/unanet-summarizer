@@ -147,6 +147,18 @@ export module Summarizer {
       }
     };
 
+    totalPlusHours = (): number => {
+      var allPlusHoursRows = this.timesheetRows.filter(val =>
+        val.isPlusProjectType()
+      );
+
+      var allPlusHours = allPlusHoursRows.reduce((acc, val) => {
+        return acc.concat(val.entries.map(entry => entry.hoursAmount));
+      }, []);
+
+      return allPlusHours.reduce((acc, val) => (acc += val));
+    };
+
     validateTimesheetRows = function(
       timesheetRows: Array<Summarizer.TimesheetRow>
     ) {
