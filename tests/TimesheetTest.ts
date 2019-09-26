@@ -212,8 +212,9 @@ describe('timesheet', function(){
     });
   });
   describe('getLatestEntryDate', function(){
+    var hoursAmountThatDoesntMatter = "8";
+
     it('returns the largest date number that has an entry', function(){
-      var hoursAmountThatDoesntMatter = "8";
       var rows = new Array<Summarizer.TimesheetRow>();
 
       rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter)).build());
@@ -225,8 +226,33 @@ describe('timesheet', function(){
       expect(timesheet.getLatestEntryDate()).toBe(3);
     });
 
-    xit("doesn't count zero time entries as a date to care about", function(){
+    it("doesn't count zero time entries as a date to care about", function(){
+      var rows = new Array<Summarizer.TimesheetRow>();
+      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter)).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("3", "0.0")).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("1", hoursAmountThatDoesntMatter)).build());
 
+      var timesheet = new TimesheetBuilder().withRows(rows).build();
+
+      expect(timesheet.getLatestEntryDate()).toBe(2);
+    });
+    it("returns undefined when an empty timesheet", function(){
+      var timesheet = new TimesheetBuilder().build();
+
+      expect(timesheet.getLatestEntryDate()).toBe(undefined);
+
+    });
+    it("returns undefined with a timesheet of all zero entries", function(){
+      var rows = new Array<Summarizer.TimesheetRow>();
+      var zeroHours = "0.0";
+
+      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("2", zeroHours)).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("10", zeroHours)).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("30", zeroHours)).build());
+
+      var timesheet = new TimesheetBuilder().withRows(rows).build();
+
+      expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
   });
 });
