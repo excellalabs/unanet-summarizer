@@ -166,6 +166,25 @@ export module Summarizer {
       return allPlusHours.reduce((acc, val) => (acc += val));
     };
 
+    totalNonPlusHours = (): number => {
+      var allNonPlusHoursRows = this.timesheetRows.filter(
+        val => !val.isPlusProjectType()
+      );
+
+      if (allNonPlusHoursRows.length === 0) {
+        return 0;
+      }
+
+      var allNonPlusHours = allNonPlusHoursRows.reduce(
+        (acc, val) => {
+          return acc.concat(val.entries.map(entry => entry.hoursAmount));
+        },
+        [0]
+      );
+
+      return allNonPlusHours.reduce((acc, val) => (acc += val));
+    };
+
     validateTimesheetRows = function(
       timesheetRows: Array<Summarizer.TimesheetRow>
     ) {
