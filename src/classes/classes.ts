@@ -98,6 +98,11 @@ export module Summarizer {
       this.todaysDate = momentTodayDate;
     }
 
+    getLatestEntryDate = (): number => {
+      var result = this.timesheetRows.reduce((acc, val) => acc.concat(val.entries.reduce((acc, val) => acc.concat(val.dayOfMonth), [])), [])
+      return Math.max(...result);
+    }
+
     validateTimesheetRows = function(timesheetRows: Array<Summarizer.TimesheetRow>){
       if(timesheetRows === null || timesheetRows === undefined){
         throw new Error("Must supply a timesheet rows list.");

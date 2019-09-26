@@ -214,13 +214,50 @@ describe('timesheet', function(){
       });
     });
   });
+  describe('getLatestEntryDate', function(){
+    it('returns the largest date number that has an entry', function(){
+      var hoursAmountThatDoesntMatter = "8";
+      var rows = new Array<Summarizer.TimesheetRow>();
+
+      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter)).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("3", hoursAmountThatDoesntMatter)).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("1", hoursAmountThatDoesntMatter)).build());
+
+      var timesheet = new TimesheetBuilder().withRows(rows).build();
+
+      expect(timesheet.getLatestEntryDate()).toBe(3);
+    });
+
+    xit("doesn't count zero time entries as a date to care about", function(){
+
+    });
+  });
 });
+
+class TimesheetRowBuilder {
+  projectType:Summarizer.ProjectType;
+  entries = new Array<Summarizer.DateEntry>();
+
+  build=() => {
+    return new Summarizer.TimesheetRow(this.projectType, this.entries);
+  }
+
+  withEntry=(entry: Summarizer.DateEntry) => {
+    this.entries.push(entry);
+    return this;
+  }
+
+  withProjectType=(type:Summarizer.ProjectType) => {
+    this.projectType = type;
+    return this;
+  }
+}
 
 class TimesheetBuilder
 {
-  startDate:string = "9/1/2019";
-  endDate:string = "9/15/2019";
-  todayDate:string = "9/8/2019";
+  startDate:string = "2019-09-01";
+  endDate:string = "2019-09-15";
+  todayDate:string = "2019-09-08";
   rows = new Array<Summarizer.TimesheetRow>();
 
   constructor (){
