@@ -150,7 +150,8 @@ describe('timesheet', function(){
         }
         expect(shouldBeFine).not.toThrowError();
       });
-    })
+    });
+
     describe("today's date", function(){
 
       it('throws an error when null', function(){
@@ -211,8 +212,8 @@ describe('timesheet', function(){
         }
         expect(shouldBeFine).not.toThrowError();
       });
-    })
-  })
+    });
+  });
 });
 
 class TimesheetBuilder
