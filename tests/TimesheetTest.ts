@@ -1,11 +1,12 @@
 import { Summarizer } from "../src/classes/classes";
+import { Helpers } from "./Helpers";
 
 describe("timesheet", function() {
   describe("ctor", function() {
     describe("rows", function() {
       it("throws an exception with null rows list", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withRows(null).build();
+          new Helpers.TimesheetBuilder().withRows(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");
@@ -13,7 +14,7 @@ describe("timesheet", function() {
 
       it("throws an exception with undefined rows list", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withRows(undefined).build();
+          new Helpers.TimesheetBuilder().withRows(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");
@@ -21,7 +22,7 @@ describe("timesheet", function() {
 
       it("throws an exception with empty rows list", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder()
+          new Helpers.TimesheetBuilder()
             .withRows(new Array<Summarizer.TimesheetRow>())
             .build();
         };
@@ -33,7 +34,7 @@ describe("timesheet", function() {
     describe("timesheet start date", function() {
       it("throws an error when null", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withStartDate(null).build();
+          new Helpers.TimesheetBuilder().withStartDate(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -41,7 +42,7 @@ describe("timesheet", function() {
 
       it("throws an error when undefined", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withStartDate(undefined).build();
+          new Helpers.TimesheetBuilder().withStartDate(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -49,7 +50,7 @@ describe("timesheet", function() {
 
       it("throws an error when empty", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withStartDate("").build();
+          new Helpers.TimesheetBuilder().withStartDate("").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -57,7 +58,7 @@ describe("timesheet", function() {
 
       it("throws an error when whitespace", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withStartDate("    ").build();
+          new Helpers.TimesheetBuilder().withStartDate("    ").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -65,7 +66,7 @@ describe("timesheet", function() {
 
       it("throws an error when non-formatted date", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withStartDate("abcd").build();
+          new Helpers.TimesheetBuilder().withStartDate("abcd").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -74,7 +75,7 @@ describe("timesheet", function() {
       it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withStartDate("2009-12-31").build();
+          new Helpers.TimesheetBuilder().withStartDate("2009-12-31").build();
         };
 
         expect(shouldBlowUp).toThrowError(
@@ -84,8 +85,8 @@ describe("timesheet", function() {
 
       it("is fine with a valid date", function() {
         var shouldBeFine = function() {
-          new TimesheetBuilder().withStartDate("2010-01-01").build();
-          new TimesheetBuilder().withStartDate("2019-09-08").build();
+          new Helpers.TimesheetBuilder().withStartDate("2010-01-01").build();
+          new Helpers.TimesheetBuilder().withStartDate("2019-09-08").build();
         };
         expect(shouldBeFine).not.toThrowError();
       });
@@ -94,7 +95,7 @@ describe("timesheet", function() {
     describe("timesheet end date", function() {
       it("throws an error when null", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withEndDate(null).build();
+          new Helpers.TimesheetBuilder().withEndDate(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
@@ -102,7 +103,7 @@ describe("timesheet", function() {
 
       it("throws an error when undefined", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withEndDate(undefined).build();
+          new Helpers.TimesheetBuilder().withEndDate(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
@@ -110,7 +111,7 @@ describe("timesheet", function() {
 
       it("throws an error when empty", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withEndDate("").build();
+          new Helpers.TimesheetBuilder().withEndDate("").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
@@ -118,7 +119,7 @@ describe("timesheet", function() {
 
       it("throws an error when whitespace", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withEndDate("    ").build();
+          new Helpers.TimesheetBuilder().withEndDate("    ").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
@@ -126,7 +127,7 @@ describe("timesheet", function() {
 
       it("throws an error when non-formatted date", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withEndDate("abcd").build();
+          new Helpers.TimesheetBuilder().withEndDate("abcd").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
@@ -135,7 +136,7 @@ describe("timesheet", function() {
       it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withEndDate("2009-12-31").build();
+          new Helpers.TimesheetBuilder().withEndDate("2009-12-31").build();
         };
 
         expect(shouldBlowUp).toThrowError(
@@ -145,8 +146,8 @@ describe("timesheet", function() {
 
       it("is fine with a valid date", function() {
         var shouldBeFine = function() {
-          new TimesheetBuilder().withEndDate("01-01-2010").build();
-          new TimesheetBuilder().withEndDate("2019-09-08").build();
+          new Helpers.TimesheetBuilder().withEndDate("01-01-2010").build();
+          new Helpers.TimesheetBuilder().withEndDate("2019-09-08").build();
         };
         expect(shouldBeFine).not.toThrowError();
       });
@@ -155,7 +156,7 @@ describe("timesheet", function() {
     describe("today's date", function() {
       it("throws an error when null", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withTodayDate(null).build();
+          new Helpers.TimesheetBuilder().withTodayDate(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -163,7 +164,7 @@ describe("timesheet", function() {
 
       it("throws an error when undefined", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withTodayDate(undefined).build();
+          new Helpers.TimesheetBuilder().withTodayDate(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -171,7 +172,7 @@ describe("timesheet", function() {
 
       it("throws an error when empty", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withTodayDate("").build();
+          new Helpers.TimesheetBuilder().withTodayDate("").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -179,7 +180,7 @@ describe("timesheet", function() {
 
       it("throws an error when whitespace", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withTodayDate("     ").build();
+          new Helpers.TimesheetBuilder().withTodayDate("     ").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -187,7 +188,7 @@ describe("timesheet", function() {
 
       it("throws an error when non-formatted date", function() {
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withTodayDate("abcd").build();
+          new Helpers.TimesheetBuilder().withTodayDate("abcd").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -196,7 +197,7 @@ describe("timesheet", function() {
       it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
         var shouldBlowUp = function() {
-          new TimesheetBuilder().withTodayDate("2009-12-31").build();
+          new Helpers.TimesheetBuilder().withTodayDate("2009-12-31").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date should be after 2009.");
@@ -204,8 +205,8 @@ describe("timesheet", function() {
 
       it("is fine with a valid date", function() {
         var shouldBeFine = function() {
-          new TimesheetBuilder().withTodayDate("2010-01-01").build();
-          new TimesheetBuilder().withTodayDate("2019-09-08").build();
+          new Helpers.TimesheetBuilder().withTodayDate("2010-01-01").build();
+          new Helpers.TimesheetBuilder().withTodayDate("2019-09-08").build();
         };
         expect(shouldBeFine).not.toThrowError();
       });
@@ -218,22 +219,22 @@ describe("timesheet", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
 
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter))
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("3", hoursAmountThatDoesntMatter))
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("1", hoursAmountThatDoesntMatter))
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.getLatestEntryDate()).toBe(3);
     });
@@ -241,27 +242,27 @@ describe("timesheet", function() {
     it("doesn't count zero time entries as a date to care about", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter))
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("3", "0.0"))
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("1", hoursAmountThatDoesntMatter))
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.getLatestEntryDate()).toBe(2);
     });
     it("returns undefined when an empty timesheet", function() {
-      var timesheet = new TimesheetBuilder().build();
+      var timesheet = new Helpers.TimesheetBuilder().build();
 
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
@@ -270,22 +271,22 @@ describe("timesheet", function() {
       var zeroHours = "0.0";
 
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("2", zeroHours))
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("10", zeroHours))
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("30", zeroHours))
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
@@ -295,25 +296,25 @@ describe("timesheet", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
 
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
           .withProjectType(Summarizer.ProjectType.Bench)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("12", "2.0"))
           .withProjectType(Summarizer.ProjectType.Bill)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("13", "3.5"))
           .withProjectType(Summarizer.ProjectType.Core)
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
@@ -322,37 +323,37 @@ describe("timesheet", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
 
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
           .withProjectType(Summarizer.ProjectType.Bench)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("12", "2.0"))
           .withProjectType(Summarizer.ProjectType.Bill)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("13", "3.5"))
           .withProjectType(Summarizer.ProjectType.Core)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("13", "2"))
           .withProjectType(Summarizer.ProjectType.Internal)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("13", "2"))
           .withProjectType(Summarizer.ProjectType.NonBillable)
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
@@ -360,25 +361,25 @@ describe("timesheet", function() {
     it("returns 0 when there are no + rows", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
           .withProjectType(Summarizer.ProjectType.Internal)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
           .withProjectType(Summarizer.ProjectType.NonBillable)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
           .withProjectType(Summarizer.ProjectType.Internal)
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalPlusHours()).toBe(0);
     });
@@ -386,22 +387,22 @@ describe("timesheet", function() {
     it("returns 0 when there are no entries in any rows", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withProjectType(Summarizer.ProjectType.Core)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withProjectType(Summarizer.ProjectType.Bench)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withProjectType(Summarizer.ProjectType.Bill)
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalPlusHours()).toBe(0);
     });
@@ -411,25 +412,25 @@ describe("timesheet", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
 
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
           .withProjectType(Summarizer.ProjectType.Internal)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("12", "2.0"))
           .withProjectType(Summarizer.ProjectType.NonBillable)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("13", "3.5"))
           .withProjectType(Summarizer.ProjectType.Internal)
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalNonPlusHours()).toBe(6.5);
     });
@@ -438,37 +439,37 @@ describe("timesheet", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
 
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
           .withProjectType(Summarizer.ProjectType.NonBillable)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("12", "2.0"))
           .withProjectType(Summarizer.ProjectType.Internal)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("13", "3.5"))
           .withProjectType(Summarizer.ProjectType.Internal)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("13", "2"))
           .withProjectType(Summarizer.ProjectType.Core)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("13", "2"))
           .withProjectType(Summarizer.ProjectType.Bench)
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalNonPlusHours()).toBe(6.5);
     });
@@ -476,25 +477,25 @@ describe("timesheet", function() {
     it("returns 0 when there are no non-plus rows", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
           .withProjectType(Summarizer.ProjectType.Bill)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
           .withProjectType(Summarizer.ProjectType.Core)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
           .withProjectType(Summarizer.ProjectType.Bench)
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
@@ -502,22 +503,22 @@ describe("timesheet", function() {
     it("returns 0 when there are no entries in any rows", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withProjectType(Summarizer.ProjectType.Internal)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withProjectType(Summarizer.ProjectType.NonBillable)
           .build()
       );
       rows.push(
-        new TimesheetRowBuilder()
+        new Helpers.TimesheetRowBuilder()
           .withProjectType(Summarizer.ProjectType.NonBillable)
           .build()
       );
 
-      var timesheet = new TimesheetBuilder().withRows(rows).build();
+      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
@@ -527,8 +528,39 @@ describe("timesheet", function() {
     // Timesheet starts with Sunday 9/1
     // There were 10 working days in the period, Sept 2-6 and Sept 9-13
     // Timesheet ends with Sat/Sun Sept 14-15
+    const timesheetStartDate = "2019-09-01";
+    const timesheetEndDate = "2019-09-15";
+
     describe("timesheet incomplete before period ends", function() {
       const dateForToday = "2019-09-12"; // Thursday
+
+      describe("not filled out up to today", function() {
+        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var rows = arrayBuilder
+          .plusHoursForDates([2, 3, 4, 5, 6])
+          .concat(arrayBuilder.nonPlusHoursForDates([9, 10]));
+
+        var timesheet = new Summarizer.Timesheet(
+          rows,
+          timesheetStartDate,
+          timesheetEndDate,
+          dateForToday
+        );
+
+        it("totals the plus hours correctly", function() {
+          expect(timesheet.totalPlusHours()).toBe(40);
+        });
+
+        it("totals the non-plus hours correctly", function() {
+          expect(timesheet.totalNonPlusHours()).toBe(16);
+        });
+
+        it("has tracking of zero because it assumes 8 hours for 11th-13th", function() {
+          expect(timesheet.plusHoursTracking()).toBe(0);
+        });
+      });
+
+      describe("but filled out up to today", function() {});
     });
     describe("timesheet complete before period ends", function() {
       const dateForToday = "2019-09-12"; // Thursday
@@ -542,67 +574,3 @@ describe("timesheet", function() {
     describe("dealing with non-work days", function() {});
   });
 });
-
-class TimesheetRowBuilder {
-  projectType: Summarizer.ProjectType;
-  entries = new Array<Summarizer.DateEntry>();
-
-  build = () => {
-    return new Summarizer.TimesheetRow(this.projectType, this.entries);
-  };
-
-  withEntry = (entry: Summarizer.DateEntry) => {
-    this.entries.push(entry);
-    return this;
-  };
-
-  withProjectType = (type: Summarizer.ProjectType) => {
-    this.projectType = type;
-    return this;
-  };
-}
-
-class TimesheetBuilder {
-  startDate: string = "2019-09-01";
-  endDate: string = "2019-09-15";
-  todayDate: string = "2019-09-08";
-  rows = new Array<Summarizer.TimesheetRow>();
-
-  constructor() {
-    this.rows.push(
-      new Summarizer.TimesheetRow(
-        Summarizer.ProjectType.Bench,
-        new Array<Summarizer.DateEntry>()
-      )
-    );
-  }
-
-  withStartDate = (theDate: string) => {
-    this.startDate = theDate;
-    return this;
-  };
-
-  withEndDate = (theDate: string) => {
-    this.endDate = theDate;
-    return this;
-  };
-
-  withTodayDate = (theDate: string) => {
-    this.todayDate = theDate;
-    return this;
-  };
-
-  withRows = (theRows: Array<Summarizer.TimesheetRow>) => {
-    this.rows = theRows;
-    return this;
-  };
-
-  build = () => {
-    return new Summarizer.Timesheet(
-      this.rows,
-      this.startDate,
-      this.endDate,
-      this.todayDate
-    );
-  };
-}

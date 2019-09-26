@@ -213,6 +213,10 @@ export module Summarizer {
 
       return date;
     };
+
+    plusHoursTracking = (): number => {
+      return 0;
+    };
   }
 
   enum TimesheetDateType {
