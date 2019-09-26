@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+
 export module Summarizer {
   export class DateEntry {
     dayOfMonth: number;
@@ -44,7 +45,7 @@ export module Summarizer {
           throw new Error("Entries array must not be null or undefined.");
         }
         else{
-         this.entries = dateEntries;
+          this.entries = dateEntries;
         }
     }
     
