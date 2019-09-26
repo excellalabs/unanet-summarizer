@@ -152,14 +152,10 @@ describe('timesheet', function(){
       });
     })
     describe("today's date", function(){
-      var legitTimesheetRowList = new Array<Summarizer.TimesheetRow>();
-      legitTimesheetRowList.push(new Summarizer.TimesheetRow(Summarizer.ProjectType.Bench, new Array<Summarizer.DateEntry>()));
-      const legitStartDate = "2019-09-01";
-      const legitEndDate = "2019-09-10";
 
       it('throws an error when null', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, legitStartDate, legitEndDate, null);
+          new TimesheetBuilder().withTodayDate(null).build();
         }
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -167,7 +163,7 @@ describe('timesheet', function(){
 
       it('throws an error when undefined', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, legitStartDate, legitEndDate, undefined);
+          new TimesheetBuilder().withTodayDate(undefined).build();
         }
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -175,7 +171,7 @@ describe('timesheet', function(){
 
       it('throws an error when empty', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, legitStartDate, legitEndDate, "");
+          new TimesheetBuilder().withTodayDate("").build();
         }
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -183,7 +179,7 @@ describe('timesheet', function(){
 
       it('throws an error when whitespace', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, legitStartDate, legitEndDate, "    ");
+          new TimesheetBuilder().withTodayDate("     ").build();
         }
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -191,7 +187,7 @@ describe('timesheet', function(){
 
       it('throws an error when non-formatted date', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, legitStartDate, legitEndDate, "abcd");
+          new TimesheetBuilder().withTodayDate("abcd").build();
         }
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
