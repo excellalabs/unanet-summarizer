@@ -589,7 +589,30 @@ describe("timesheet", function() {
       });
       describe("timesheet complete before period ends", function() {
         const dateForToday = "2019-09-12"; // Thursday
-        // TODO
+
+        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var rows = arrayBuilder
+          .plusHoursForDates([2, 3, 4, 5, 6])
+          .concat(arrayBuilder.nonPlusHoursForDates([9, 10, 11, 12, 13]));
+
+        var timesheet = new Summarizer.Timesheet(
+          rows,
+          timesheetStartDate,
+          timesheetEndDate,
+          dateForToday
+        );
+
+        it("totals the plus hours correctly", function() {
+          expect(timesheet.totalPlusHours()).toBe(40);
+        });
+
+        it("totals the non-plus hours correctly", function() {
+          expect(timesheet.totalNonPlusHours()).toBe(40);
+        });
+
+        it("has tracking of zero because 13th is filled out", function() {
+          expect(timesheet.plusHoursTracking()).toBe(0);
+        });
       });
       describe("timesheet incomplete after period ends", function() {
         const dateForToday = "2019-09-16"; // next day after time sheet closes
