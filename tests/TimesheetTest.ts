@@ -562,7 +562,29 @@ describe("timesheet", function() {
         });
 
         describe("but filled out up to today", function() {
-          // TODO
+          var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+          var rows = arrayBuilder
+            .plusHoursForDates([2, 3, 4, 5, 6])
+            .concat(arrayBuilder.nonPlusHoursForDates([9, 10, 11, 12]));
+
+          var timesheet = new Summarizer.Timesheet(
+            rows,
+            timesheetStartDate,
+            timesheetEndDate,
+            dateForToday
+          );
+
+          it("totals the plus hours correctly", function() {
+            expect(timesheet.totalPlusHours()).toBe(40);
+          });
+
+          it("totals the non-plus hours correctly", function() {
+            expect(timesheet.totalNonPlusHours()).toBe(32);
+          });
+
+          it("has tracking of zero because it assumes 8 hours for 13th", function() {
+            expect(timesheet.plusHoursTracking()).toBe(0);
+          });
         });
       });
       describe("timesheet complete before period ends", function() {
