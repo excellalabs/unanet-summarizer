@@ -567,14 +567,28 @@ describe("timesheet", function() {
       });
       describe("timesheet complete before period ends", function() {
         const dateForToday = "2019-09-12"; // Thursday
+        // TODO
       });
       describe("timesheet incomplete after period ends", function() {
         const dateForToday = "2019-09-16"; // next day after time sheet closes
+        // TODO
       });
       describe("timesheet complete after period ends", function() {
         const dateForToday = "2019-09-16"; // next day after time sheet closes
+        // TODO
       });
-      describe("dealing with non-work days", function() {});
+    });
+
+    describe("tracking a timesheet with plus hour overages", function() {
+      // TODO
+    });
+
+    describe("tracking a timesheet with plus hour underages", function() {
+      //TODO
+    });
+
+    describe("dealing with non-work days", function() {
+      // TODO
     });
   });
 });

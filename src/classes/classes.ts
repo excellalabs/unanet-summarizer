@@ -215,7 +215,7 @@ export module Summarizer {
     };
 
     plusHoursTracking = (): number => {
-      return 0;
+      return 0; // TODO: real code
     };
   }
 
