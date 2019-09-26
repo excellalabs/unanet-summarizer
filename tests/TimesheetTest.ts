@@ -524,8 +524,6 @@ describe("timesheet", function() {
   });
 });
 
-// TODO: Total + Hours
-// TODO: Total Non + Hours
 // TODO: Tracking
 
 class TimesheetRowBuilder {

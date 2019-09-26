@@ -147,23 +147,27 @@ export module Summarizer {
       }
     };
 
-    totalPlusHours = (): number => {
-      var allPlusHoursRows = this.timesheetRows.filter(val =>
-        val.isPlusProjectType()
-      );
-
-      if (allPlusHoursRows.length === 0) {
+    totalUpFilteredRows = (filteredRows: Array<TimesheetRow>): number => {
+      if (filteredRows.length === 0) {
         return 0;
       }
 
-      var allPlusHours = allPlusHoursRows.reduce(
+      var allHours = filteredRows.reduce(
         (acc, val) => {
           return acc.concat(val.entries.map(entry => entry.hoursAmount));
         },
         [0]
       );
 
-      return allPlusHours.reduce((acc, val) => (acc += val));
+      return allHours.reduce((acc, val) => (acc += val));
+    };
+
+    totalPlusHours = (): number => {
+      var allPlusHoursRows = this.timesheetRows.filter(val =>
+        val.isPlusProjectType()
+      );
+
+      return this.totalUpFilteredRows(allPlusHoursRows);
     };
 
     totalNonPlusHours = (): number => {
@@ -171,18 +175,7 @@ export module Summarizer {
         val => !val.isPlusProjectType()
       );
 
-      if (allNonPlusHoursRows.length === 0) {
-        return 0;
-      }
-
-      var allNonPlusHours = allNonPlusHoursRows.reduce(
-        (acc, val) => {
-          return acc.concat(val.entries.map(entry => entry.hoursAmount));
-        },
-        [0]
-      );
-
-      return allNonPlusHours.reduce((acc, val) => (acc += val));
+      return this.totalUpFilteredRows(allNonPlusHoursRows);
     };
 
     validateTimesheetRows = function(
