@@ -522,9 +522,26 @@ describe("timesheet", function() {
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
   });
+  describe("tracking", function() {
+    // This section uses a real time period of 9/1/2019 - 9/15/2019
+    // Timesheet starts with Sunday 9/1
+    // There were 10 working days in the period, Sept 2-6 and Sept 9-13
+    // Timesheet ends with Sat/Sun Sept 14-15
+    describe("timesheet incomplete before period ends", function() {
+      const dateForToday = "2019-09-12"; // Thursday
+    });
+    describe("timesheet complete before period ends", function() {
+      const dateForToday = "2019-09-12"; // Thursday
+    });
+    describe("timesheet incomplete after period ends", function() {
+      const dateForToday = "2019-09-16"; // next day after time sheet closes
+    });
+    describe("timesheet complete after period ends", function() {
+      const dateForToday = "2019-09-16"; // next day after time sheet closes
+    });
+    describe("dealing with non-work days", function() {});
+  });
 });
-
-// TODO: Tracking
 
 class TimesheetRowBuilder {
   projectType: Summarizer.ProjectType;
