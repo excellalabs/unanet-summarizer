@@ -41,7 +41,7 @@ describe('timesheet', function(){
 
       it('throws an error when null', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, null, legitEndDate, legitTodayDate);
+          new TimesheetBuilder().withStartDate(null).build();
         }
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -49,7 +49,7 @@ describe('timesheet', function(){
 
       it('throws an error when undefined', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, undefined, legitEndDate, legitTodayDate);
+          new TimesheetBuilder().withStartDate(undefined).build();
         }
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -57,7 +57,7 @@ describe('timesheet', function(){
 
       it('throws an error when empty', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, "", legitEndDate, legitTodayDate);
+          new TimesheetBuilder().withStartDate("").build();
         }
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -65,7 +65,7 @@ describe('timesheet', function(){
 
       it('throws an error when whitespace', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, "    ", legitEndDate, legitTodayDate);
+          new TimesheetBuilder().withStartDate("    ").build();
         }
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -73,7 +73,7 @@ describe('timesheet', function(){
 
       it('throws an error when non-formatted date', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, "abcd", legitEndDate, legitTodayDate);
+          new TimesheetBuilder().withStartDate("abcd").build();
         }
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
