@@ -214,7 +214,7 @@ describe('timesheet', function(){
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
         var shouldBlowUp = function(){
           
-          new Summarizer.Timesheet(legitTimesheetRowList, legitStartDate, legitEndDate, "2009-12-31");
+          new TimesheetBuilder().withTodayDate("2009-12-31").build();
         }
 
         expect(shouldBlowUp).toThrowError("today's date should be after 2009.");
@@ -238,6 +238,10 @@ class TimesheetBuilder
   endDate:string = "9/15/2019";
   todayDate:string = "9/8/2019";
   rows = new Array<Summarizer.TimesheetRow>();
+
+  constructor (){
+    this.rows.push(new Summarizer.TimesheetRow(Summarizer.ProjectType.Bench, new Array<Summarizer.DateEntry>()));
+  }
 
   withStartDate=(theDate: string) => {
     this.startDate = theDate;
