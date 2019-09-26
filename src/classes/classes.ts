@@ -81,8 +81,9 @@ export module Summarizer {
     timesheetRows: Array<Summarizer.TimesheetRow>
     timesheetStartDate: moment.Moment;
     timesheetEndDate: moment.Moment;
+    todaysDate: moment.Moment;
 
-    constructor(timesheetRows: Array<Summarizer.TimesheetRow>, timesheetStartDate: string, timesheetEndDate: string){
+    constructor(timesheetRows: Array<Summarizer.TimesheetRow>, timesheetStartDate: string, timesheetEndDate: string, todaysDate: string){
       this.validateTimesheetRows(timesheetRows);
 
       this.timesheetRows = timesheetRows;
@@ -93,6 +94,8 @@ export module Summarizer {
       var momentEndDate = this.validateTimesheetDate(timesheetEndDate, TimesheetDateType.End);
       this.timesheetEndDate = momentEndDate;
 
+      var momentTodayDate = this.validateTimesheetDate(todaysDate, TimesheetDateType.Today);
+      this.todaysDate = momentTodayDate;
     }
 
     validateTimesheetRows = function(timesheetRows: Array<Summarizer.TimesheetRow>){
