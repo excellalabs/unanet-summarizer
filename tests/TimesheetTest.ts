@@ -250,7 +250,6 @@ class TimesheetBuilder
     return new Summarizer.Timesheet(this.rows, this.startDate, this.endDate, this.todayDate);
   }
 }
-// TODO: Today's date  (needs it to evaluate whether this is an old timesheet or has time left)
 // TODO: Latest timesheet entry date
 // TODO: Total + Hours
 // TODO: Total Non + Hours
