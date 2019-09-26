@@ -9,7 +9,7 @@ describe('timesheet', function(){
 
       it('throws an exception with null rows list', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(null, legitStartDate, legitEndDate, legitTodayDate);
+          new TimesheetBuilder().withRows(null).build();
         }
 
         expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");
@@ -17,7 +17,7 @@ describe('timesheet', function(){
 
       it('throws an exception with undefined rows list', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(undefined, legitStartDate, legitEndDate, legitTodayDate);
+          new TimesheetBuilder().withRows(undefined).build();
         }
 
         expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");        
@@ -25,7 +25,7 @@ describe('timesheet', function(){
 
       it('throws an exception with empty rows list', function(){
         var shouldBlowUp = function(){
-          new Summarizer.Timesheet(new Array<Summarizer.TimesheetRow>(), legitStartDate, legitEndDate, legitTodayDate);
+          new TimesheetBuilder().withRows(new Array<Summarizer.TimesheetRow>()).build();
         }
 
         expect(shouldBlowUp).toThrowError("timesheet rows list is empty.");
@@ -222,9 +222,9 @@ describe('timesheet', function(){
 
       it('is fine with a valid date', function(){
         var shouldBeFine = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, legitStartDate, legitEndDate, "01-01-2010");          
-          new Summarizer.Timesheet(legitTimesheetRowList, legitStartDate, legitEndDate, "01/01/2010");
-          new Summarizer.Timesheet(legitTimesheetRowList, legitStartDate, legitEndDate, "9/8/2019");
+          new TimesheetBuilder().withTodayDate("01-01-2010").build();
+          new TimesheetBuilder().withTodayDate("01/01/2010").build();
+          new TimesheetBuilder().withTodayDate("9/8/2019").build();
         }
         expect(shouldBeFine).not.toThrowError();
       });
