@@ -3,9 +3,6 @@ import {Summarizer} from "../src/classes/classes";
 describe('timesheet', function(){
   describe('ctor', function(){
     describe('rows', function(){
-      var legitStartDate = "9/8/2019";
-      var legitEndDate = "10/1/2019";
-      var legitTodayDate = "9/30/2019";
 
       it('throws an exception with null rows list', function(){
         var shouldBlowUp = function(){
@@ -33,11 +30,6 @@ describe('timesheet', function(){
     });
 
     describe('timesheet start date', function(){
-      var legitTimesheetRowList = new Array<Summarizer.TimesheetRow>();
-      legitTimesheetRowList.push(new Summarizer.TimesheetRow(Summarizer.ProjectType.Bench, new Array<Summarizer.DateEntry>()));
-      const legitEndDate = "10/1/2019";
-      const legitTodayDate = "9/30/2019";
-
 
       it('throws an error when null', function(){
         var shouldBlowUp = function(){
@@ -83,7 +75,7 @@ describe('timesheet', function(){
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
         var shouldBlowUp = function(){
           
-          new Summarizer.Timesheet(legitTimesheetRowList, "2009-12-31", legitEndDate, legitTodayDate);
+          new TimesheetBuilder().withStartDate("2009-12-31").build();
         }
 
         expect(shouldBlowUp).toThrowError("timesheet start date should be after 2009.");
@@ -91,9 +83,9 @@ describe('timesheet', function(){
 
       it('is fine with a valid date', function(){
         var shouldBeFine = function(){
-          new Summarizer.Timesheet(legitTimesheetRowList, "2010-01-01", legitEndDate, legitTodayDate);          
-          new Summarizer.Timesheet(legitTimesheetRowList, "1/1/2010", legitEndDate, legitTodayDate);
-          new Summarizer.Timesheet(legitTimesheetRowList, "9/8/2019", legitEndDate, legitTodayDate);
+          new TimesheetBuilder().withStartDate("2010-01-01").build();          
+          new TimesheetBuilder().withStartDate("1/1/2010").build();
+          new TimesheetBuilder().withStartDate("9/8/2019").build();
         }
         expect(shouldBeFine).not.toThrowError();
       });
