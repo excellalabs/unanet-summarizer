@@ -292,6 +292,10 @@ describe("timesheet", function() {
   });
 });
 
+// TODO: Total + Hours
+// TODO: Total Non + Hours
+// TODO: Tracking
+
 class TimesheetRowBuilder {
   projectType: Summarizer.ProjectType;
   entries = new Array<Summarizer.DateEntry>();
@@ -355,7 +359,3 @@ class TimesheetBuilder {
     );
   };
 }
-// TODO: Latest timesheet entry date
-// TODO: Total + Hours
-// TODO: Total Non + Hours
-// TODO: Tracking
