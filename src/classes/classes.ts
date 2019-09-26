@@ -122,22 +122,27 @@ export module Summarizer {
     }
 
     getLatestEntryDate = (): number => {
-      var allDatesThatHaveMoreThanZeroHours = this.timesheetRows.reduce((acc, val) => { // outer reducer, for timesheet rows
-        return acc.concat(
-          val.entries.reduce((acc, val) => { // inner reducer, for the date entries on a given row
-            if (val.hoursAmount > 0){ // we only care if there are more than 0 hours for the entry.
-              return acc.concat(val.dayOfMonth);
-            }else{
-              return acc;
-            }
-          }, [])
-        );
-      }, []);
-      
-      if(allDatesThatHaveMoreThanZeroHours.length > 0){
+      var allDatesThatHaveMoreThanZeroHours = this.timesheetRows.reduce(
+        (acc, val) => {
+          // outer reducer, for timesheet rows
+          return acc.concat(
+            val.entries.reduce((acc, val) => {
+              // inner reducer, for the date entries on a given row
+              if (val.hoursAmount > 0) {
+                // we only care if there are more than 0 hours for the entry.
+                return acc.concat(val.dayOfMonth);
+              } else {
+                return acc;
+              }
+            }, [])
+          );
+        },
+        []
+      );
+
+      if (allDatesThatHaveMoreThanZeroHours.length > 0) {
         return Math.max(...allDatesThatHaveMoreThanZeroHours);
-      }
-      else { 
+      } else {
         return undefined;
       }
     };
