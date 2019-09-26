@@ -1,254 +1,289 @@
-import {Summarizer} from "../src/classes/classes";
+import { Summarizer } from "../src/classes/classes";
 
-describe('timesheet', function(){
-  describe('ctor', function(){
-    describe('rows', function(){
-
-      it('throws an exception with null rows list', function(){
-        var shouldBlowUp = function(){
+describe("timesheet", function() {
+  describe("ctor", function() {
+    describe("rows", function() {
+      it("throws an exception with null rows list", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withRows(null).build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");
       });
 
-      it('throws an exception with undefined rows list', function(){
-        var shouldBlowUp = function(){
+      it("throws an exception with undefined rows list", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withRows(undefined).build();
-        }
+        };
 
-        expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");        
+        expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");
       });
 
-      it('throws an exception with empty rows list', function(){
-        var shouldBlowUp = function(){
-          new TimesheetBuilder().withRows(new Array<Summarizer.TimesheetRow>()).build();
-        }
+      it("throws an exception with empty rows list", function() {
+        var shouldBlowUp = function() {
+          new TimesheetBuilder()
+            .withRows(new Array<Summarizer.TimesheetRow>())
+            .build();
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet rows list is empty.");
       });
     });
 
-    describe('timesheet start date', function(){
-
-      it('throws an error when null', function(){
-        var shouldBlowUp = function(){
+    describe("timesheet start date", function() {
+      it("throws an error when null", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withStartDate(null).build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
 
-      it('throws an error when undefined', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when undefined", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withStartDate(undefined).build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
 
-      it('throws an error when empty', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when empty", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withStartDate("").build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
 
-      it('throws an error when whitespace', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when whitespace", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withStartDate("    ").build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
 
-      it('throws an error when non-formatted date', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when non-formatted date", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withStartDate("abcd").build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
 
-      it('throws an error when given a date before 2010', function(){
+      it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
-        var shouldBlowUp = function(){
-          
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withStartDate("2009-12-31").build();
-        }
+        };
 
-        expect(shouldBlowUp).toThrowError("timesheet start date should be after 2009.");
+        expect(shouldBlowUp).toThrowError(
+          "timesheet start date should be after 2009."
+        );
       });
 
-      it('is fine with a valid date', function(){
-        var shouldBeFine = function(){
-          new TimesheetBuilder().withStartDate("2010-01-01").build();          
+      it("is fine with a valid date", function() {
+        var shouldBeFine = function() {
+          new TimesheetBuilder().withStartDate("2010-01-01").build();
           new TimesheetBuilder().withStartDate("2019-09-08").build();
-        }
+        };
         expect(shouldBeFine).not.toThrowError();
       });
     });
 
-    describe('timesheet end date', function(){
-
-      it('throws an error when null', function(){
-        var shouldBlowUp = function(){
+    describe("timesheet end date", function() {
+      it("throws an error when null", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withEndDate(null).build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
       });
 
-      it('throws an error when undefined', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when undefined", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withEndDate(undefined).build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
       });
 
-      it('throws an error when empty', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when empty", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withEndDate("").build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
       });
 
-      it('throws an error when whitespace', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when whitespace", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withEndDate("    ").build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
       });
 
-      it('throws an error when non-formatted date', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when non-formatted date", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withEndDate("abcd").build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
       });
 
-      it('throws an error when given a date before 2010', function(){
+      it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
-        var shouldBlowUp = function(){
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withEndDate("2009-12-31").build();
-        }
+        };
 
-        expect(shouldBlowUp).toThrowError("timesheet end date should be after 2009.");
+        expect(shouldBlowUp).toThrowError(
+          "timesheet end date should be after 2009."
+        );
       });
 
-      it('is fine with a valid date', function(){
-        var shouldBeFine = function(){
-          new TimesheetBuilder().withEndDate("01-01-2010").build();          
+      it("is fine with a valid date", function() {
+        var shouldBeFine = function() {
+          new TimesheetBuilder().withEndDate("01-01-2010").build();
           new TimesheetBuilder().withEndDate("2019-09-08").build();
-        }
+        };
         expect(shouldBeFine).not.toThrowError();
       });
     });
 
-    describe("today's date", function(){
-
-      it('throws an error when null', function(){
-        var shouldBlowUp = function(){
+    describe("today's date", function() {
+      it("throws an error when null", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withTodayDate(null).build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
       });
 
-      it('throws an error when undefined', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when undefined", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withTodayDate(undefined).build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
       });
 
-      it('throws an error when empty', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when empty", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withTodayDate("").build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
       });
 
-      it('throws an error when whitespace', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when whitespace", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withTodayDate("     ").build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
       });
 
-      it('throws an error when non-formatted date', function(){
-        var shouldBlowUp = function(){
+      it("throws an error when non-formatted date", function() {
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withTodayDate("abcd").build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
       });
 
-      it('throws an error when given a date before 2010', function(){
+      it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
-        var shouldBlowUp = function(){
-          
+        var shouldBlowUp = function() {
           new TimesheetBuilder().withTodayDate("2009-12-31").build();
-        }
+        };
 
         expect(shouldBlowUp).toThrowError("today's date should be after 2009.");
       });
 
-      it('is fine with a valid date', function(){
-        var shouldBeFine = function(){
+      it("is fine with a valid date", function() {
+        var shouldBeFine = function() {
           new TimesheetBuilder().withTodayDate("2010-01-01").build();
           new TimesheetBuilder().withTodayDate("2019-09-08").build();
-        }
+        };
         expect(shouldBeFine).not.toThrowError();
       });
     });
   });
-  describe('getLatestEntryDate', function(){
+  describe("getLatestEntryDate", function() {
     var hoursAmountThatDoesntMatter = "8";
 
-    it('returns the largest date number that has an entry', function(){
+    it("returns the largest date number that has an entry", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
 
-      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter)).build());
-      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("3", hoursAmountThatDoesntMatter)).build());
-      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("1", hoursAmountThatDoesntMatter)).build());
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter))
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("3", hoursAmountThatDoesntMatter))
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("1", hoursAmountThatDoesntMatter))
+          .build()
+      );
 
       var timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.getLatestEntryDate()).toBe(3);
     });
 
-    it("doesn't count zero time entries as a date to care about", function(){
+    it("doesn't count zero time entries as a date to care about", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
-      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter)).build());
-      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("3", "0.0")).build());
-      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("1", hoursAmountThatDoesntMatter)).build());
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter))
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("3", "0.0"))
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("1", hoursAmountThatDoesntMatter))
+          .build()
+      );
 
       var timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.getLatestEntryDate()).toBe(2);
     });
-    it("returns undefined when an empty timesheet", function(){
+    it("returns undefined when an empty timesheet", function() {
       var timesheet = new TimesheetBuilder().build();
 
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
-
     });
-    it("returns undefined with a timesheet of all zero entries", function(){
+    it("returns undefined with a timesheet of all zero entries", function() {
       var rows = new Array<Summarizer.TimesheetRow>();
       var zeroHours = "0.0";
 
-      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("2", zeroHours)).build());
-      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("10", zeroHours)).build());
-      rows.push(new TimesheetRowBuilder().withEntry(new Summarizer.DateEntry("30", zeroHours)).build());
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("2", zeroHours))
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("10", zeroHours))
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("30", zeroHours))
+          .build()
+      );
 
       var timesheet = new TimesheetBuilder().withRows(rows).build();
 
@@ -258,58 +293,67 @@ describe('timesheet', function(){
 });
 
 class TimesheetRowBuilder {
-  projectType:Summarizer.ProjectType;
+  projectType: Summarizer.ProjectType;
   entries = new Array<Summarizer.DateEntry>();
 
-  build=() => {
+  build = () => {
     return new Summarizer.TimesheetRow(this.projectType, this.entries);
-  }
+  };
 
-  withEntry=(entry: Summarizer.DateEntry) => {
+  withEntry = (entry: Summarizer.DateEntry) => {
     this.entries.push(entry);
     return this;
-  }
+  };
 
-  withProjectType=(type:Summarizer.ProjectType) => {
+  withProjectType = (type: Summarizer.ProjectType) => {
     this.projectType = type;
     return this;
-  }
+  };
 }
 
-class TimesheetBuilder
-{
-  startDate:string = "2019-09-01";
-  endDate:string = "2019-09-15";
-  todayDate:string = "2019-09-08";
+class TimesheetBuilder {
+  startDate: string = "2019-09-01";
+  endDate: string = "2019-09-15";
+  todayDate: string = "2019-09-08";
   rows = new Array<Summarizer.TimesheetRow>();
 
-  constructor (){
-    this.rows.push(new Summarizer.TimesheetRow(Summarizer.ProjectType.Bench, new Array<Summarizer.DateEntry>()));
+  constructor() {
+    this.rows.push(
+      new Summarizer.TimesheetRow(
+        Summarizer.ProjectType.Bench,
+        new Array<Summarizer.DateEntry>()
+      )
+    );
   }
 
-  withStartDate=(theDate: string) => {
+  withStartDate = (theDate: string) => {
     this.startDate = theDate;
     return this;
-  }
+  };
 
-  withEndDate=(theDate: string) => {
+  withEndDate = (theDate: string) => {
     this.endDate = theDate;
     return this;
-  }
+  };
 
-  withTodayDate=(theDate:string) => {
+  withTodayDate = (theDate: string) => {
     this.todayDate = theDate;
     return this;
-  }
-  
-  withRows=(theRows:Array<Summarizer.TimesheetRow>) => {
+  };
+
+  withRows = (theRows: Array<Summarizer.TimesheetRow>) => {
     this.rows = theRows;
     return this;
-  }
+  };
 
-  build=() => {
-    return new Summarizer.Timesheet(this.rows, this.startDate, this.endDate, this.todayDate);
-  }
+  build = () => {
+    return new Summarizer.Timesheet(
+      this.rows,
+      this.startDate,
+      this.endDate,
+      this.todayDate
+    );
+  };
 }
 // TODO: Latest timesheet entry date
 // TODO: Total + Hours
