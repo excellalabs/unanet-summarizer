@@ -152,9 +152,16 @@ export module Summarizer {
         val.isPlusProjectType()
       );
 
-      var allPlusHours = allPlusHoursRows.reduce((acc, val) => {
-        return acc.concat(val.entries.map(entry => entry.hoursAmount));
-      }, []);
+      if (allPlusHoursRows.length === 0) {
+        return 0;
+      }
+
+      var allPlusHours = allPlusHoursRows.reduce(
+        (acc, val) => {
+          return acc.concat(val.entries.map(entry => entry.hoursAmount));
+        },
+        [0]
+      );
 
       return allPlusHours.reduce((acc, val) => (acc += val));
     };

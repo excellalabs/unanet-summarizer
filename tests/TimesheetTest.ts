@@ -357,9 +357,54 @@ describe("timesheet", function() {
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
 
-    xit("returns 0 when there are no + rows", function() {});
+    it("returns 0 when there are no + rows", function() {
+      var rows = new Array<Summarizer.TimesheetRow>();
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("11", "1.0"))
+          .withProjectType(Summarizer.ProjectType.Internal)
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("11", "1.0"))
+          .withProjectType(Summarizer.ProjectType.NonBillable)
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withEntry(new Summarizer.DateEntry("11", "1.0"))
+          .withProjectType(Summarizer.ProjectType.Internal)
+          .build()
+      );
 
-    xit("returns 0 for an empty timesheet", function() {});
+      var timesheet = new TimesheetBuilder().withRows(rows).build();
+
+      expect(timesheet.totalPlusHours()).toBe(0);
+    });
+
+    it("returns 0 when there are no entries in any rows", function() {
+      var rows = new Array<Summarizer.TimesheetRow>();
+      rows.push(
+        new TimesheetRowBuilder()
+          .withProjectType(Summarizer.ProjectType.Core)
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withProjectType(Summarizer.ProjectType.Bench)
+          .build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withProjectType(Summarizer.ProjectType.Bill)
+          .build()
+      );
+
+      var timesheet = new TimesheetBuilder().withRows(rows).build();
+
+      expect(timesheet.totalPlusHours()).toBe(0);
+    });
   });
 });
 
