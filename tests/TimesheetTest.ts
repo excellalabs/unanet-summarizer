@@ -231,6 +231,38 @@ describe('timesheet', function(){
     })
   })
 });
+
+class TimesheetBuilder
+{
+  startDate:string = "9/1/2019";
+  endDate:string = "9/15/2019";
+  todayDate:string = "9/8/2019";
+  rows = new Array<Summarizer.TimesheetRow>();
+
+  withStartDate=(theDate: string) => {
+    this.startDate = theDate;
+    return this;
+  }
+
+  withEndDate=(theDate: string) => {
+    this.endDate = theDate;
+    return this;
+  }
+
+  withTodayDate=(theDate:string) => {
+    this.todayDate = theDate;
+    return this;
+  }
+  
+  withRows=(theRows:Array<Summarizer.TimesheetRow>) => {
+    this.rows = theRows;
+    return this;
+  }
+
+  build=() => {
+    return new Summarizer.Timesheet(this.rows, this.startDate, this.endDate, this.todayDate);
+  }
+}
 // TODO: Today's date  (needs it to evaluate whether this is an old timesheet or has time left)
 // TODO: Latest timesheet entry date
 // TODO: Total + Hours
