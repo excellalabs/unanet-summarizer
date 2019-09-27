@@ -23,7 +23,7 @@ export module Summarizer {
       ) {
         this.hoursAmount = 0;
       } else {
-        var parsedHours = Number.parseFloat(hoursAmount.trim());
+        var parsedHours: number = Number.parseFloat(hoursAmount.trim());
         if (Number.isNaN(parsedHours)) {
           throw new Error(
             `Unable to parse a valid hours amount for dayOfMonth: '${dayOfMonth}'`
@@ -33,7 +33,7 @@ export module Summarizer {
         }
       }
 
-      var parsedDayOfMonth = Number.parseInt(dayOfMonth.trim());
+      var parsedDayOfMonth: number = Number.parseInt(dayOfMonth.trim(), 10);
       if (Number.isNaN(parsedDayOfMonth)) {
         throw new Error(
           `Unable to parse dayOfMonth: input was '${dayOfMonth}'`
