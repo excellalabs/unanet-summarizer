@@ -583,7 +583,7 @@ describe("timesheet", function(): void {
         const dateForToday: string = "2019-09-12"; // thursday
 
         describe("not filled out up to today", function(): void {
-          var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+          var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
           var rows = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11]);
 
           var timesheet = new Summarizer.Timesheet(
@@ -603,7 +603,7 @@ describe("timesheet", function(): void {
         });
 
         describe("but filled out up to today", function(): void {
-          var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+          var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
           var rows = arrayBuilder.plusHoursForDates([
             2,
             3,
@@ -635,7 +635,7 @@ describe("timesheet", function(): void {
       describe("timesheet complete before period ends", function(): void {
         const dateForToday: string = "2019-09-12"; // Thursday
 
-        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6])
           .concat(arrayBuilder.nonPlusHoursForDates([9, 10, 11, 12, 13]));
@@ -662,7 +662,7 @@ describe("timesheet", function(): void {
       describe("timesheet complete after period ends", function(): void {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
 
-        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder.plusHoursForDates([
           2,
           3,
@@ -697,7 +697,7 @@ describe("timesheet", function(): void {
       describe("overage on incomplete timesheet", function(): void {
         var dateForToday: string = "2019-09-10";
 
-        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10])
           .concat(arrayBuilder.plusHoursForDates([2])); // 16 hours on the 2nd
@@ -720,7 +720,7 @@ describe("timesheet", function(): void {
       describe("overage on the last working day of the timesehet", function(): void {
         var dateForToday: string = "2019-09-13";
 
-        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
@@ -744,7 +744,7 @@ describe("timesheet", function(): void {
       describe("overage on the last calendar day of the timesheet", function(): void {
         var dateForToday: string = "2019-09-15";
 
-        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
@@ -767,7 +767,7 @@ describe("timesheet", function(): void {
       describe("overage after the timesheet is complete", function(): void {
         var dateForToday: string = "2019-09-16";
 
-        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
@@ -792,7 +792,7 @@ describe("timesheet", function(): void {
     describe("tracking a timesheet with plus hour underages", function(): void {
       describe("timesheet incomplete after period ends", function(): void {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
-        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
 
         var rows = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 13])
