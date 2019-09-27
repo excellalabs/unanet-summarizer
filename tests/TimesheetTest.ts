@@ -726,7 +726,7 @@ describe("timesheet", function(): void {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
-      describe("overage on the last working day of the timesehet", function(): void {
+      describe("overage on the last working day of the timesheet", function(): void {
         var dateForToday: string = "2019-09-13";
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
@@ -975,8 +975,8 @@ describe("timesheet", function(): void {
   describe("weekdaysInTimesheet", function(): void {
     describe("uses start and end dates to calculate weekdays", function(): void {
       it("returns 0 workdays when started/ended on a weekend", function(): void {
-        var saturday = "2019-09-07";
-        var sunday = "2019-09-08";
+        var saturday: string = "2019-09-07";
+        var sunday: string = "2019-09-08";
 
         var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
           [7]
@@ -991,7 +991,7 @@ describe("timesheet", function(): void {
         expect(timesheet.weekdaysInTimesheet()).toBe(0);
       });
       it("returns 1 when start/end date are the same weekday", function(): void {
-        var monday = "2019-09-10";
+        var monday: string = "2019-09-10";
 
         var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
           [10]
@@ -1006,28 +1006,28 @@ describe("timesheet", function(): void {
         expect(timesheet.weekdaysInTimesheet()).toBe(1);
       });
       it("returns the correct number of weekdays in the 9/1/19 - 9/15/19 pay period", function(): void {
-        var rowArrayThatDoesntMatter = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+        var rowArrayThatDoesntMatter: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
           [8]
         );
-        var dayForTodayThatDoesntMatter = "2019-09-27";
+        var dayForTodayThatDoesntMatter: string = "2019-09-27";
 
-        var timesehet = new Summarizer.Timesheet(
+        var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rowArrayThatDoesntMatter,
           "2019-09-01",
           "2019-09-15",
           dayForTodayThatDoesntMatter
         );
 
-        expect(timesehet.weekdaysInTimesheet()).toBe(10);
+        expect(timesheet.weekdaysInTimesheet()).toBe(10);
       });
     });
   });
   describe("hoursByProjectType", function(): void {
     var startDate: string = "2019-09-01";
     var endDate: string = "2019-09-15";
-    var todayDate = "2019-09-13";
+    var todayDate: string = "2019-09-13";
 
-    var helper = new Helpers.TimesheetRowArrayBuilder();
+    var helper: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
 
     var rows: Summarizer.TimesheetRow[] = new Array<Summarizer.TimesheetRow>()
       .concat(helper.hoursOfTypeForDates([1, 2], Summarizer.ProjectType.Bill))
@@ -1054,7 +1054,10 @@ describe("timesheet", function(): void {
       todayDate
     );
 
-    var result = timesheet.hoursByProjectType();
+    var result: Array<{
+      projectType: Summarizer.ProjectType;
+      total: number;
+    }> = timesheet.hoursByProjectType();
 
     it("breaks down categories correctly", function(): void {
       expect(result.length).toBe(5);
@@ -1077,21 +1080,23 @@ describe("timesheet", function(): void {
       ).toBe(24);
     });
     it("matches the sum of plus rows", function(): void {
-      var bill = result.find(i => i.projectType === Summarizer.ProjectType.Bill)
-        .total;
-      var core = result.find(i => i.projectType === Summarizer.ProjectType.Core)
-        .total;
-      var bench = result.find(
+      var bill: number = result.find(
+        i => i.projectType === Summarizer.ProjectType.Bill
+      ).total;
+      var core: number = result.find(
+        i => i.projectType === Summarizer.ProjectType.Core
+      ).total;
+      var bench: number = result.find(
         i => i.projectType === Summarizer.ProjectType.Bench
       ).total;
 
       expect(timesheet.totalPlusHours()).toBe(bill + core + bench);
     });
     it("matches the sum of non-plus rows", function(): void {
-      var internal = result.find(
+      var internal: number = result.find(
         i => i.projectType === Summarizer.ProjectType.Internal
       ).total;
-      var nonBillable = result.find(
+      var nonBillable: number = result.find(
         i => i.projectType === Summarizer.ProjectType.NonBillable
       ).total;
 
@@ -1102,7 +1107,7 @@ describe("timesheet", function(): void {
     var rows: Array<Summarizer.TimesheetRow> = new Array<
       Summarizer.TimesheetRow
     >();
-    var nrecaRow = new Helpers.TimesheetRowBuilder()
+    var nrecaRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
       .withProjectType(Summarizer.ProjectType.Bill)
       .withEntry(new Summarizer.DateEntry("4", "7.75"))
       .withEntry(new Summarizer.DateEntry("5", "10.25"))
@@ -1114,7 +1119,7 @@ describe("timesheet", function(): void {
       .withEntry(new Summarizer.DateEntry("13", ".5"))
       .build();
 
-    var trainingRow = new Helpers.TimesheetRowBuilder()
+    var trainingRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
       .withProjectType(Summarizer.ProjectType.Bill)
       .withEntry(new Summarizer.DateEntry("3", "1.0"))
       .withEntry(new Summarizer.DateEntry("5", "1.25"))
@@ -1123,17 +1128,17 @@ describe("timesheet", function(): void {
       .withEntry(new Summarizer.DateEntry("15", "3.0"))
       .build();
 
-    var holidayRow = new Helpers.TimesheetRowBuilder()
+    var holidayRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
       .withProjectType(Summarizer.ProjectType.Core)
       .withEntry(new Summarizer.DateEntry("2", "8"))
       .build();
 
-    var sickRow = new Helpers.TimesheetRowBuilder()
+    var sickRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
       .withProjectType(Summarizer.ProjectType.Core)
       .withEntry(new Summarizer.DateEntry("4", "1"))
       .build();
 
-    var bdRow = new Helpers.TimesheetRowBuilder()
+    var bdRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
       .withProjectType(Summarizer.ProjectType.Core)
       .withEntry(new Summarizer.DateEntry("1", "3"))
       .withEntry(new Summarizer.DateEntry("2", "3"))
