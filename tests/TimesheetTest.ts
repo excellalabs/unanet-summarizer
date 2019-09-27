@@ -652,8 +652,7 @@ describe("timesheet", function() {
 
         var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
-          .plusHoursForDates([2, 3, 4, 5, 6])
-          .concat(arrayBuilder.nonPlusHoursForDates([9, 10]))
+          .plusHoursForDates([2, 3, 4, 5, 6, 9, 10])
           .concat(arrayBuilder.plusHoursForDates([2])); // 16 hours on the 2nd
 
         var timesheet = new Summarizer.Timesheet(
@@ -663,15 +662,11 @@ describe("timesheet", function() {
           dateForToday
         );
 
-        xit("totals the plus hours correctly", function() {
-          expect(timesheet.totalPlusHours()).toBe(48);
+        it("totals the plus hours correctly", function() {
+          expect(timesheet.totalPlusHours()).toBe(64);
         });
 
-        xit("totals the non-plus hours correctly", function() {
-          expect(timesheet.totalNonPlusHours()).toBe(16);
-        });
-
-        xit("has tracking of 8 11-13 is assumed to be 8 hours", function() {
+        it("has tracking of 8 11-13 is assumed to be 8 hours", function() {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
