@@ -672,13 +672,16 @@ describe("timesheet", function() {
       });
       describe("overage on the last working day of the timesehet", function() {
         var dateForToday = "2019-09-13";
+        //TODO
       });
 
       describe("overage on the last calendar day of the timesheet", function() {
         var dateForToday = "2019-09-15";
+        //TODO
       });
       describe("overage after the timesheet is complete", function() {
         var dateForToday = "2019-09-16";
+        // TODO
       });
       // TODO
     });
