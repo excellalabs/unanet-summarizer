@@ -825,12 +825,14 @@ describe("timesheet", function(): void {
     });
   });
   describe("hoursForDate", function(): void {
-    var startDate = "2019-09-01";
-    var endDate = "2019-09-15";
-    var todayDateThatDoesntMatter = "2019-09-27";
+    var startDate: string = "2019-09-01";
+    var endDate: string = "2019-09-15";
+    var todayDateThatDoesntMatter: string = "2019-09-27";
 
     it("returns 0 if no hours for a date", function(): void {
-      var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([7]);
+      var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+        [7]
+      );
       var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rows,
         startDate,
@@ -841,7 +843,9 @@ describe("timesheet", function(): void {
       expect(timesheet.hoursForDate(1)).toBe(0);
     });
     it("returns hours if plus hours exist", function(): void {
-      var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([7]);
+      var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+        [7]
+      );
       var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rows,
         startDate,
@@ -852,9 +856,9 @@ describe("timesheet", function(): void {
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
     it("returns hours if non-plus hours exist", function(): void {
-      var rows = new Helpers.TimesheetRowArrayBuilder().nonPlusHoursForDates([
-        7
-      ]);
+      var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().nonPlusHoursForDates(
+        [7]
+      );
       var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rows,
         startDate,
@@ -894,8 +898,8 @@ describe("timesheet", function(): void {
     });
   });
   describe("numberOfRemainingWorkDays", function(): void {
-    var startDate = "2019-09-01";
-    var endDate = "2019-09-15";
+    var startDate: string = "2019-09-01";
+    var endDate: string = "2019-09-15";
     var rowsThatDontMatter = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
       [6]
     );
@@ -974,9 +978,9 @@ describe("timesheet", function(): void {
         var saturday = "2019-09-07";
         var sunday = "2019-09-08";
 
-        var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([
-          7
-        ]);
+        var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+          [7]
+        );
         var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rows,
           saturday,
@@ -989,9 +993,9 @@ describe("timesheet", function(): void {
       it("returns 1 when start/end date are the same weekday", function(): void {
         var monday = "2019-09-10";
 
-        var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([
-          10
-        ]);
+        var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+          [10]
+        );
         var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rows,
           monday,
@@ -1019,8 +1023,8 @@ describe("timesheet", function(): void {
     });
   });
   describe("hoursByProjectType", function(): void {
-    var startDate = "2019-09-01";
-    var endDate = "2019-09-15";
+    var startDate: string = "2019-09-01";
+    var endDate: string = "2019-09-15";
     var todayDate = "2019-09-13";
 
     var helper = new Helpers.TimesheetRowArrayBuilder();
