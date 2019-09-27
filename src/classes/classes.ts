@@ -129,7 +129,7 @@ export module Summarizer {
     }
 
     getLatestEntryDate = (): number => {
-      var allDatesThatHaveMoreThanZeroHours = this.timesheetRows.reduce(
+      var allDatesThatHaveMoreThanZeroHours: number[] = this.timesheetRows.reduce(
         (acc, val) => {
           // outer reducer, for timesheet rows
           return acc.concat(
