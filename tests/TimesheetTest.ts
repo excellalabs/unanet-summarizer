@@ -216,10 +216,12 @@ describe("timesheet", function(): void {
     });
   });
   describe("getLatestEntryDate", function(): void {
-    var hoursAmountThatDoesntMatter = "8";
+    var hoursAmountThatDoesntMatter: string = "8";
 
-    it("returns the largest date number that has an entry", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
+    it("returns the largest date number that has an entry", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
 
       rows.push(
         new Helpers.TimesheetRowBuilder()
@@ -237,13 +239,17 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.getLatestEntryDate()).toBe(3);
     });
 
-    it("doesn't count zero time entries as a date to care about", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
+    it("doesn't count zero time entries as a date to care about", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
       rows.push(
         new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter))
@@ -260,12 +266,14 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.getLatestEntryDate()).toBe(2);
     });
     it("returns undefined when an empty timesheet", function() {
-      var timesheet = new Helpers.TimesheetBuilder().build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder().build();
 
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
@@ -289,7 +297,9 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
@@ -317,7 +327,9 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
@@ -356,7 +368,9 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
@@ -382,7 +396,9 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.totalPlusHours()).toBe(0);
     });
@@ -405,7 +421,9 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.totalPlusHours()).toBe(0);
     });
@@ -433,7 +451,9 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.totalNonPlusHours()).toBe(6.5);
     });
@@ -472,7 +492,9 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.totalNonPlusHours()).toBe(6.5);
     });
@@ -498,7 +520,9 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
@@ -521,7 +545,9 @@ describe("timesheet", function(): void {
           .build()
       );
 
-      var timesheet = new Helpers.TimesheetBuilder().withRows(rows).build();
+      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+        .withRows(rows)
+        .build();
 
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
