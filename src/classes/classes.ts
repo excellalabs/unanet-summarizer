@@ -294,13 +294,14 @@ export module Summarizer {
       }> = [];
 
       Object.keys(ProjectType).forEach(key => {
-        var keyAsEnum = ProjectType[key as keyof typeof ProjectType];
+        var keyAsEnum: ProjectType =
+          ProjectType[key as keyof typeof ProjectType];
 
-        var filteredToProjectType = this.timesheetRows.filter(
+        var filteredToProjectType: TimesheetRow[] = this.timesheetRows.filter(
           val => val.projectType === keyAsEnum
         );
 
-        var theTotal = this.totalUpFilteredRows(filteredToProjectType);
+        var theTotal: number = this.totalUpFilteredRows(filteredToProjectType);
         results.push({
           projectType: keyAsEnum,
           total: theTotal
