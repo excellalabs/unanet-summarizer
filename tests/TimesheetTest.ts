@@ -957,6 +957,12 @@ describe("timesheet", function() {
       });
     });
   });
+  describe("hoursByCategory", function() {
+    // TODO: timesheet with rows of all categories
+    xit("breaks down categories correctly", function() {});
+    xit("matches the sum of plus rows", function() {});
+    xit("matches the sum of non-plus rows", function() {});
+  });
   describe("Sean's actual 9/1/2019-9/15/2019 timesheet", function() {
     var rows = new Array<Summarizer.TimesheetRow>();
     var nrecaRow = new Helpers.TimesheetRowBuilder()
