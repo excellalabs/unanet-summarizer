@@ -232,7 +232,7 @@ export module Summarizer {
     };
 
     numberOfRemainingWorkDays = (): number => {
-      var workingDaysLeft = this.weekDaysBetweenDates(
+      var workingDaysLeft: number = this.weekDaysBetweenDates(
         this.todaysDate,
         this.timesheetEndDate
       );
@@ -251,14 +251,18 @@ export module Summarizer {
     };
 
     hoursForDate = (theDate: number): number => {
-      var allEntryArrays = this.timesheetRows.map(row => row.entries);
-      var flattenedArray = ([] as DateEntry[]).concat(...allEntryArrays);
+      var allEntryArrays: DateEntry[][] = this.timesheetRows.map(
+        row => row.entries
+      );
+      var flattenedArray: DateEntry[] = ([] as DateEntry[]).concat(
+        ...allEntryArrays
+      );
 
-      var filteredToTheDate = flattenedArray.filter(value => {
+      var filteredToTheDate: DateEntry[] = flattenedArray.filter(value => {
         return value.dayOfMonth === theDate;
       });
 
-      var sumOfHours = filteredToTheDate.reduce((acc, val) => {
+      var sumOfHours: number = filteredToTheDate.reduce((acc, val) => {
         return acc + val.hoursAmount;
       }, 0);
       return sumOfHours;
@@ -268,14 +272,14 @@ export module Summarizer {
       theStartDate: moment.Moment,
       endDate: moment.Moment
     ): number => {
-      var totalWeekDays = 0;
-      var startDate = theStartDate.clone();
+      var totalWeekDays: number = 0;
+      var startDate: moment.Moment = theStartDate.clone();
       while (startDate <= endDate) {
         if (
           startDate.format("ddd") !== "Sat" &&
           startDate.format("ddd") !== "Sun"
         ) {
-          totalWeekDays++; //add 1 to your counter if its not a weekend day
+          totalWeekDays++; // add 1 to your counter if its not a weekend day
         }
 
         startDate.add(1, "day");
