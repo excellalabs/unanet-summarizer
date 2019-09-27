@@ -5,6 +5,7 @@ describe("timesheet", function() {
   describe("ctor", function() {
     describe("rows", function() {
       it("throws an exception with null rows list", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withRows(null).build();
         };
@@ -13,6 +14,7 @@ describe("timesheet", function() {
       });
 
       it("throws an exception with undefined rows list", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withRows(undefined).build();
         };
@@ -21,6 +23,7 @@ describe("timesheet", function() {
       });
 
       it("throws an exception with empty rows list", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder()
             .withRows(new Array<Summarizer.TimesheetRow>())
@@ -33,6 +36,7 @@ describe("timesheet", function() {
 
     describe("timesheet start date", function() {
       it("throws an error when null", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withStartDate(null).build();
         };
@@ -41,6 +45,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when undefined", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withStartDate(undefined).build();
         };
@@ -49,6 +54,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when empty", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withStartDate("").build();
         };
@@ -57,6 +63,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when whitespace", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withStartDate("    ").build();
         };
@@ -65,6 +72,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when non-formatted date", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withStartDate("abcd").build();
         };
@@ -74,6 +82,7 @@ describe("timesheet", function() {
 
       it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withStartDate("2009-12-31").build();
         };
@@ -84,7 +93,7 @@ describe("timesheet", function() {
       });
 
       it("is fine with a valid date", function() {
-        var shouldBeFine = function() {
+        var shouldBeFine: any = function(): any {
           new Helpers.TimesheetBuilder().withStartDate("2010-01-01").build();
           new Helpers.TimesheetBuilder().withStartDate("2019-09-08").build();
         };
@@ -94,6 +103,7 @@ describe("timesheet", function() {
 
     describe("timesheet end date", function() {
       it("throws an error when null", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withEndDate(null).build();
         };
@@ -102,6 +112,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when undefined", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withEndDate(undefined).build();
         };
@@ -110,6 +121,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when empty", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withEndDate("").build();
         };
@@ -118,6 +130,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when whitespace", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withEndDate("    ").build();
         };
@@ -126,6 +139,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when non-formatted date", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withEndDate("abcd").build();
         };
@@ -135,6 +149,7 @@ describe("timesheet", function() {
 
       it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withEndDate("2009-12-31").build();
         };
@@ -145,7 +160,7 @@ describe("timesheet", function() {
       });
 
       it("is fine with a valid date", function() {
-        var shouldBeFine = function() {
+        var shouldBeFine: any = function(): any {
           new Helpers.TimesheetBuilder().withEndDate("01-01-2010").build();
           new Helpers.TimesheetBuilder().withEndDate("2019-09-08").build();
         };
@@ -155,6 +170,7 @@ describe("timesheet", function() {
 
     describe("today's date", function() {
       it("throws an error when null", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withTodayDate(null).build();
         };
@@ -163,6 +179,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when undefined", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withTodayDate(undefined).build();
         };
@@ -171,6 +188,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when empty", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withTodayDate("").build();
         };
@@ -179,6 +197,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when whitespace", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withTodayDate("     ").build();
         };
@@ -187,6 +206,7 @@ describe("timesheet", function() {
       });
 
       it("throws an error when non-formatted date", function() {
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withTodayDate("abcd").build();
         };
@@ -196,6 +216,7 @@ describe("timesheet", function() {
 
       it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
+        // tslint:disable-next-line:typedef
         var shouldBlowUp = function() {
           new Helpers.TimesheetBuilder().withTodayDate("2009-12-31").build();
         };
@@ -204,7 +225,7 @@ describe("timesheet", function() {
       });
 
       it("is fine with a valid date", function() {
-        var shouldBeFine = function() {
+        var shouldBeFine: any = function(): any {
           new Helpers.TimesheetBuilder().withTodayDate("2010-01-01").build();
           new Helpers.TimesheetBuilder().withTodayDate("2019-09-08").build();
         };
