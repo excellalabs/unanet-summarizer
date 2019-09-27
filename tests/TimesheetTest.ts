@@ -1151,12 +1151,12 @@ describe("timesheet", function(): void {
       .withEntry(new Summarizer.DateEntry("13", "5.25"))
       .build();
 
-    var rediRow = new Helpers.TimesheetRowBuilder()
+    var rediRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
       .withProjectType(Summarizer.ProjectType.Core)
       .withEntry(new Summarizer.DateEntry("10", "2.0"))
       .build();
 
-    var innovationRow = new Helpers.TimesheetRowBuilder()
+    var innovationRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
       .withProjectType(Summarizer.ProjectType.Core)
       .withEntry(new Summarizer.DateEntry("3", "3.25"))
       .withEntry(new Summarizer.DateEntry("6", "1.0"))
