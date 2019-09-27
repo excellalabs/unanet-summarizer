@@ -957,4 +957,89 @@ describe("timesheet", function() {
       });
     });
   });
+  describe("Sean's actual 9/1/2019-9/15/2019 timesheet", function() {
+    var rows = new Array<Summarizer.TimesheetRow>();
+    var nrecaRow = new Helpers.TimesheetRowBuilder()
+      .withProjectType(Summarizer.ProjectType.Bill)
+      .withEntry(new Summarizer.DateEntry("4", "7.75"))
+      .withEntry(new Summarizer.DateEntry("5", "10.25"))
+      .withEntry(new Summarizer.DateEntry("6", "5.50"))
+      .withEntry(new Summarizer.DateEntry("9", "10.25"))
+      .withEntry(new Summarizer.DateEntry("10", "9.50"))
+      .withEntry(new Summarizer.DateEntry("11", "7.50"))
+      .withEntry(new Summarizer.DateEntry("12", "7"))
+      .withEntry(new Summarizer.DateEntry("13", ".5"))
+      .build();
+
+    var trainingRow = new Helpers.TimesheetRowBuilder()
+      .withProjectType(Summarizer.ProjectType.Bill)
+      .withEntry(new Summarizer.DateEntry("3", "1.0"))
+      .withEntry(new Summarizer.DateEntry("5", "1.25"))
+      .withEntry(new Summarizer.DateEntry("11", ".75"))
+      .withEntry(new Summarizer.DateEntry("12", "0.0"))
+      .withEntry(new Summarizer.DateEntry("15", "3.0"))
+      .build();
+
+    var holidayRow = new Helpers.TimesheetRowBuilder()
+      .withProjectType(Summarizer.ProjectType.Core)
+      .withEntry(new Summarizer.DateEntry("2", "8"))
+      .build();
+
+    var sickRow = new Helpers.TimesheetRowBuilder()
+      .withProjectType(Summarizer.ProjectType.Core)
+      .withEntry(new Summarizer.DateEntry("4", "1"))
+      .build();
+
+    var bdRow = new Helpers.TimesheetRowBuilder()
+      .withProjectType(Summarizer.ProjectType.Core)
+      .withEntry(new Summarizer.DateEntry("1", "3"))
+      .withEntry(new Summarizer.DateEntry("2", "3"))
+      .withEntry(new Summarizer.DateEntry("3", "10"))
+      .withEntry(new Summarizer.DateEntry("4", "1.75"))
+      .withEntry(new Summarizer.DateEntry("6", "3.75"))
+      .withEntry(new Summarizer.DateEntry("9", "1.50"))
+      .withEntry(new Summarizer.DateEntry("10", "0.25"))
+      .withEntry(new Summarizer.DateEntry("11", ".50"))
+      .withEntry(new Summarizer.DateEntry("13", "5.25"))
+      .build();
+
+    var rediRow = new Helpers.TimesheetRowBuilder()
+      .withProjectType(Summarizer.ProjectType.Core)
+      .withEntry(new Summarizer.DateEntry("10", "2.0"))
+      .build();
+
+    var innovationRow = new Helpers.TimesheetRowBuilder()
+      .withProjectType(Summarizer.ProjectType.Core)
+      .withEntry(new Summarizer.DateEntry("3", "3.25"))
+      .withEntry(new Summarizer.DateEntry("6", "1.0"))
+      .withEntry(new Summarizer.DateEntry("13", "2.50"))
+      .build();
+
+    rows.push(nrecaRow);
+    rows.push(trainingRow);
+    rows.push(holidayRow);
+    rows.push(sickRow);
+    rows.push(bdRow);
+    rows.push(rediRow);
+    rows.push(innovationRow);
+
+    var timesheet = new Summarizer.Timesheet(
+      rows,
+      "2019-09-01",
+      "2019-09-15",
+      "2019-09-27"
+    );
+
+    it("totals plus rows correctly", function() {
+      expect(timesheet.totalPlusHours()).toBe(111);
+    });
+
+    it("totals non-plus rows correctly", function() {
+      expect(timesheet.totalNonPlusHours()).toBe(0);
+    });
+
+    it("totals tracking correctly", function() {
+      expect(timesheet.plusHoursTracking()).toBe(31);
+    });
+  });
 });
