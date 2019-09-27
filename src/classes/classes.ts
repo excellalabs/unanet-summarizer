@@ -1,6 +1,12 @@
 import * as moment from "moment";
 
 export module Summarizer {
+  enum TimesheetDateType {
+    Start = "timesheet start date",
+    End = "timesheet end date",
+    Today = "today's date"
+  }
+
   export enum ProjectType {
     Bill = "CLI-BILL+",
     Core = "EXC-CORE+",
@@ -103,19 +109,19 @@ export module Summarizer {
 
       this.timesheetRows = timesheetRows;
 
-      var momentStartDate = this.validateTimesheetDate(
+      var momentStartDate: moment.Moment = this.validateTimesheetDate(
         timesheetStartDate,
         TimesheetDateType.Start
       );
       this.timesheetStartDate = momentStartDate;
 
-      var momentEndDate = this.validateTimesheetDate(
+      var momentEndDate: moment.Moment = this.validateTimesheetDate(
         timesheetEndDate,
         TimesheetDateType.End
       );
       this.timesheetEndDate = momentEndDate;
 
-      var momentTodayDate = this.validateTimesheetDate(
+      var momentTodayDate: moment.Moment = this.validateTimesheetDate(
         todaysDate,
         TimesheetDateType.Today
       );
@@ -153,7 +159,7 @@ export module Summarizer {
         return 0;
       }
 
-      var allHours = filteredRows.reduce(
+      var allHours: number[] = filteredRows.reduce(
         (acc, val) => {
           return acc.concat(val.entries.map(entry => entry.hoursAmount));
         },
@@ -164,7 +170,7 @@ export module Summarizer {
     };
 
     totalPlusHours = (): number => {
-      var allPlusHoursRows = this.timesheetRows.filter(val =>
+      var allPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(val =>
         val.isPlusProjectType()
       );
 
@@ -172,7 +178,7 @@ export module Summarizer {
     };
 
     totalNonPlusHours = (): number => {
-      var allNonPlusHoursRows = this.timesheetRows.filter(
+      var allNonPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(
         val => !val.isPlusProjectType()
       );
 
@@ -181,7 +187,7 @@ export module Summarizer {
 
     validateTimesheetRows = function(
       timesheetRows: Array<Summarizer.TimesheetRow>
-    ) {
+    ): void {
       if (timesheetRows === null || timesheetRows === undefined) {
         throw new Error("Must supply a timesheet rows list.");
       }
@@ -202,7 +208,7 @@ export module Summarizer {
         throw new Error(`${type} is invalid.`);
       }
 
-      var date = moment(timesheetStartDate);
+      var date: moment.Moment = moment(timesheetStartDate);
 
       if (!date.isValid()) {
         throw new Error(`${type} is invalid.`);
@@ -216,10 +222,10 @@ export module Summarizer {
     };
 
     plusHoursTracking = (): number => {
-      var workingDays = this.weekdaysInTimesheet();
-      var remainingWorkingDays = this.numberOfRemainingWorkDays();
-      var expectedHours = workingDays * this.HOURS_IN_WORKDAY;
-      var actualHours =
+      var workingDays: number = this.weekdaysInTimesheet();
+      var remainingWorkingDays: number = this.numberOfRemainingWorkDays();
+      var expectedHours: number = workingDays * this.HOURS_IN_WORKDAY;
+      var actualHours: number =
         this.totalPlusHours() + remainingWorkingDays * this.HOURS_IN_WORKDAY;
 
       return actualHours - expectedHours;
@@ -299,11 +305,5 @@ export module Summarizer {
 
       return results;
     };
-  }
-
-  enum TimesheetDateType {
-    Start = "timesheet start date",
-    End = "timesheet end date",
-    Today = "today's date"
   }
 }
