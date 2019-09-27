@@ -285,6 +285,7 @@ export module Summarizer {
 
       Object.keys(ProjectType).forEach(key => {
         var keyAsEnum = ProjectType[key as keyof typeof ProjectType];
+
         var filteredToProjectType = this.timesheetRows.filter(
           val => val.projectType === keyAsEnum
         );

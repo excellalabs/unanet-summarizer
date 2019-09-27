@@ -1118,6 +1118,17 @@ describe("timesheet", function() {
       expect(timesheet.plusHoursTracking()).toBe(31);
     });
 
-    xit("breaks down categories correctly", function() {});
+    it("breaks down categories correctly", function() {
+      expect(
+        timesheet
+          .hoursByProjectType()
+          .find(i => i.projectType === Summarizer.ProjectType.Bill).total
+      ).toBe(64.25);
+      expect(
+        timesheet
+          .hoursByProjectType()
+          .find(i => i.projectType === Summarizer.ProjectType.Core).total
+      ).toBe(46.75);
+    });
   });
 });
