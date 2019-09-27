@@ -5,7 +5,7 @@ describe("timesheet", function(): void {
   describe("ctor", function(): void {
     describe("rows", function(): void {
       it("throws an exception with null rows list", function(): void {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withRows(null).build();
         };
 
@@ -13,7 +13,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an exception with undefined rows list", function(): void {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withRows(undefined).build();
         };
 
@@ -21,7 +21,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an exception with empty rows list", function(): void {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder()
             .withRows(new Array<Summarizer.TimesheetRow>())
             .build();
@@ -33,7 +33,7 @@ describe("timesheet", function(): void {
 
     describe("timesheet start date", function(): void {
       it("throws an error when null", function(): void {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withStartDate(null).build();
         };
 
@@ -41,7 +41,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when undefined", function(): void {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withStartDate(undefined).build();
         };
 
@@ -49,7 +49,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when empty", function(): void {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withStartDate("").build();
         };
 
@@ -57,7 +57,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when whitespace", function(): void {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withStartDate("    ").build();
         };
 
@@ -65,7 +65,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when non-formatted date", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withStartDate("abcd").build();
         };
 
@@ -75,7 +75,7 @@ describe("timesheet", function(): void {
       it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
 
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withStartDate("2009-12-31").build();
         };
 
@@ -95,7 +95,7 @@ describe("timesheet", function(): void {
 
     describe("timesheet end date", function() {
       it("throws an error when null", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withEndDate(null).build();
         };
 
@@ -103,7 +103,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when undefined", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withEndDate(undefined).build();
         };
 
@@ -111,7 +111,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when empty", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withEndDate("").build();
         };
 
@@ -119,7 +119,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when whitespace", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withEndDate("    ").build();
         };
 
@@ -127,7 +127,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when non-formatted date", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withEndDate("abcd").build();
         };
 
@@ -137,7 +137,7 @@ describe("timesheet", function(): void {
       it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
 
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withEndDate("2009-12-31").build();
         };
 
@@ -157,7 +157,7 @@ describe("timesheet", function(): void {
 
     describe("today's date", function() {
       it("throws an error when null", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withTodayDate(null).build();
         };
 
@@ -165,7 +165,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when undefined", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withTodayDate(undefined).build();
         };
 
@@ -173,7 +173,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when empty", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withTodayDate("").build();
         };
 
@@ -181,7 +181,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when whitespace", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withTodayDate("     ").build();
         };
 
@@ -189,7 +189,7 @@ describe("timesheet", function(): void {
       });
 
       it("throws an error when non-formatted date", function() {
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withTodayDate("abcd").build();
         };
 
@@ -199,7 +199,7 @@ describe("timesheet", function(): void {
       it("throws an error when given a date before 2010", function() {
         // This is just to ensure people are using it for recent timesheets; we introduced this in 2018.
 
-        var shouldBlowUp = function() {
+        var shouldBlowUp: any = function(): void {
           new Helpers.TimesheetBuilder().withTodayDate("2009-12-31").build();
         };
 
