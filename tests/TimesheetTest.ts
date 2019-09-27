@@ -584,9 +584,18 @@ describe("timesheet", function(): void {
 
         describe("not filled out up to today", function(): void {
           var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-          var rows = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11]);
+          var rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates([
+            2,
+            3,
+            4,
+            5,
+            6,
+            9,
+            10,
+            11
+          ]);
 
-          var timesheet = new Summarizer.Timesheet(
+          var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
             rows,
             timesheetStartDate,
             timesheetEndDate,
@@ -604,7 +613,7 @@ describe("timesheet", function(): void {
 
         describe("but filled out up to today", function(): void {
           var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-          var rows = arrayBuilder.plusHoursForDates([
+          var rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates([
             2,
             3,
             4,
@@ -616,7 +625,7 @@ describe("timesheet", function(): void {
             12
           ]);
 
-          var timesheet = new Summarizer.Timesheet(
+          var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
             rows,
             timesheetStartDate,
             timesheetEndDate,
@@ -633,14 +642,14 @@ describe("timesheet", function(): void {
         });
       });
       describe("timesheet complete before period ends", function(): void {
-        const dateForToday: string = "2019-09-12"; // Thursday
+        const dateForToday: string = "2019-09-12"; // thursday
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        var rows = arrayBuilder
+        var rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6])
           .concat(arrayBuilder.nonPlusHoursForDates([9, 10, 11, 12, 13]));
 
-        var timesheet = new Summarizer.Timesheet(
+        var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -663,7 +672,7 @@ describe("timesheet", function(): void {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        var rows = arrayBuilder.plusHoursForDates([
+        var rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates([
           2,
           3,
           4,
@@ -676,7 +685,7 @@ describe("timesheet", function(): void {
           13
         ]);
 
-        var timesheet = new Summarizer.Timesheet(
+        var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -698,11 +707,11 @@ describe("timesheet", function(): void {
         var dateForToday: string = "2019-09-10";
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        var rows = arrayBuilder
+        var rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10])
           .concat(arrayBuilder.plusHoursForDates([2])); // 16 hours on the 2nd
 
-        var timesheet = new Summarizer.Timesheet(
+        var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -721,11 +730,11 @@ describe("timesheet", function(): void {
         var dateForToday: string = "2019-09-13";
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        var rows = arrayBuilder
+        var rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
 
-        var timesheet = new Summarizer.Timesheet(
+        var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -745,11 +754,11 @@ describe("timesheet", function(): void {
         var dateForToday: string = "2019-09-15";
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        var rows = arrayBuilder
+        var rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
 
-        var timesheet = new Summarizer.Timesheet(
+        var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -768,11 +777,11 @@ describe("timesheet", function(): void {
         var dateForToday: string = "2019-09-16";
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        var rows = arrayBuilder
+        var rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
 
-        var timesheet = new Summarizer.Timesheet(
+        var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -794,11 +803,11 @@ describe("timesheet", function(): void {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
 
-        var rows = arrayBuilder
+        var rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 13])
           .concat(arrayBuilder.nonPlusHoursForDates([12])); // non hours on the 12th
 
-        var timesheet = new Summarizer.Timesheet(
+        var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -822,7 +831,7 @@ describe("timesheet", function(): void {
 
     it("returns 0 if no hours for a date", function(): void {
       var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([7]);
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rows,
         startDate,
         endDate,
@@ -833,7 +842,7 @@ describe("timesheet", function(): void {
     });
     it("returns hours if plus hours exist", function(): void {
       var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([7]);
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rows,
         startDate,
         endDate,
@@ -846,7 +855,7 @@ describe("timesheet", function(): void {
       var rows = new Helpers.TimesheetRowArrayBuilder().nonPlusHoursForDates([
         7
       ]);
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rows,
         startDate,
         endDate,
@@ -860,7 +869,7 @@ describe("timesheet", function(): void {
       var rows = rowBuilder
         .plusHoursForDates([7])
         .concat(rowBuilder.nonPlusHoursForDates([7]));
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rows,
         startDate,
         endDate,
@@ -874,7 +883,7 @@ describe("timesheet", function(): void {
       var rows = rowBuilder
         .plusHoursForDates([7])
         .concat(rowBuilder.nonPlusHoursForDates([10]));
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rows,
         startDate,
         endDate,
@@ -891,7 +900,7 @@ describe("timesheet", function(): void {
       [6]
     );
     it("returns zero when today is after the timesheet end", function(): void {
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
         endDate,
@@ -901,7 +910,7 @@ describe("timesheet", function(): void {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
     it("returns zero when today is in a weekend at the end of the timesheet", function(): void {
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
         endDate,
@@ -911,7 +920,7 @@ describe("timesheet", function(): void {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
     it("returns 1 when today is the last workday of the timesheet", function(): void {
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
         endDate,
@@ -925,7 +934,7 @@ describe("timesheet", function(): void {
         new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([13])
       );
 
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rows,
         startDate,
         endDate,
@@ -935,7 +944,7 @@ describe("timesheet", function(): void {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
     it("returns 2 when today is the 2nd to last day in timesheet", function(): void {
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
         endDate,
@@ -949,7 +958,7 @@ describe("timesheet", function(): void {
         new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([12])
       );
 
-      var timesheet = new Summarizer.Timesheet(
+      var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rows,
         startDate,
         endDate,
@@ -968,7 +977,7 @@ describe("timesheet", function(): void {
         var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([
           7
         ]);
-        var timesheet = new Summarizer.Timesheet(
+        var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
           rows,
           saturday,
           sunday,
@@ -983,7 +992,12 @@ describe("timesheet", function(): void {
         var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([
           10
         ]);
-        var timesheet = new Summarizer.Timesheet(rows, monday, monday, monday);
+        var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+          rows,
+          monday,
+          monday,
+          monday
+        );
 
         expect(timesheet.weekdaysInTimesheet()).toBe(1);
       });
@@ -1029,7 +1043,7 @@ describe("timesheet", function(): void {
         )
       );
 
-    var timesheet = new Summarizer.Timesheet(
+    var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
       rows,
       startDate,
       endDate,
@@ -1148,7 +1162,7 @@ describe("timesheet", function(): void {
     rows.push(rediRow);
     rows.push(innovationRow);
 
-    var timesheet = new Summarizer.Timesheet(
+    var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
       rows,
       "2019-09-01",
       "2019-09-15",
