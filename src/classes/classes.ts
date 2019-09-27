@@ -1,6 +1,25 @@
 import * as moment from "moment";
 
 export module Summarizer {
+  export enum ProjectType {
+    Bill = "CLI-BILL+",
+    Core = "EXC-CORE+",
+    Bench = "EXC-BENCH+",
+    Internal = "EXC-INT",
+    NonBillable = "CLI-NB"
+  }
+
+  export enum PlusProjectTypes {
+    Bill = ProjectType.Bill,
+    Core = ProjectType.Core,
+    Bench = ProjectType.Bench
+  }
+
+  export enum NonPlusProjectTypes {
+    Internal = ProjectType.Internal,
+    NonBillable = ProjectType.NonBillable
+  }
+
   export class DateEntry {
     dayOfMonth: number;
     hoursAmount: number;
@@ -65,25 +84,6 @@ export module Summarizer {
     totalHours(): number {
       return this.entries.reduce((a, b) => a + b.hoursAmount, 0);
     }
-  }
-
-  export enum ProjectType {
-    Bill = "CLI-BILL+",
-    Core = "EXC-CORE+",
-    Bench = "EXC-BENCH+",
-    Internal = "EXC-INT",
-    NonBillable = "CLI-NB"
-  }
-
-  export enum PlusProjectTypes {
-    Bill = ProjectType.Bill,
-    Core = ProjectType.Core,
-    Bench = ProjectType.Bench
-  }
-
-  export enum NonPlusProjectTypes {
-    Internal = ProjectType.Internal,
-    NonBillable = ProjectType.NonBillable
   }
 
   export class Timesheet {
