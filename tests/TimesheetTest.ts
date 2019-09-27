@@ -957,7 +957,7 @@ describe("timesheet", function() {
       });
     });
   });
-  describe("hoursByCategory", function() {
+  describe("hoursByProjectType", function() {
     var startDate = "2019-09-01";
     var endDate = "2019-09-15";
     var todayDate = "2019-09-13";
@@ -989,38 +989,47 @@ describe("timesheet", function() {
       todayDate
     );
 
-    var result = timesheet.hoursByCategory();
+    var result = timesheet.hoursByProjectType();
 
-    // TODO: timesheet with rows of all categories
     it("breaks down categories correctly", function() {
       expect(result.length).toBe(5);
-      expect(result.find(i => i.id === Summarizer.ProjectType.Bill).total).toBe(
-        16
-      );
       expect(
-        result.find(i => i.id === Summarizer.ProjectType.Bench).total
-      ).toBe(24);
-      expect(result.find(i => i.id === Summarizer.ProjectType.Core).total).toBe(
-        32
-      );
-      expect(
-        result.find(i => i.id === Summarizer.ProjectType.Internal).total
+        result.find(i => i.projectType === Summarizer.ProjectType.Bill).total
       ).toBe(16);
       expect(
-        result.find(i => i.id === Summarizer.ProjectType.NonBillable).total
+        result.find(i => i.projectType === Summarizer.ProjectType.Bench).total
+      ).toBe(24);
+      expect(
+        result.find(i => i.projectType === Summarizer.ProjectType.Core).total
+      ).toBe(32);
+      expect(
+        result.find(i => i.projectType === Summarizer.ProjectType.Internal)
+          .total
+      ).toBe(16);
+      expect(
+        result.find(i => i.projectType === Summarizer.ProjectType.NonBillable)
+          .total
       ).toBe(24);
     });
     it("matches the sum of plus rows", function() {
-      var bill = result.find(i => i.id === Summarizer.ProjectType.Bill).total;
-      var core = result.find(i => i.id === Summarizer.ProjectType.Core).total;
-      var bench = result.find(i => i.id === Summarizer.ProjectType.Bench).total;
-      
+      var bill = result.find(i => i.projectType === Summarizer.ProjectType.Bill)
+        .total;
+      var core = result.find(i => i.projectType === Summarizer.ProjectType.Core)
+        .total;
+      var bench = result.find(
+        i => i.projectType === Summarizer.ProjectType.Bench
+      ).total;
+
       expect(timesheet.totalPlusHours()).toBe(bill + core + bench);
     });
     it("matches the sum of non-plus rows", function() {
-      var internal = result.find(i => i.id === Summarizer.ProjectType.Internal).total;
-      var nonBillable = result.find(i => i.id === Summarizer.ProjectType.NonBillable).total;
-      
+      var internal = result.find(
+        i => i.projectType === Summarizer.ProjectType.Internal
+      ).total;
+      var nonBillable = result.find(
+        i => i.projectType === Summarizer.ProjectType.NonBillable
+      ).total;
+
       expect(timesheet.totalNonPlusHours()).toBe(internal + nonBillable);
     });
   });

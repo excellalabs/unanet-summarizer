@@ -277,8 +277,24 @@ export module Summarizer {
       return totalWeekDays;
     };
 
-    hoursByCategory = () => {
-      let results: Array<{ id: ProjectType; total: number }> = [];
+    hoursByProjectType = () => {
+      let results: Array<{
+        projectType: Summarizer.ProjectType;
+        total: number;
+      }> = [];
+
+      Object.keys(ProjectType).forEach(key => {
+        var keyAsEnum = ProjectType[key as keyof typeof ProjectType];
+        var filteredToProjectType = this.timesheetRows.filter(
+          val => val.projectType === keyAsEnum
+        );
+
+        var theTotal = this.totalUpFilteredRows(filteredToProjectType);
+        results.push({
+          projectType: keyAsEnum,
+          total: theTotal
+        });
+      });
 
       return results;
     };
