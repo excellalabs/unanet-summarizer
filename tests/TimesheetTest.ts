@@ -869,8 +869,8 @@ describe("timesheet", function(): void {
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
     it("returns sum if plus and non-plus exist", function(): void {
-      var rowBuilder = new Helpers.TimesheetRowArrayBuilder();
-      var rows = rowBuilder
+      var rowBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+      var rows: Summarizer.TimesheetRow[] = rowBuilder
         .plusHoursForDates([7])
         .concat(rowBuilder.nonPlusHoursForDates([7]));
       var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
@@ -883,8 +883,8 @@ describe("timesheet", function(): void {
       expect(timesheet.hoursForDate(7)).toBe(16);
     });
     it("only cares about that date", function(): void {
-      var rowBuilder = new Helpers.TimesheetRowArrayBuilder();
-      var rows = rowBuilder
+      var rowBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+      var rows: Summarizer.TimesheetRow[] = rowBuilder
         .plusHoursForDates([7])
         .concat(rowBuilder.nonPlusHoursForDates([10]));
       var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
@@ -900,7 +900,7 @@ describe("timesheet", function(): void {
   describe("numberOfRemainingWorkDays", function(): void {
     var startDate: string = "2019-09-01";
     var endDate: string = "2019-09-15";
-    var rowsThatDontMatter = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+    var rowsThatDontMatter: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
       [6]
     );
     it("returns zero when today is after the timesheet end", function(): void {
@@ -934,7 +934,7 @@ describe("timesheet", function(): void {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(1);
     });
     it("returns 0 when today is the last workday of the timesheet and has hours", function(): void {
-      var rows = rowsThatDontMatter.concat(
+      var rows: Summarizer.TimesheetRow[] = rowsThatDontMatter.concat(
         new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([13])
       );
 
@@ -958,7 +958,7 @@ describe("timesheet", function(): void {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(2);
     });
     it("returns 1 when today is 2nd to last day but has hours", function(): void {
-      var rows = rowsThatDontMatter.concat(
+      var rows: Summarizer.TimesheetRow[] = rowsThatDontMatter.concat(
         new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([12])
       );
 
@@ -1029,7 +1029,7 @@ describe("timesheet", function(): void {
 
     var helper = new Helpers.TimesheetRowArrayBuilder();
 
-    var rows = new Array<Summarizer.TimesheetRow>()
+    var rows: Summarizer.TimesheetRow[] = new Array<Summarizer.TimesheetRow>()
       .concat(helper.hoursOfTypeForDates([1, 2], Summarizer.ProjectType.Bill))
       .concat(
         helper.hoursOfTypeForDates([3, 4, 5], Summarizer.ProjectType.Bench)
