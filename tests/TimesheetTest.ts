@@ -272,14 +272,16 @@ describe("timesheet", function(): void {
 
       expect(timesheet.getLatestEntryDate()).toBe(2);
     });
-    it("returns undefined when an empty timesheet", function() {
+    it("returns undefined when an empty timesheet", function(): void {
       var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder().build();
 
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
-    it("returns undefined with a timesheet of all zero entries", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
-      var zeroHours = "0.0";
+    it("returns undefined with a timesheet of all zero entries", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
+      var zeroHours: string = "0.0";
 
       rows.push(
         new Helpers.TimesheetRowBuilder()
@@ -304,9 +306,11 @@ describe("timesheet", function(): void {
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
   });
-  describe("totalPlusHours", function() {
-    it("returns the sum of hours across all plus rows on a timesheet", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
+  describe("totalPlusHours", function(): void {
+    it("returns the sum of hours across all plus rows on a timesheet", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
 
       rows.push(
         new Helpers.TimesheetRowBuilder()
@@ -334,8 +338,10 @@ describe("timesheet", function(): void {
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
 
-    it("doesn't count non-plus rows", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
+    it("doesn't count non-plus rows", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
 
       rows.push(
         new Helpers.TimesheetRowBuilder()
@@ -375,8 +381,10 @@ describe("timesheet", function(): void {
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
 
-    it("returns 0 when there are no + rows", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
+    it("returns 0 when there are no + rows", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
       rows.push(
         new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
@@ -403,8 +411,10 @@ describe("timesheet", function(): void {
       expect(timesheet.totalPlusHours()).toBe(0);
     });
 
-    it("returns 0 when there are no entries in any rows", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
+    it("returns 0 when there are no entries in any rows", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
       rows.push(
         new Helpers.TimesheetRowBuilder()
           .withProjectType(Summarizer.ProjectType.Core)
@@ -428,9 +438,11 @@ describe("timesheet", function(): void {
       expect(timesheet.totalPlusHours()).toBe(0);
     });
   });
-  describe("totalNonPlusHours", function() {
-    it("returns the sum of hours across all non-plus rows on a timesheet", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
+  describe("totalNonPlusHours", function(): void {
+    it("returns the sum of hours across all non-plus rows on a timesheet", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
 
       rows.push(
         new Helpers.TimesheetRowBuilder()
@@ -458,8 +470,10 @@ describe("timesheet", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(6.5);
     });
 
-    it("doesn't count plus rows", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
+    it("doesn't count plus rows", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
 
       rows.push(
         new Helpers.TimesheetRowBuilder()
@@ -499,8 +513,10 @@ describe("timesheet", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(6.5);
     });
 
-    it("returns 0 when there are no non-plus rows", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
+    it("returns 0 when there are no non-plus rows", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
       rows.push(
         new Helpers.TimesheetRowBuilder()
           .withEntry(new Summarizer.DateEntry("11", "1.0"))
@@ -527,8 +543,10 @@ describe("timesheet", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
 
-    it("returns 0 when there are no entries in any rows", function() {
-      var rows = new Array<Summarizer.TimesheetRow>();
+    it("returns 0 when there are no entries in any rows", function(): void {
+      var rows: Array<Summarizer.TimesheetRow> = new Array<
+        Summarizer.TimesheetRow
+      >();
       rows.push(
         new Helpers.TimesheetRowBuilder()
           .withProjectType(Summarizer.ProjectType.Internal)
@@ -552,19 +570,19 @@ describe("timesheet", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
   });
-  describe("tracking", function() {
-    // This section uses a real time period of 9/1/2019 - 9/15/2019
-    // Timesheet starts with Sunday 9/1
-    // There were 10 working days in the period, Sept 2-6 and Sept 9-13
-    // Timesheet ends with Sat/Sun Sept 14-15
-    const timesheetStartDate = "2019-09-01";
-    const timesheetEndDate = "2019-09-15";
+  describe("tracking", function(): void {
+    // this section uses a real time period of 9/1/2019 - 9/15/2019
+    // timesheet starts with Sunday 9/1
+    // there were 10 working days in the period, Sept 2-6 and Sept 9-13
+    // timesheet ends with Sat/Sun Sept 14-15
+    const timesheetStartDate: string = "2019-09-01";
+    const timesheetEndDate: string = "2019-09-15";
 
-    describe("tracking a totally balanced timesheet", function() {
-      describe("timesheet incomplete before period ends", function() {
-        const dateForToday = "2019-09-12"; // Thursday
+    describe("tracking a totally balanced timesheet", function(): void {
+      describe("timesheet incomplete before period ends", function(): void {
+        const dateForToday: string = "2019-09-12"; // thursday
 
-        describe("not filled out up to today", function() {
+        describe("not filled out up to today", function(): void {
           var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
           var rows = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11]);
 
@@ -575,16 +593,16 @@ describe("timesheet", function(): void {
             dateForToday
           );
 
-          it("totals the plus hours correctly", function() {
+          it("totals the plus hours correctly", function(): void {
             expect(timesheet.totalPlusHours()).toBe(64);
           });
 
-          it("has tracking of zero because it assumes 8 hours for 11th-13th", function() {
+          it("has tracking of zero because it assumes 8 hours for 11th-13th", function(): void {
             expect(timesheet.plusHoursTracking()).toBe(0);
           });
         });
 
-        describe("but filled out up to today", function() {
+        describe("but filled out up to today", function(): void {
           var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
           var rows = arrayBuilder.plusHoursForDates([
             2,
@@ -605,17 +623,17 @@ describe("timesheet", function(): void {
             dateForToday
           );
 
-          it("totals the plus hours correctly", function() {
+          it("totals the plus hours correctly", function(): void {
             expect(timesheet.totalPlusHours()).toBe(72);
           });
 
-          it("has tracking of zero because it assumes 8 hours for 13th", function() {
+          it("has tracking of zero because it assumes 8 hours for 13th", function(): void {
             expect(timesheet.plusHoursTracking()).toBe(0);
           });
         });
       });
-      describe("timesheet complete before period ends", function() {
-        const dateForToday = "2019-09-12"; // Thursday
+      describe("timesheet complete before period ends", function(): void {
+        const dateForToday: string = "2019-09-12"; // Thursday
 
         var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
@@ -629,20 +647,20 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function() {
+        it("totals the plus hours correctly", function(): void {
           expect(timesheet.totalPlusHours()).toBe(40);
         });
 
-        it("totals the non-plus hours correctly", function() {
+        it("totals the non-plus hours correctly", function(): void {
           expect(timesheet.totalNonPlusHours()).toBe(40);
         });
 
-        it("has tracking of -32 because 13th is filled out", function() {
+        it("has tracking of -32 because 13th is filled out", function(): void {
           expect(timesheet.plusHoursTracking()).toBe(-32);
         });
       });
-      describe("timesheet complete after period ends", function() {
-        const dateForToday = "2019-09-16"; // next day after time sheet closes
+      describe("timesheet complete after period ends", function(): void {
+        const dateForToday: string = "2019-09-16"; // next day after time sheet closes
 
         var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder.plusHoursForDates([
@@ -665,19 +683,19 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function() {
+        it("totals the plus hours correctly", function(): void {
           expect(timesheet.totalPlusHours()).toBe(80);
         });
 
-        it("has tracking of zero because 13th is filled out", function() {
+        it("has tracking of zero because 13th is filled out", function(): void {
           expect(timesheet.plusHoursTracking()).toBe(0);
         });
       });
     });
 
-    describe("tracking a timesheet with plus hour overages", function() {
-      describe("overage on incomplete timesheet", function() {
-        var dateForToday = "2019-09-10";
+    describe("tracking a timesheet with plus hour overages", function(): void {
+      describe("overage on incomplete timesheet", function(): void {
+        var dateForToday: string = "2019-09-10";
 
         var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
@@ -691,16 +709,16 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function() {
+        it("totals the plus hours correctly", function(): void {
           expect(timesheet.totalPlusHours()).toBe(64);
         });
 
-        it("has tracking of 8 11-13 is assumed to be 8 hours", function() {
+        it("has tracking of 8 11-13 is assumed to be 8 hours", function(): void {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
-      describe("overage on the last working day of the timesehet", function() {
-        var dateForToday = "2019-09-13";
+      describe("overage on the last working day of the timesehet", function(): void {
+        var dateForToday: string = "2019-09-13";
 
         var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
@@ -714,17 +732,17 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function() {
+        it("totals the plus hours correctly", function(): void {
           expect(timesheet.totalPlusHours()).toBe(80);
         });
 
-        it("has tracking of 8 13 is assumed to be 8 hours", function() {
+        it("has tracking of 8 13 is assumed to be 8 hours", function(): void {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
 
-      describe("overage on the last calendar day of the timesheet", function() {
-        var dateForToday = "2019-09-15";
+      describe("overage on the last calendar day of the timesheet", function(): void {
+        var dateForToday: string = "2019-09-15";
 
         var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
@@ -738,16 +756,16 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function() {
+        it("totals the plus hours correctly", function(): void {
           expect(timesheet.totalPlusHours()).toBe(88);
         });
 
-        it("has tracking of 8 13 is assumed to be 8 hours", function() {
+        it("has tracking of 8 13 is assumed to be 8 hours", function(): void {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
-      describe("overage after the timesheet is complete", function() {
-        var dateForToday = "2019-09-16";
+      describe("overage after the timesheet is complete", function(): void {
+        var dateForToday: string = "2019-09-16";
 
         var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         var rows = arrayBuilder
@@ -761,19 +779,19 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function() {
+        it("totals the plus hours correctly", function(): void {
           expect(timesheet.totalPlusHours()).toBe(88);
         });
 
-        it("has tracking of 8", function() {
+        it("has tracking of 8", function(): void {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
     });
 
-    describe("tracking a timesheet with plus hour underages", function() {
-      describe("timesheet incomplete after period ends", function() {
-        const dateForToday = "2019-09-16"; // next day after time sheet closes
+    describe("tracking a timesheet with plus hour underages", function(): void {
+      describe("timesheet incomplete after period ends", function(): void {
+        const dateForToday: string = "2019-09-16"; // next day after time sheet closes
         var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
 
         var rows = arrayBuilder
@@ -787,22 +805,22 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function() {
+        it("totals the plus hours correctly", function(): void {
           expect(timesheet.totalPlusHours()).toBe(72);
         });
 
-        it("has tracking of -8", function() {
+        it("has tracking of -8", function(): void {
           expect(timesheet.plusHoursTracking()).toBe(-8);
         });
       });
     });
   });
-  describe("hoursForDate", function() {
+  describe("hoursForDate", function(): void {
     var startDate = "2019-09-01";
     var endDate = "2019-09-15";
     var todayDateThatDoesntMatter = "2019-09-27";
 
-    it("returns 0 if no hours for a date", function() {
+    it("returns 0 if no hours for a date", function(): void {
       var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([7]);
       var timesheet = new Summarizer.Timesheet(
         rows,
@@ -813,7 +831,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.hoursForDate(1)).toBe(0);
     });
-    it("returns hours if plus hours exist", function() {
+    it("returns hours if plus hours exist", function(): void {
       var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([7]);
       var timesheet = new Summarizer.Timesheet(
         rows,
@@ -824,7 +842,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
-    it("returns hours if non-plus hours exist", function() {
+    it("returns hours if non-plus hours exist", function(): void {
       var rows = new Helpers.TimesheetRowArrayBuilder().nonPlusHoursForDates([
         7
       ]);
@@ -837,7 +855,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
-    it("returns sum if plus and non-plus exist", function() {
+    it("returns sum if plus and non-plus exist", function(): void {
       var rowBuilder = new Helpers.TimesheetRowArrayBuilder();
       var rows = rowBuilder
         .plusHoursForDates([7])
@@ -851,7 +869,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.hoursForDate(7)).toBe(16);
     });
-    it("only cares about that date", function() {
+    it("only cares about that date", function(): void {
       var rowBuilder = new Helpers.TimesheetRowArrayBuilder();
       var rows = rowBuilder
         .plusHoursForDates([7])
@@ -866,13 +884,13 @@ describe("timesheet", function(): void {
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
   });
-  describe("numberOfRemainingWorkDays", function() {
+  describe("numberOfRemainingWorkDays", function(): void {
     var startDate = "2019-09-01";
     var endDate = "2019-09-15";
     var rowsThatDontMatter = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
       [6]
     );
-    it("returns zero when today is after the timesheet end", function() {
+    it("returns zero when today is after the timesheet end", function(): void {
       var timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
@@ -882,7 +900,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
-    it("returns zero when today is in a weekend at the end of the timesheet", function() {
+    it("returns zero when today is in a weekend at the end of the timesheet", function(): void {
       var timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
@@ -892,7 +910,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
-    it("returns 1 when today is the last workday of the timesheet", function() {
+    it("returns 1 when today is the last workday of the timesheet", function(): void {
       var timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
@@ -902,7 +920,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(1);
     });
-    it("returns 0 when today is the last workday of the timesheet and has hours", function() {
+    it("returns 0 when today is the last workday of the timesheet and has hours", function(): void {
       var rows = rowsThatDontMatter.concat(
         new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([13])
       );
@@ -916,7 +934,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
-    it("returns 2 when today is the 2nd to last day in timesheet", function() {
+    it("returns 2 when today is the 2nd to last day in timesheet", function(): void {
       var timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
@@ -926,7 +944,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(2);
     });
-    it("returns 1 when today is 2nd to last day but has hours", function() {
+    it("returns 1 when today is 2nd to last day but has hours", function(): void {
       var rows = rowsThatDontMatter.concat(
         new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([12])
       );
@@ -941,9 +959,9 @@ describe("timesheet", function(): void {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(1);
     });
   });
-  describe("weekdaysInTimesheet", function() {
-    describe("uses start and end dates to calculate weekdays", function() {
-      it("returns 0 workdays when started/ended on a weekend", function() {
+  describe("weekdaysInTimesheet", function(): void {
+    describe("uses start and end dates to calculate weekdays", function(): void {
+      it("returns 0 workdays when started/ended on a weekend", function(): void {
         var saturday = "2019-09-07";
         var sunday = "2019-09-08";
 
@@ -959,7 +977,7 @@ describe("timesheet", function(): void {
 
         expect(timesheet.weekdaysInTimesheet()).toBe(0);
       });
-      it("returns 1 when start/end date are the same weekday", function() {
+      it("returns 1 when start/end date are the same weekday", function(): void {
         var monday = "2019-09-10";
 
         var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([
@@ -969,7 +987,7 @@ describe("timesheet", function(): void {
 
         expect(timesheet.weekdaysInTimesheet()).toBe(1);
       });
-      it("returns the correct number of weekdays in the 9/1/19 - 9/15/19 pay period", function() {
+      it("returns the correct number of weekdays in the 9/1/19 - 9/15/19 pay period", function(): void {
         var rowArrayThatDoesntMatter = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
           [8]
         );
@@ -986,7 +1004,7 @@ describe("timesheet", function(): void {
       });
     });
   });
-  describe("hoursByProjectType", function() {
+  describe("hoursByProjectType", function(): void {
     var startDate = "2019-09-01";
     var endDate = "2019-09-15";
     var todayDate = "2019-09-13";
@@ -1020,7 +1038,7 @@ describe("timesheet", function(): void {
 
     var result = timesheet.hoursByProjectType();
 
-    it("breaks down categories correctly", function() {
+    it("breaks down categories correctly", function(): void {
       expect(result.length).toBe(5);
       expect(
         result.find(i => i.projectType === Summarizer.ProjectType.Bill).total
@@ -1040,7 +1058,7 @@ describe("timesheet", function(): void {
           .total
       ).toBe(24);
     });
-    it("matches the sum of plus rows", function() {
+    it("matches the sum of plus rows", function(): void {
       var bill = result.find(i => i.projectType === Summarizer.ProjectType.Bill)
         .total;
       var core = result.find(i => i.projectType === Summarizer.ProjectType.Core)
@@ -1051,7 +1069,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.totalPlusHours()).toBe(bill + core + bench);
     });
-    it("matches the sum of non-plus rows", function() {
+    it("matches the sum of non-plus rows", function(): void {
       var internal = result.find(
         i => i.projectType === Summarizer.ProjectType.Internal
       ).total;
@@ -1062,8 +1080,10 @@ describe("timesheet", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(internal + nonBillable);
     });
   });
-  describe("Sean's actual 9/1/2019-9/15/2019 timesheet", function() {
-    var rows = new Array<Summarizer.TimesheetRow>();
+  describe("Sean's actual 9/1/2019-9/15/2019 timesheet", function(): void {
+    var rows: Array<Summarizer.TimesheetRow> = new Array<
+      Summarizer.TimesheetRow
+    >();
     var nrecaRow = new Helpers.TimesheetRowBuilder()
       .withProjectType(Summarizer.ProjectType.Bill)
       .withEntry(new Summarizer.DateEntry("4", "7.75"))
@@ -1135,19 +1155,19 @@ describe("timesheet", function(): void {
       "2019-09-27"
     );
 
-    it("totals plus rows correctly", function() {
+    it("totals plus rows correctly", function(): void {
       expect(timesheet.totalPlusHours()).toBe(111);
     });
 
-    it("totals non-plus rows correctly", function() {
+    it("totals non-plus rows correctly", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
 
-    it("totals tracking correctly", function() {
+    it("totals tracking correctly", function(): void {
       expect(timesheet.plusHoursTracking()).toBe(31);
     });
 
-    it("breaks down categories correctly", function() {
+    it("breaks down categories correctly", function(): void {
       expect(
         timesheet
           .hoursByProjectType()
