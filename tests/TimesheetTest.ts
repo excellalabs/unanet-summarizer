@@ -537,9 +537,7 @@ describe("timesheet", function() {
 
         describe("not filled out up to today", function() {
           var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-          var rows = arrayBuilder
-            .plusHoursForDates([2, 3, 4, 5, 6])
-            .concat(arrayBuilder.nonPlusHoursForDates([9, 10]));
+          var rows = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10]);
 
           var timesheet = new Summarizer.Timesheet(
             rows,
@@ -549,11 +547,7 @@ describe("timesheet", function() {
           );
 
           it("totals the plus hours correctly", function() {
-            expect(timesheet.totalPlusHours()).toBe(40);
-          });
-
-          it("totals the non-plus hours correctly", function() {
-            expect(timesheet.totalNonPlusHours()).toBe(16);
+            expect(timesheet.totalPlusHours()).toBe(56);
           });
 
           it("has tracking of zero because it assumes 8 hours for 11th-13th", function() {
@@ -563,9 +557,17 @@ describe("timesheet", function() {
 
         describe("but filled out up to today", function() {
           var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-          var rows = arrayBuilder
-            .plusHoursForDates([2, 3, 4, 5, 6])
-            .concat(arrayBuilder.nonPlusHoursForDates([9, 10, 11, 12]));
+          var rows = arrayBuilder.plusHoursForDates([
+            2,
+            3,
+            4,
+            5,
+            6,
+            9,
+            10,
+            11,
+            12
+          ]);
 
           var timesheet = new Summarizer.Timesheet(
             rows,
@@ -575,11 +577,7 @@ describe("timesheet", function() {
           );
 
           it("totals the plus hours correctly", function() {
-            expect(timesheet.totalPlusHours()).toBe(40);
-          });
-
-          it("totals the non-plus hours correctly", function() {
-            expect(timesheet.totalNonPlusHours()).toBe(32);
+            expect(timesheet.totalPlusHours()).toBe(72);
           });
 
           it("has tracking of zero because it assumes 8 hours for 13th", function() {
@@ -618,9 +616,18 @@ describe("timesheet", function() {
         const dateForToday = "2019-09-16"; // next day after time sheet closes
 
         var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        var rows = arrayBuilder
-          .plusHoursForDates([2, 3, 4, 5, 6])
-          .concat(arrayBuilder.nonPlusHoursForDates([9, 10, 11, 12, 13]));
+        var rows = arrayBuilder.plusHoursForDates([
+          2,
+          3,
+          4,
+          5,
+          6,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]);
 
         var timesheet = new Summarizer.Timesheet(
           rows,
@@ -630,11 +637,7 @@ describe("timesheet", function() {
         );
 
         it("totals the plus hours correctly", function() {
-          expect(timesheet.totalPlusHours()).toBe(40);
-        });
-
-        it("totals the non-plus hours correctly", function() {
-          expect(timesheet.totalNonPlusHours()).toBe(40);
+          expect(timesheet.totalPlusHours()).toBe(80);
         });
 
         it("has tracking of zero because 13th is filled out", function() {
