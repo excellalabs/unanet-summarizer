@@ -766,8 +766,80 @@ describe("timesheet", function() {
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
   });
-  describe("numberOfRemainingWorkingDays", function() {
-    // TODO
+  describe("numberOfRemainingWorkDays", function() {
+    var startDate = "2019-09-01";
+    var endDate = "2019-09-15";
+    var rowsThatDontMatter = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+      [6]
+    );
+    it("returns zero when today is after the timesheet end", function() {
+      var timesheet = new Summarizer.Timesheet(
+        rowsThatDontMatter,
+        startDate,
+        endDate,
+        "2019-09-27"
+      );
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
+    it("returns zero when today is in a weekend at the end of the timesheet", function() {
+      var timesheet = new Summarizer.Timesheet(
+        rowsThatDontMatter,
+        startDate,
+        endDate,
+        "2019-09-14"
+      );
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
+    it("returns 1 when today is the last workday of the timesheet", function() {
+      var timesheet = new Summarizer.Timesheet(
+        rowsThatDontMatter,
+        startDate,
+        endDate,
+        "2019-09-13"
+      );
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(1);
+    });
+    it("returns 0 when today is the last workday of the timesheet and has hours", function() {
+      var rows = rowsThatDontMatter.concat(
+        new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([13])
+      );
+
+      var timesheet = new Summarizer.Timesheet(
+        rows,
+        startDate,
+        endDate,
+        "2019-09-13"
+      );
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
+    it("returns 2 when today is the 2nd to last day in timesheet", function() {
+      var timesheet = new Summarizer.Timesheet(
+        rowsThatDontMatter,
+        startDate,
+        endDate,
+        "2019-09-12"
+      );
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(2);
+    });
+    it("returns 1 when today is 2nd to last day but has hours", function() {
+      var rows = rowsThatDontMatter.concat(
+        new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([12])
+      );
+
+      var timesheet = new Summarizer.Timesheet(
+        rows,
+        startDate,
+        endDate,
+        "2019-09-12"
+      );
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(1);
+    });
   });
   describe("weekdaysInTimesheet", function() {
     describe("uses start and end dates to calculate weekdays", function() {

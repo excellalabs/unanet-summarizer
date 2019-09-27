@@ -223,22 +223,23 @@ export module Summarizer {
       return 0; // TODO: real code
     };
 
-    weekdaysInTimesheet = (): number => {
-      var startDate = this.timesheetStartDate.clone();
-      var endDate = this.timesheetEndDate;
-
-      var totalWeekDays = 0;
-      while (startDate <= endDate) {
-        if (
-          startDate.format("ddd") !== "Sat" &&
-          startDate.format("ddd") !== "Sun"
-        ) {
-          totalWeekDays++; //add 1 to your counter if its not a weekend day
-        }
-
-        startDate.add(1, "day");
+    numberOfRemainingWorkDays = (): number => {
+      var workingDaysLeft = this.weekDaysBetweenDates(
+        this.todaysDate,
+        this.timesheetEndDate
+      );
+      if (this.hoursForDate(this.todaysDate.date()) > 0) {
+        workingDaysLeft--;
       }
-      return totalWeekDays;
+
+      return workingDaysLeft;
+    };
+
+    weekdaysInTimesheet = (): number => {
+      return this.weekDaysBetweenDates(
+        this.timesheetStartDate,
+        this.timesheetEndDate
+      );
     };
 
     hoursForDate = (theDate: number): number => {
@@ -253,6 +254,25 @@ export module Summarizer {
         return acc + val.hoursAmount;
       }, 0);
       return sumOfHours;
+    };
+
+    weekDaysBetweenDates = (
+      theStartDate: moment.Moment,
+      endDate: moment.Moment
+    ): number => {
+      var totalWeekDays = 0;
+      var startDate = theStartDate.clone();
+      while (startDate <= endDate) {
+        if (
+          startDate.format("ddd") !== "Sat" &&
+          startDate.format("ddd") !== "Sun"
+        ) {
+          totalWeekDays++; //add 1 to your counter if its not a weekend day
+        }
+
+        startDate.add(1, "day");
+      }
+      return totalWeekDays;
     };
   }
 
