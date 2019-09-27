@@ -1041,5 +1041,7 @@ describe("timesheet", function() {
     it("totals tracking correctly", function() {
       expect(timesheet.plusHoursTracking()).toBe(31);
     });
+
+    xit("breaks down categories correctly", function() {});
   });
 });
