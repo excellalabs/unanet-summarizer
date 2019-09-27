@@ -215,7 +215,30 @@ export module Summarizer {
     };
 
     plusHoursTracking = (): number => {
+      // var weekDays = weekdaysInTimesheet()
+      // var numberOfRemainingWorkDays() // counts today if no time has been entered
+      // expectedHours = workingDays * HOURS_PER_DAY
+      // actualHours = totalPlusHours() + (numberOfRemainingWorkDays * HOURS_PER_DAY)
+      // return actualHours - expectedHours
       return 0; // TODO: real code
+    };
+
+    weekdaysInTimesheet = (): number => {
+      var startDate = this.timesheetStartDate.clone();
+      var endDate = this.timesheetEndDate;
+
+      var totalWeekDays = 0;
+      while (startDate <= endDate) {
+        if (
+          startDate.format("ddd") !== "Sat" &&
+          startDate.format("ddd") !== "Sun"
+        ) {
+          totalWeekDays++; //add 1 to your counter if its not a weekend day
+        }
+
+        startDate.add(1, "day");
+      }
+      return totalWeekDays;
     };
   }
 

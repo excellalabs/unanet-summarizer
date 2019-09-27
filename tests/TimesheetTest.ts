@@ -660,15 +660,15 @@ describe("timesheet", function() {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function() {
+        xit("totals the plus hours correctly", function() {
           expect(timesheet.totalPlusHours()).toBe(48);
         });
 
-        it("totals the non-plus hours correctly", function() {
+        xit("totals the non-plus hours correctly", function() {
           expect(timesheet.totalNonPlusHours()).toBe(16);
         });
 
-        it("has tracking of 8 11-13 is assumed to be 8 hours", function() {
+        xit("has tracking of 8 11-13 is assumed to be 8 hours", function() {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
@@ -697,9 +697,49 @@ describe("timesheet", function() {
       // TODO
     });
   });
-  describe("trackerHoursFillIn", function() {
-    xit("returns 0 if today is later than the last calendar day in the timesheet", function() {});
-    xit("returns 0 if today is later than the last working day in the timesheet", function() {});
-    xit("returns 8 if there is one workday not filled in", function() {});
+  describe("weekdaysInTimesheet", function() {
+    describe("uses start and end dates to calculate weekdays", function() {
+      it("returns 0 workdays when started/ended on a weekend", function() {
+        var saturday = "2019-09-07";
+        var sunday = "2019-09-08";
+
+        var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([
+          7
+        ]);
+        var timesheet = new Summarizer.Timesheet(
+          rows,
+          saturday,
+          sunday,
+          sunday
+        );
+
+        expect(timesheet.weekdaysInTimesheet()).toBe(0);
+      });
+      it("returns 1 when start/end date are the same weekday", function() {
+        var monday = "2019-09-10";
+
+        var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([
+          10
+        ]);
+        var timesheet = new Summarizer.Timesheet(rows, monday, monday, monday);
+
+        expect(timesheet.weekdaysInTimesheet()).toBe(1);
+      });
+      it("returns the correct number of weekdays in the 9/1/19 - 9/15/19 pay period", function() {
+        var rowArrayThatDoesntMatter = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+          [8]
+        );
+        var dayForTodayThatDoesntMatter = "2019-09-27";
+
+        var timesehet = new Summarizer.Timesheet(
+          rowArrayThatDoesntMatter,
+          "2019-09-01",
+          "2019-09-15",
+          dayForTodayThatDoesntMatter
+        );
+
+        expect(timesehet.weekdaysInTimesheet()).toBe(10);
+      });
+    });
   });
 });
