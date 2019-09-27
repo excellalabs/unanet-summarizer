@@ -610,8 +610,8 @@ describe("timesheet", function() {
           expect(timesheet.totalNonPlusHours()).toBe(40);
         });
 
-        it("has tracking of zero because 13th is filled out", function() {
-          expect(timesheet.plusHoursTracking()).toBe(0);
+        it("has tracking of -32 because 13th is filled out", function() {
+          expect(timesheet.plusHoursTracking()).toBe(-32);
         });
       });
       describe("timesheet complete after period ends", function() {

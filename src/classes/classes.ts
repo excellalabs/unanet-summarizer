@@ -91,6 +91,7 @@ export module Summarizer {
     timesheetStartDate: moment.Moment;
     timesheetEndDate: moment.Moment;
     todaysDate: moment.Moment;
+    HOURS_IN_WORKDAY = 8;
 
     constructor(
       timesheetRows: Array<Summarizer.TimesheetRow>,
@@ -216,11 +217,12 @@ export module Summarizer {
 
     plusHoursTracking = (): number => {
       var workingDays = this.weekdaysInTimesheet();
-      // var numberOfRemainingWorkDays() // counts today if no time has been entered
-      // expectedHours = workingDays * HOURS_PER_DAY
-      // actualHours = totalPlusHours() + (numberOfRemainingWorkDays * HOURS_PER_DAY)
-      // return actualHours - expectedHours
-      return 0; // TODO: real code
+      var remainingWorkingDays = this.numberOfRemainingWorkDays();
+      var expectedHours = workingDays * this.HOURS_IN_WORKDAY;
+      var actualHours =
+        this.totalPlusHours() + remainingWorkingDays * this.HOURS_IN_WORKDAY;
+
+      return actualHours - expectedHours;
     };
 
     numberOfRemainingWorkDays = (): number => {
