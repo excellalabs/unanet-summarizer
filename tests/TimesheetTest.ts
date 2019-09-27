@@ -672,27 +672,100 @@ describe("timesheet", function() {
       });
       describe("overage on the last working day of the timesehet", function() {
         var dateForToday = "2019-09-13";
+
+        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var rows = arrayBuilder
+          .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12])
+          .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
+
+        var timesheet = new Summarizer.Timesheet(
+          rows,
+          timesheetStartDate,
+          timesheetEndDate,
+          dateForToday
+        );
+
+        it("totals the plus hours correctly", function() {
+          expect(timesheet.totalPlusHours()).toBe(80);
+        });
+
+        it("has tracking of 8 13 is assumed to be 8 hours", function() {
+          expect(timesheet.plusHoursTracking()).toBe(8);
+        });
       });
 
       describe("overage on the last calendar day of the timesheet", function() {
         var dateForToday = "2019-09-15";
+
+        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var rows = arrayBuilder
+          .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
+          .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
+
+        var timesheet = new Summarizer.Timesheet(
+          rows,
+          timesheetStartDate,
+          timesheetEndDate,
+          dateForToday
+        );
+
+        it("totals the plus hours correctly", function() {
+          expect(timesheet.totalPlusHours()).toBe(88);
+        });
+
+        it("has tracking of 8 13 is assumed to be 8 hours", function() {
+          expect(timesheet.plusHoursTracking()).toBe(8);
+        });
       });
       describe("overage after the timesheet is complete", function() {
         var dateForToday = "2019-09-16";
+
+        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        var rows = arrayBuilder
+          .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
+          .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
+
+        var timesheet = new Summarizer.Timesheet(
+          rows,
+          timesheetStartDate,
+          timesheetEndDate,
+          dateForToday
+        );
+
+        it("totals the plus hours correctly", function() {
+          expect(timesheet.totalPlusHours()).toBe(88);
+        });
+
+        it("has tracking of 8", function() {
+          expect(timesheet.plusHoursTracking()).toBe(8);
+        });
       });
-      // TODO
     });
 
     describe("tracking a timesheet with plus hour underages", function() {
       describe("timesheet incomplete after period ends", function() {
         const dateForToday = "2019-09-16"; // next day after time sheet closes
-        // TODO
-      });
-      //TODO
-    });
+        var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
 
-    describe("dealing with non-work days", function() {
-      // TODO
+        var rows = arrayBuilder
+          .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 13])
+          .concat(arrayBuilder.nonPlusHoursForDates([12])); // non hours on the 12th
+
+        var timesheet = new Summarizer.Timesheet(
+          rows,
+          timesheetStartDate,
+          timesheetEndDate,
+          dateForToday
+        );
+
+        it("totals the plus hours correctly", function() {
+          expect(timesheet.totalPlusHours()).toBe(72);
+        });
+
+        it("has tracking of -8", function() {
+          expect(timesheet.plusHoursTracking()).toBe(-8);
+        });
+      });
     });
   });
   describe("hoursForDate", function() {
