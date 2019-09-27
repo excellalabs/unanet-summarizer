@@ -215,7 +215,7 @@ export module Summarizer {
     };
 
     plusHoursTracking = (): number => {
-      // var weekDays = weekdaysInTimesheet()
+      var workingDays = this.weekdaysInTimesheet();
       // var numberOfRemainingWorkDays() // counts today if no time has been entered
       // expectedHours = workingDays * HOURS_PER_DAY
       // actualHours = totalPlusHours() + (numberOfRemainingWorkDays * HOURS_PER_DAY)
@@ -239,6 +239,20 @@ export module Summarizer {
         startDate.add(1, "day");
       }
       return totalWeekDays;
+    };
+
+    hoursForDate = (theDate: number): number => {
+      var allEntryArrays = this.timesheetRows.map(row => row.entries);
+      var flattenedArray = ([] as DateEntry[]).concat(...allEntryArrays);
+
+      var filteredToTheDate = flattenedArray.filter(value => {
+        return value.dayOfMonth === theDate;
+      });
+
+      var sumOfHours = filteredToTheDate.reduce((acc, val) => {
+        return acc + val.hoursAmount;
+      }, 0);
+      return sumOfHours;
     };
   }
 

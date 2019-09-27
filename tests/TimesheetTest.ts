@@ -697,6 +697,78 @@ describe("timesheet", function() {
       // TODO
     });
   });
+  describe("hoursForDate", function() {
+    var startDate = "2019-09-01";
+    var endDate = "2019-09-15";
+    var todayDateThatDoesntMatter = "2019-09-27";
+
+    it("returns 0 if no hours for a date", function() {
+      var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([7]);
+      var timesheet = new Summarizer.Timesheet(
+        rows,
+        startDate,
+        endDate,
+        todayDateThatDoesntMatter
+      );
+
+      expect(timesheet.hoursForDate(1)).toBe(0);
+    });
+    it("returns hours if plus hours exist", function() {
+      var rows = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([7]);
+      var timesheet = new Summarizer.Timesheet(
+        rows,
+        startDate,
+        endDate,
+        todayDateThatDoesntMatter
+      );
+
+      expect(timesheet.hoursForDate(7)).toBe(8);
+    });
+    it("returns hours if non-plus hours exist", function() {
+      var rows = new Helpers.TimesheetRowArrayBuilder().nonPlusHoursForDates([
+        7
+      ]);
+      var timesheet = new Summarizer.Timesheet(
+        rows,
+        startDate,
+        endDate,
+        todayDateThatDoesntMatter
+      );
+
+      expect(timesheet.hoursForDate(7)).toBe(8);
+    });
+    it("returns sum if plus and non-plus exist", function() {
+      var rowBuilder = new Helpers.TimesheetRowArrayBuilder();
+      var rows = rowBuilder
+        .plusHoursForDates([7])
+        .concat(rowBuilder.nonPlusHoursForDates([7]));
+      var timesheet = new Summarizer.Timesheet(
+        rows,
+        startDate,
+        endDate,
+        todayDateThatDoesntMatter
+      );
+
+      expect(timesheet.hoursForDate(7)).toBe(16);
+    });
+    it("only cares about that date", function() {
+      var rowBuilder = new Helpers.TimesheetRowArrayBuilder();
+      var rows = rowBuilder
+        .plusHoursForDates([7])
+        .concat(rowBuilder.nonPlusHoursForDates([10]));
+      var timesheet = new Summarizer.Timesheet(
+        rows,
+        startDate,
+        endDate,
+        todayDateThatDoesntMatter
+      );
+
+      expect(timesheet.hoursForDate(7)).toBe(8);
+    });
+  });
+  describe("numberOfRemainingWorkingDays", function() {
+    // TODO
+  });
   describe("weekdaysInTimesheet", function() {
     describe("uses start and end dates to calculate weekdays", function() {
       it("returns 0 workdays when started/ended on a weekend", function() {
