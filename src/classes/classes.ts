@@ -276,6 +276,12 @@ export module Summarizer {
       }
       return totalWeekDays;
     };
+
+    hoursByCategory = () => {
+      let results: Array<{ id: ProjectType; total: number }> = [];
+
+      return results;
+    };
   }
 
   enum TimesheetDateType {
