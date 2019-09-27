@@ -537,7 +537,7 @@ describe("timesheet", function() {
 
         describe("not filled out up to today", function() {
           var arrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-          var rows = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10]);
+          var rows = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11]);
 
           var timesheet = new Summarizer.Timesheet(
             rows,
@@ -547,7 +547,7 @@ describe("timesheet", function() {
           );
 
           it("totals the plus hours correctly", function() {
-            expect(timesheet.totalPlusHours()).toBe(56);
+            expect(timesheet.totalPlusHours()).toBe(64);
           });
 
           it("has tracking of zero because it assumes 8 hours for 11th-13th", function() {
