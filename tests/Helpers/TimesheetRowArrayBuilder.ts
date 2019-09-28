@@ -4,21 +4,19 @@ import { TimesheetRow } from "../../src/classes/TimesheetRow";
 import { TimesheetRowBuilder } from "../Helpers/TimesheetRowBuilder";
 
 export class TimesheetRowArrayBuilder {
-  constructor() {}
-
-  plusHoursForDates = (dates: Array<number>): Array<TimesheetRow> => {
+  public plusHoursForDates = (dates: number[]): TimesheetRow[] => {
     return this.hoursOfTypeForDates(dates, ProjectType.Bill);
   };
 
-  nonPlusHoursForDates = (dates: Array<number>): Array<TimesheetRow> => {
+  public nonPlusHoursForDates = (dates: number[]): TimesheetRow[] => {
     return this.hoursOfTypeForDates(dates, ProjectType.NonBillable);
   };
 
-  hoursOfTypeForDates = (
-    dates: Array<number>,
+  public hoursOfTypeForDates = (
+    dates: number[],
     type: ProjectType
-  ): Array<TimesheetRow> => {
-    var rows = dates.map(theDate =>
+  ): TimesheetRow[] => {
+    const rows = dates.map(theDate =>
       new TimesheetRowBuilder()
         .withProjectType(type)
         .withEntry(new DateEntry(theDate.toString(), "8.0"))
