@@ -5,36 +5,37 @@ describe("constructor", () => {
     const validDayOfMonth = "8";
 
     it("treats null hours as zero hours", () => {
-      var entry = new DateEntry(validDayOfMonth, null);
+      const entry = new DateEntry(validDayOfMonth, null);
       expect(entry.hoursAmount).toBe(0);
     });
 
     it("treats empty hours as zero hours", () => {
-      var entry = new DateEntry(validDayOfMonth, "");
+      const entry = new DateEntry(validDayOfMonth, "");
       expect(entry.hoursAmount).toBe(0);
     });
 
     it("treats whitespace hours as zero hours", () => {
-      var entry = new DateEntry(validDayOfMonth, "  ");
+      const entry = new DateEntry(validDayOfMonth, "  ");
       expect(entry.hoursAmount).toBe(0);
     });
 
     it("parses a round number correctly", () => {
-      var entry = new DateEntry(validDayOfMonth, "8");
+      const entry = new DateEntry(validDayOfMonth, "8");
       expect(entry.hoursAmount).toBe(8);
     });
 
     it("parses a decimal number correctly", () => {
-      var entry = new DateEntry(validDayOfMonth, "8.25");
+      const entry = new DateEntry(validDayOfMonth, "8.25");
       expect(entry.hoursAmount).toBe(8.25);
     });
 
     it("parses a decimal number correctly with whitespace", () => {
-      var entry = new DateEntry(validDayOfMonth, " 8.25 ");
+      const entry = new DateEntry(validDayOfMonth, " 8.25 ");
       expect(entry.hoursAmount).toBe(8.25);
     });
     it("throws an error if the value parsed is still not a number", () => {
-      var functionToBlowUp = () => {
+      const functionToBlowUp = () => {
+        // tslint:disable-next-line:no-unused-expression
         new DateEntry(validDayOfMonth, "Abc");
       };
       expect(functionToBlowUp).toThrowError(
@@ -47,7 +48,8 @@ describe("constructor", () => {
     const validWorkHours = "8.25";
 
     it("throws exception on null string", () => {
-      var functionThatShouldBlowUp = () => {
+      const functionThatShouldBlowUp = () => {
+        // tslint:disable-next-line:no-unused-expression
         new DateEntry(null, validWorkHours);
       };
       expect(functionThatShouldBlowUp).toThrowError(
@@ -56,7 +58,8 @@ describe("constructor", () => {
     });
 
     it("throws exception on undefined string", () => {
-      var functionThatShouldBlowUp = () => {
+      const functionThatShouldBlowUp = () => {
+        // tslint:disable-next-line:no-unused-expression
         new DateEntry(undefined, validWorkHours);
       };
       expect(functionThatShouldBlowUp).toThrowError(
@@ -65,7 +68,8 @@ describe("constructor", () => {
     });
 
     it("throws exception on empty string", () => {
-      var functionThatShouldBlowUp = () => {
+      const functionThatShouldBlowUp = () => {
+        // tslint:disable-next-line:no-unused-expression
         new DateEntry("", validWorkHours);
       };
       expect(functionThatShouldBlowUp).toThrowError(
@@ -74,7 +78,8 @@ describe("constructor", () => {
     });
 
     it("throws exception on whitespace string", () => {
-      var functionThatShouldBlowUp = () => {
+      const functionThatShouldBlowUp = () => {
+        // tslint:disable-next-line:no-unused-expression
         new DateEntry("   ", validWorkHours);
       };
       expect(functionThatShouldBlowUp).toThrowError(
@@ -83,22 +88,23 @@ describe("constructor", () => {
     });
 
     it("parses whole numbers", () => {
-      var entry = new DateEntry("11", validWorkHours);
+      const entry = new DateEntry("11", validWorkHours);
       expect(entry.dayOfMonth).toBe(11);
     });
 
     it("parses even with whitespace", () => {
-      var entry = new DateEntry(" 11 ", validWorkHours);
+      const entry = new DateEntry(" 11 ", validWorkHours);
       expect(entry.dayOfMonth).toBe(11);
     });
 
     it("ensures whole numbers", () => {
-      var entry = new DateEntry("11.2", validWorkHours);
+      const entry = new DateEntry("11.2", validWorkHours);
       expect(entry.dayOfMonth).toBe(11);
     });
 
     it("throws an error when it cannot be parsed", () => {
-      var shouldBlowUp = () => {
+      const shouldBlowUp = () => {
+        // tslint:disable-next-line:no-unused-expression
         new DateEntry("Abc", validWorkHours);
       };
       expect(shouldBlowUp).toThrowError(
