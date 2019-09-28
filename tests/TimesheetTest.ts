@@ -1,27 +1,27 @@
 import { Summarizer } from "../src/classes/classes";
 import { Helpers } from "./Helpers";
 
-describe("timesheet", function(): void {
-  describe("ctor", function(): void {
-    describe("rows", function(): void {
-      it("throws an exception with null rows list", function(): void {
-        var shouldBlowUp: any = function(): void {
+describe("timesheet", () => {
+  describe("ctor", () => {
+    describe("rows", () => {
+      it("throws an exception with null rows list", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withRows(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");
       });
 
-      it("throws an exception with undefined rows list", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an exception with undefined rows list", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withRows(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");
       });
 
-      it("throws an exception with empty rows list", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an exception with empty rows list", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder()
             .withRows(new Array<Summarizer.TimesheetRow>())
             .build();
@@ -31,51 +31,51 @@ describe("timesheet", function(): void {
       });
     });
 
-    describe("timesheet start date", function(): void {
-      it("throws an error when null", function(): void {
-        var shouldBlowUp: any = function(): void {
+    describe("timesheet start date", () => {
+      it("throws an error when null", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withStartDate(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
 
-      it("throws an error when undefined", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when undefined", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withStartDate(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
 
-      it("throws an error when empty", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when empty", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withStartDate("").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
 
-      it("throws an error when whitespace", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when whitespace", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withStartDate("    ").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
 
-      it("throws an error when non-formatted date", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when non-formatted date", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withStartDate("abcd").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
       });
 
-      it("throws an error when given a date before 2010", function(): void {
+      it("throws an error when given a date before 2010", () => {
         // this is just to ensure people are using it for recent timesheets; we introduced this in 2018.
 
-        var shouldBlowUp: any = function(): void {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withStartDate("2009-12-31").build();
         };
 
@@ -84,7 +84,7 @@ describe("timesheet", function(): void {
         );
       });
 
-      it("is fine with a valid date", function(): void {
+      it("is fine with a valid date", () => {
         var shouldBeFine: any = function(): any {
           new Helpers.TimesheetBuilder().withStartDate("2010-01-01").build();
           new Helpers.TimesheetBuilder().withStartDate("2019-09-08").build();
@@ -93,51 +93,51 @@ describe("timesheet", function(): void {
       });
     });
 
-    describe("timesheet end date", function(): void {
-      it("throws an error when null", function(): void {
-        var shouldBlowUp: any = function(): void {
+    describe("timesheet end date", () => {
+      it("throws an error when null", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withEndDate(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
       });
 
-      it("throws an error when undefined", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when undefined", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withEndDate(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
       });
 
-      it("throws an error when empty", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when empty", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withEndDate("").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
       });
 
-      it("throws an error when whitespace", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when whitespace", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withEndDate("    ").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
       });
 
-      it("throws an error when non-formatted date", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when non-formatted date", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withEndDate("abcd").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
       });
 
-      it("throws an error when given a date before 2010", function(): void {
+      it("throws an error when given a date before 2010", () => {
         // this is just to ensure people are using it for recent timesheets; we introduced this in 2018.
 
-        var shouldBlowUp: any = function(): void {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withEndDate("2009-12-31").build();
         };
 
@@ -146,7 +146,7 @@ describe("timesheet", function(): void {
         );
       });
 
-      it("is fine with a valid date", function(): void {
+      it("is fine with a valid date", () => {
         var shouldBeFine: any = function(): any {
           new Helpers.TimesheetBuilder().withEndDate("01-01-2010").build();
           new Helpers.TimesheetBuilder().withEndDate("2019-09-08").build();
@@ -155,58 +155,58 @@ describe("timesheet", function(): void {
       });
     });
 
-    describe("today's date", function(): void {
-      it("throws an error when null", function(): void {
-        var shouldBlowUp: any = function(): void {
+    describe("today's date", () => {
+      it("throws an error when null", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withTodayDate(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
       });
 
-      it("throws an error when undefined", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when undefined", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withTodayDate(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
       });
 
-      it("throws an error when empty", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when empty", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withTodayDate("").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
       });
 
-      it("throws an error when whitespace", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when whitespace", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withTodayDate("     ").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
       });
 
-      it("throws an error when non-formatted date", function(): void {
-        var shouldBlowUp: any = function(): void {
+      it("throws an error when non-formatted date", () => {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withTodayDate("abcd").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
       });
 
-      it("throws an error when given a date before 2010", function(): void {
+      it("throws an error when given a date before 2010", () => {
         // this is just to ensure people are using it for recent timesheets; we introduced this in 2018.
 
-        var shouldBlowUp: any = function(): void {
+        var shouldBlowUp: any = () => {
           new Helpers.TimesheetBuilder().withTodayDate("2009-12-31").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date should be after 2009.");
       });
 
-      it("is fine with a valid date", function(): void {
+      it("is fine with a valid date", () => {
         var shouldBeFine: any = function(): any {
           new Helpers.TimesheetBuilder().withTodayDate("2010-01-01").build();
           new Helpers.TimesheetBuilder().withTodayDate("2019-09-08").build();
@@ -215,10 +215,10 @@ describe("timesheet", function(): void {
       });
     });
   });
-  describe("getLatestEntryDate", function(): void {
+  describe("getLatestEntryDate", () => {
     var hoursAmountThatDoesntMatter: string = "8";
 
-    it("returns the largest date number that has an entry", function(): void {
+    it("returns the largest date number that has an entry", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -246,7 +246,7 @@ describe("timesheet", function(): void {
       expect(timesheet.getLatestEntryDate()).toBe(3);
     });
 
-    it("doesn't count zero time entries as a date to care about", function(): void {
+    it("doesn't count zero time entries as a date to care about", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -272,12 +272,12 @@ describe("timesheet", function(): void {
 
       expect(timesheet.getLatestEntryDate()).toBe(2);
     });
-    it("returns undefined when an empty timesheet", function(): void {
+    it("returns undefined when an empty timesheet", () => {
       var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder().build();
 
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
-    it("returns undefined with a timesheet of all zero entries", function(): void {
+    it("returns undefined with a timesheet of all zero entries", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -306,8 +306,8 @@ describe("timesheet", function(): void {
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
   });
-  describe("totalPlusHours", function(): void {
-    it("returns the sum of hours across all plus rows on a timesheet", function(): void {
+  describe("totalPlusHours", () => {
+    it("returns the sum of hours across all plus rows on a timesheet", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -338,7 +338,7 @@ describe("timesheet", function(): void {
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
 
-    it("doesn't count non-plus rows", function(): void {
+    it("doesn't count non-plus rows", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -381,7 +381,7 @@ describe("timesheet", function(): void {
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
 
-    it("returns 0 when there are no + rows", function(): void {
+    it("returns 0 when there are no + rows", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -411,7 +411,7 @@ describe("timesheet", function(): void {
       expect(timesheet.totalPlusHours()).toBe(0);
     });
 
-    it("returns 0 when there are no entries in any rows", function(): void {
+    it("returns 0 when there are no entries in any rows", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -438,8 +438,8 @@ describe("timesheet", function(): void {
       expect(timesheet.totalPlusHours()).toBe(0);
     });
   });
-  describe("totalNonPlusHours", function(): void {
-    it("returns the sum of hours across all non-plus rows on a timesheet", function(): void {
+  describe("totalNonPlusHours", () => {
+    it("returns the sum of hours across all non-plus rows on a timesheet", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -470,7 +470,7 @@ describe("timesheet", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(6.5);
     });
 
-    it("doesn't count plus rows", function(): void {
+    it("doesn't count plus rows", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -513,7 +513,7 @@ describe("timesheet", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(6.5);
     });
 
-    it("returns 0 when there are no non-plus rows", function(): void {
+    it("returns 0 when there are no non-plus rows", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -543,7 +543,7 @@ describe("timesheet", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
 
-    it("returns 0 when there are no entries in any rows", function(): void {
+    it("returns 0 when there are no entries in any rows", () => {
       var rows: Array<Summarizer.TimesheetRow> = new Array<
         Summarizer.TimesheetRow
       >();
@@ -570,7 +570,7 @@ describe("timesheet", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
   });
-  describe("tracking", function(): void {
+  describe("tracking", () => {
     // this section uses a real time period of 9/1/2019 - 9/15/2019
     // timesheet starts with Sunday 9/1
     // there were 10 working days in the period, Sept 2-6 and Sept 9-13
@@ -578,11 +578,11 @@ describe("timesheet", function(): void {
     const timesheetStartDate: string = "2019-09-01";
     const timesheetEndDate: string = "2019-09-15";
 
-    describe("tracking a totally balanced timesheet", function(): void {
-      describe("timesheet incomplete before period ends", function(): void {
+    describe("tracking a totally balanced timesheet", () => {
+      describe("timesheet incomplete before period ends", () => {
         const dateForToday: string = "2019-09-12"; // thursday
 
-        describe("not filled out up to today", function(): void {
+        describe("not filled out up to today", () => {
           var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
           var rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates([
             2,
@@ -602,16 +602,16 @@ describe("timesheet", function(): void {
             dateForToday
           );
 
-          it("totals the plus hours correctly", function(): void {
+          it("totals the plus hours correctly", () => {
             expect(timesheet.totalPlusHours()).toBe(64);
           });
 
-          it("has tracking of zero because it assumes 8 hours for 11th-13th", function(): void {
+          it("has tracking of zero because it assumes 8 hours for 11th-13th", () => {
             expect(timesheet.plusHoursTracking()).toBe(0);
           });
         });
 
-        describe("but filled out up to today", function(): void {
+        describe("but filled out up to today", () => {
           var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
           var rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates([
             2,
@@ -632,16 +632,16 @@ describe("timesheet", function(): void {
             dateForToday
           );
 
-          it("totals the plus hours correctly", function(): void {
+          it("totals the plus hours correctly", () => {
             expect(timesheet.totalPlusHours()).toBe(72);
           });
 
-          it("has tracking of zero because it assumes 8 hours for 13th", function(): void {
+          it("has tracking of zero because it assumes 8 hours for 13th", () => {
             expect(timesheet.plusHoursTracking()).toBe(0);
           });
         });
       });
-      describe("timesheet complete before period ends", function(): void {
+      describe("timesheet complete before period ends", () => {
         const dateForToday: string = "2019-09-12"; // thursday
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
@@ -656,19 +656,19 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function(): void {
+        it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(40);
         });
 
-        it("totals the non-plus hours correctly", function(): void {
+        it("totals the non-plus hours correctly", () => {
           expect(timesheet.totalNonPlusHours()).toBe(40);
         });
 
-        it("has tracking of -32 because 13th is filled out", function(): void {
+        it("has tracking of -32 because 13th is filled out", () => {
           expect(timesheet.plusHoursTracking()).toBe(-32);
         });
       });
-      describe("timesheet complete after period ends", function(): void {
+      describe("timesheet complete after period ends", () => {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
@@ -692,18 +692,18 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function(): void {
+        it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(80);
         });
 
-        it("has tracking of zero because 13th is filled out", function(): void {
+        it("has tracking of zero because 13th is filled out", () => {
           expect(timesheet.plusHoursTracking()).toBe(0);
         });
       });
     });
 
-    describe("tracking a timesheet with plus hour overages", function(): void {
-      describe("overage on incomplete timesheet", function(): void {
+    describe("tracking a timesheet with plus hour overages", () => {
+      describe("overage on incomplete timesheet", () => {
         var dateForToday: string = "2019-09-10";
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
@@ -718,15 +718,15 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function(): void {
+        it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(64);
         });
 
-        it("has tracking of 8 11-13 is assumed to be 8 hours", function(): void {
+        it("has tracking of 8 11-13 is assumed to be 8 hours", () => {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
-      describe("overage on the last working day of the timesheet", function(): void {
+      describe("overage on the last working day of the timesheet", () => {
         var dateForToday: string = "2019-09-13";
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
@@ -741,16 +741,16 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function(): void {
+        it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(80);
         });
 
-        it("has tracking of 8 13 is assumed to be 8 hours", function(): void {
+        it("has tracking of 8 13 is assumed to be 8 hours", () => {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
 
-      describe("overage on the last calendar day of the timesheet", function(): void {
+      describe("overage on the last calendar day of the timesheet", () => {
         var dateForToday: string = "2019-09-15";
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
@@ -765,15 +765,15 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function(): void {
+        it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(88);
         });
 
-        it("has tracking of 8 13 is assumed to be 8 hours", function(): void {
+        it("has tracking of 8 13 is assumed to be 8 hours", () => {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
-      describe("overage after the timesheet is complete", function(): void {
+      describe("overage after the timesheet is complete", () => {
         var dateForToday: string = "2019-09-16";
 
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
@@ -788,18 +788,18 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function(): void {
+        it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(88);
         });
 
-        it("has tracking of 8", function(): void {
+        it("has tracking of 8", () => {
           expect(timesheet.plusHoursTracking()).toBe(8);
         });
       });
     });
 
-    describe("tracking a timesheet with plus hour underages", function(): void {
-      describe("timesheet incomplete after period ends", function(): void {
+    describe("tracking a timesheet with plus hour underages", () => {
+      describe("timesheet incomplete after period ends", () => {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
         var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
 
@@ -814,22 +814,22 @@ describe("timesheet", function(): void {
           dateForToday
         );
 
-        it("totals the plus hours correctly", function(): void {
+        it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(72);
         });
 
-        it("has tracking of -8", function(): void {
+        it("has tracking of -8", () => {
           expect(timesheet.plusHoursTracking()).toBe(-8);
         });
       });
     });
   });
-  describe("hoursForDate", function(): void {
+  describe("hoursForDate", () => {
     var startDate: string = "2019-09-01";
     var endDate: string = "2019-09-15";
     var todayDateThatDoesntMatter: string = "2019-09-27";
 
-    it("returns 0 if no hours for a date", function(): void {
+    it("returns 0 if no hours for a date", () => {
       var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
         [7]
       );
@@ -842,7 +842,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.hoursForDate(1)).toBe(0);
     });
-    it("returns hours if plus hours exist", function(): void {
+    it("returns hours if plus hours exist", () => {
       var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
         [7]
       );
@@ -855,7 +855,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
-    it("returns hours if non-plus hours exist", function(): void {
+    it("returns hours if non-plus hours exist", () => {
       var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().nonPlusHoursForDates(
         [7]
       );
@@ -868,7 +868,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
-    it("returns sum if plus and non-plus exist", function(): void {
+    it("returns sum if plus and non-plus exist", () => {
       var rowBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
       var rows: Summarizer.TimesheetRow[] = rowBuilder
         .plusHoursForDates([7])
@@ -882,7 +882,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.hoursForDate(7)).toBe(16);
     });
-    it("only cares about that date", function(): void {
+    it("only cares about that date", () => {
       var rowBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
       var rows: Summarizer.TimesheetRow[] = rowBuilder
         .plusHoursForDates([7])
@@ -897,13 +897,13 @@ describe("timesheet", function(): void {
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
   });
-  describe("numberOfRemainingWorkDays", function(): void {
+  describe("numberOfRemainingWorkDays", () => {
     var startDate: string = "2019-09-01";
     var endDate: string = "2019-09-15";
     var rowsThatDontMatter: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
       [6]
     );
-    it("returns zero when today is after the timesheet end", function(): void {
+    it("returns zero when today is after the timesheet end", () => {
       var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
@@ -913,7 +913,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
-    it("returns zero when today is in a weekend at the end of the timesheet", function(): void {
+    it("returns zero when today is in a weekend at the end of the timesheet", () => {
       var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
@@ -923,7 +923,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
-    it("returns 1 when today is the last workday of the timesheet", function(): void {
+    it("returns 1 when today is the last workday of the timesheet", () => {
       var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
@@ -933,7 +933,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(1);
     });
-    it("returns 0 when today is the last workday of the timesheet and has hours", function(): void {
+    it("returns 0 when today is the last workday of the timesheet and has hours", () => {
       var rows: Summarizer.TimesheetRow[] = rowsThatDontMatter.concat(
         new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([13])
       );
@@ -947,7 +947,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
-    it("returns 2 when today is the 2nd to last day in timesheet", function(): void {
+    it("returns 2 when today is the 2nd to last day in timesheet", () => {
       var timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
         rowsThatDontMatter,
         startDate,
@@ -957,7 +957,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(2);
     });
-    it("returns 1 when today is 2nd to last day but has hours", function(): void {
+    it("returns 1 when today is 2nd to last day but has hours", () => {
       var rows: Summarizer.TimesheetRow[] = rowsThatDontMatter.concat(
         new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([12])
       );
@@ -972,9 +972,9 @@ describe("timesheet", function(): void {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(1);
     });
   });
-  describe("weekdaysInTimesheet", function(): void {
-    describe("uses start and end dates to calculate weekdays", function(): void {
-      it("returns 0 workdays when started/ended on a weekend", function(): void {
+  describe("weekdaysInTimesheet", () => {
+    describe("uses start and end dates to calculate weekdays", () => {
+      it("returns 0 workdays when started/ended on a weekend", () => {
         var saturday: string = "2019-09-07";
         var sunday: string = "2019-09-08";
 
@@ -990,7 +990,7 @@ describe("timesheet", function(): void {
 
         expect(timesheet.weekdaysInTimesheet()).toBe(0);
       });
-      it("returns 1 when start/end date are the same weekday", function(): void {
+      it("returns 1 when start/end date are the same weekday", () => {
         var monday: string = "2019-09-10";
 
         var rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
@@ -1005,7 +1005,7 @@ describe("timesheet", function(): void {
 
         expect(timesheet.weekdaysInTimesheet()).toBe(1);
       });
-      it("returns the correct number of weekdays in the 9/1/19 - 9/15/19 pay period", function(): void {
+      it("returns the correct number of weekdays in the 9/1/19 - 9/15/19 pay period", () => {
         var rowArrayThatDoesntMatter: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
           [8]
         );
@@ -1022,7 +1022,7 @@ describe("timesheet", function(): void {
       });
     });
   });
-  describe("hoursByProjectType", function(): void {
+  describe("hoursByProjectType", () => {
     var startDate: string = "2019-09-01";
     var endDate: string = "2019-09-15";
     var todayDate: string = "2019-09-13";
@@ -1059,7 +1059,7 @@ describe("timesheet", function(): void {
       total: number;
     }> = timesheet.hoursByProjectType();
 
-    it("breaks down categories correctly", function(): void {
+    it("breaks down categories correctly", () => {
       expect(result.length).toBe(5);
       expect(
         result.find(i => i.projectType === Summarizer.ProjectType.Bill).total
@@ -1079,7 +1079,7 @@ describe("timesheet", function(): void {
           .total
       ).toBe(24);
     });
-    it("matches the sum of plus rows", function(): void {
+    it("matches the sum of plus rows", () => {
       var bill: number = result.find(
         i => i.projectType === Summarizer.ProjectType.Bill
       ).total;
@@ -1092,7 +1092,7 @@ describe("timesheet", function(): void {
 
       expect(timesheet.totalPlusHours()).toBe(bill + core + bench);
     });
-    it("matches the sum of non-plus rows", function(): void {
+    it("matches the sum of non-plus rows", () => {
       var internal: number = result.find(
         i => i.projectType === Summarizer.ProjectType.Internal
       ).total;
@@ -1103,7 +1103,7 @@ describe("timesheet", function(): void {
       expect(timesheet.totalNonPlusHours()).toBe(internal + nonBillable);
     });
   });
-  describe("Sean's actual 9/1/2019-9/15/2019 timesheet", function(): void {
+  describe("Sean's actual 9/1/2019-9/15/2019 timesheet", () => {
     var rows: Array<Summarizer.TimesheetRow> = new Array<
       Summarizer.TimesheetRow
     >();
@@ -1178,19 +1178,19 @@ describe("timesheet", function(): void {
       "2019-09-27"
     );
 
-    it("totals plus rows correctly", function(): void {
+    it("totals plus rows correctly", () => {
       expect(timesheet.totalPlusHours()).toBe(111);
     });
 
-    it("totals non-plus rows correctly", function(): void {
+    it("totals non-plus rows correctly", () => {
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
 
-    it("totals tracking correctly", function(): void {
+    it("totals tracking correctly", () => {
       expect(timesheet.plusHoursTracking()).toBe(31);
     });
 
-    it("breaks down categories correctly", function(): void {
+    it("breaks down categories correctly", () => {
       expect(
         timesheet
           .hoursByProjectType()
