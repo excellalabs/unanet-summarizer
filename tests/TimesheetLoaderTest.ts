@@ -1,6 +1,6 @@
 import { JSDOM } from "jsdom";
-import { EditModeLoader } from "../src/classes/Loaders/EditModeLoader";
 import moment = require("moment");
+import { EditModeLoader } from "../src/classes/Loaders/EditModeLoader";
 
 describe("timesheet loader", () => {
   describe("edit mode", () => {
