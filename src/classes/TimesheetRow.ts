@@ -3,10 +3,10 @@ import { PlusProjectTypes } from "./PlusProjectTypes";
 import { ProjectType } from "./ProjectType";
 
 export class TimesheetRow {
-  projectType: ProjectType;
-  entries: Array<DateEntry>;
+  public projectType: ProjectType;
+  public entries: DateEntry[];
 
-  constructor(projectType: ProjectType, dateEntries: Array<DateEntry>) {
+  constructor(projectType: ProjectType, dateEntries: DateEntry[]) {
     this.projectType = projectType;
 
     if (dateEntries === null || dateEntries === undefined) {
@@ -16,11 +16,11 @@ export class TimesheetRow {
     }
   }
 
-  isPlusProjectType(): boolean {
+  public isPlusProjectType(): boolean {
     return Object.values(PlusProjectTypes).includes(this.projectType);
   }
 
-  totalHours(): number {
+  public totalHours(): number {
     return this.entries.reduce((a, b) => a + b.hoursAmount, 0);
   }
 }
