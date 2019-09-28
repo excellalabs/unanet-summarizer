@@ -26,8 +26,14 @@ describe("timesheet loader", () => {
 
       await reviewModePromise;
     });
+
+    it("(sanity check) finds Sean's name", () => {
+      expect(reviewModeDom.window.document.title).toContain("Sean Killeen");
+    });
   });
-  describe("supervisee mode", () => {
+  xdescribe("supervisee mode", () => {
+    // TODO: waiting until I actually have a supervisee timesheet html
+
     let superviseeDom: JSDOM;
 
     beforeAll(async () => {
