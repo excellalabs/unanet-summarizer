@@ -5,9 +5,9 @@ import { TimesheetDateType } from "./TimesheetDateType";
 import { TimesheetRow } from "./TimesheetRow";
 
 export class Timesheet {
+  public timesheetStartDate: moment.Moment;
+  public timesheetEndDate: moment.Moment;
   private timesheetRows: TimesheetRow[];
-  private timesheetStartDate: moment.Moment;
-  private timesheetEndDate: moment.Moment;
   private todaysDate: moment.Moment;
   private HOURS_IN_WORKDAY = 8;
 

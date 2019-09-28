@@ -1,4 +1,6 @@
 import { JSDOM } from "jsdom";
+import { EditModeLoader } from "../src/classes/Loaders/EditModeLoader";
+import moment = require("moment");
 
 describe("timesheet loader", () => {
   describe("edit mode", () => {
@@ -13,6 +15,22 @@ describe("timesheet loader", () => {
 
     it("(sanity check) finds Sean's name", () => {
       expect(editModeDom.window.document.title).toContain("Killeen, Sean");
+    });
+
+    it("loads the start date correctly from the title", () => {
+      const loader = new EditModeLoader(editModeDom.window.document.title);
+      const timesheet = loader.getTimesheet();
+
+      const expectedStartDate = moment("2019-09-16");
+      expect(expectedStartDate.isSame(timesheet.timesheetStartDate)).toBe(true);
+    });
+
+    it("loads the end date correctly from the title", () => {
+      const loader = new EditModeLoader(editModeDom.window.document.title);
+      const timesheet = loader.getTimesheet();
+
+      const expectedStartDate = moment("2019-09-30");
+      expect(expectedStartDate.isSame(timesheet.timesheetEndDate)).toBe(true);
     });
   });
 
