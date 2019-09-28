@@ -1,15 +1,18 @@
 import { JSDOM } from "jsdom";
 import moment = require("moment");
 import { EditModeLoader } from "../src/classes/Loaders/EditModeLoader";
+import { ProjectType } from "../src/classes/ProjectType";
 
 describe("timesheet loader", () => {
   describe("edit mode", () => {
     let editModeDom: JSDOM;
     let pageTitle: string = "";
+    let timesheetTable: Element;
     beforeAll(async () => {
       const editModePromise = JSDOM.fromFile("tests/Fixtures/timesheetInEditMode.html").then(dom => {
         editModeDom = dom;
         pageTitle = editModeDom.window.document.title;
+        timesheetTable = editModeDom.window.document.querySelector("table.timesheet");
       });
 
       await editModePromise;
@@ -20,7 +23,7 @@ describe("timesheet loader", () => {
     });
 
     it("loads the start date correctly from the title", () => {
-      const loader = new EditModeLoader(pageTitle);
+      const loader = new EditModeLoader(pageTitle, timesheetTable);
       const timesheet = loader.getTimesheet();
 
       const expectedStartDate = moment("2019-09-16");
@@ -28,7 +31,7 @@ describe("timesheet loader", () => {
     });
 
     it("loads the end date correctly from the title", () => {
-      const loader = new EditModeLoader(pageTitle);
+      const loader = new EditModeLoader(pageTitle, timesheetTable);
       const timesheet = loader.getTimesheet();
 
       const expectedEndDate = moment("2019-09-30");
@@ -36,16 +39,29 @@ describe("timesheet loader", () => {
     });
 
     it("uses today's date correctly", () => {
-      const loader = new EditModeLoader(pageTitle);
+      const loader = new EditModeLoader(pageTitle, timesheetTable);
       const timesheet = loader.getTimesheet();
 
       const expectedTodayDate = moment();
       expect(expectedTodayDate.isSame(timesheet.todaysDate, "date")).toBe(true);
     });
 
-    xit("captures all the categories correctly", () => {});
+    it("captures all the categories correctly", () => {
+      const loader = new EditModeLoader(pageTitle, timesheetTable);
+      const timesheet = loader.getTimesheet();
 
-    xit("totals the time correctly", () => {});
+      const result = timesheet.hoursByProjectType();
+
+      expect(result.find((i: { projectType: ProjectType }) => i.projectType === ProjectType.Bill).total).toBe(44.25);
+      expect(result.find((i: { projectType: ProjectType }) => i.projectType === ProjectType.Core).total).toBe(39);
+    });
+
+    it("totals the time correctly", () => {
+      const loader = new EditModeLoader(pageTitle, timesheetTable);
+      const timesheet = loader.getTimesheet();
+
+      expect(timesheet.totalPlusHours()).toBe(83.25);
+    });
   });
 
   describe("review mode", () => {
