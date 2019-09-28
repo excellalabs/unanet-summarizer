@@ -83,9 +83,7 @@ describe("timesheet", () => {
           new TimesheetBuilder().withStartDate("2009-12-31").build();
         };
 
-        expect(shouldBlowUp).toThrowError(
-          "timesheet start date should be after 2009."
-        );
+        expect(shouldBlowUp).toThrowError("timesheet start date should be after 2009.");
       });
 
       it("is fine with a valid date", () => {
@@ -145,9 +143,7 @@ describe("timesheet", () => {
           new TimesheetBuilder().withEndDate("2009-12-31").build();
         };
 
-        expect(shouldBlowUp).toThrowError(
-          "timesheet end date should be after 2009."
-        );
+        expect(shouldBlowUp).toThrowError("timesheet end date should be after 2009.");
       });
 
       it("is fine with a valid date", () => {
@@ -225,48 +221,22 @@ describe("timesheet", () => {
     it("returns the largest date number that has an entry", () => {
       const rows: TimesheetRow[] = new Array<TimesheetRow>();
 
-      rows.push(
-        new TimesheetRowBuilder()
-          .withEntry(new DateEntry("2", hoursAmountThatDoesntMatter))
-          .build()
-      );
-      rows.push(
-        new TimesheetRowBuilder()
-          .withEntry(new DateEntry("3", hoursAmountThatDoesntMatter))
-          .build()
-      );
-      rows.push(
-        new TimesheetRowBuilder()
-          .withEntry(new DateEntry("1", hoursAmountThatDoesntMatter))
-          .build()
-      );
+      rows.push(new TimesheetRowBuilder().withEntry(new DateEntry("2", hoursAmountThatDoesntMatter)).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new DateEntry("3", hoursAmountThatDoesntMatter)).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new DateEntry("1", hoursAmountThatDoesntMatter)).build());
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.getLatestEntryDate()).toBe(3);
     });
 
     it("doesn't count zero time entries as a date to care about", () => {
       const rows: TimesheetRow[] = new Array<TimesheetRow>();
-      rows.push(
-        new TimesheetRowBuilder()
-          .withEntry(new DateEntry("2", hoursAmountThatDoesntMatter))
-          .build()
-      );
-      rows.push(
-        new TimesheetRowBuilder().withEntry(new DateEntry("3", "0.0")).build()
-      );
-      rows.push(
-        new TimesheetRowBuilder()
-          .withEntry(new DateEntry("1", hoursAmountThatDoesntMatter))
-          .build()
-      );
+      rows.push(new TimesheetRowBuilder().withEntry(new DateEntry("2", hoursAmountThatDoesntMatter)).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new DateEntry("3", "0.0")).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new DateEntry("1", hoursAmountThatDoesntMatter)).build());
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.getLatestEntryDate()).toBe(2);
     });
@@ -279,25 +249,11 @@ describe("timesheet", () => {
       const rows: TimesheetRow[] = new Array<TimesheetRow>();
       const zeroHours: string = "0.0";
 
-      rows.push(
-        new TimesheetRowBuilder()
-          .withEntry(new DateEntry("2", zeroHours))
-          .build()
-      );
-      rows.push(
-        new TimesheetRowBuilder()
-          .withEntry(new DateEntry("10", zeroHours))
-          .build()
-      );
-      rows.push(
-        new TimesheetRowBuilder()
-          .withEntry(new DateEntry("30", zeroHours))
-          .build()
-      );
+      rows.push(new TimesheetRowBuilder().withEntry(new DateEntry("2", zeroHours)).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new DateEntry("10", zeroHours)).build());
+      rows.push(new TimesheetRowBuilder().withEntry(new DateEntry("30", zeroHours)).build());
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
@@ -325,9 +281,7 @@ describe("timesheet", () => {
           .build()
       );
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
@@ -366,9 +320,7 @@ describe("timesheet", () => {
           .build()
       );
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalPlusHours()).toBe(6.5);
     });
@@ -394,28 +346,18 @@ describe("timesheet", () => {
           .build()
       );
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalPlusHours()).toBe(0);
     });
 
     it("returns 0 when there are no entries in any rows", () => {
       const rows: TimesheetRow[] = new Array<TimesheetRow>();
-      rows.push(
-        new TimesheetRowBuilder().withProjectType(ProjectType.Core).build()
-      );
-      rows.push(
-        new TimesheetRowBuilder().withProjectType(ProjectType.Bench).build()
-      );
-      rows.push(
-        new TimesheetRowBuilder().withProjectType(ProjectType.Bill).build()
-      );
+      rows.push(new TimesheetRowBuilder().withProjectType(ProjectType.Core).build());
+      rows.push(new TimesheetRowBuilder().withProjectType(ProjectType.Bench).build());
+      rows.push(new TimesheetRowBuilder().withProjectType(ProjectType.Bill).build());
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalPlusHours()).toBe(0);
     });
@@ -443,9 +385,7 @@ describe("timesheet", () => {
           .build()
       );
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalNonPlusHours()).toBe(6.5);
     });
@@ -484,9 +424,7 @@ describe("timesheet", () => {
           .build()
       );
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalNonPlusHours()).toBe(6.5);
     });
@@ -512,32 +450,18 @@ describe("timesheet", () => {
           .build()
       );
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
 
     it("returns 0 when there are no entries in any rows", () => {
       const rows: TimesheetRow[] = new Array<TimesheetRow>();
-      rows.push(
-        new TimesheetRowBuilder().withProjectType(ProjectType.Internal).build()
-      );
-      rows.push(
-        new TimesheetRowBuilder()
-          .withProjectType(ProjectType.NonBillable)
-          .build()
-      );
-      rows.push(
-        new TimesheetRowBuilder()
-          .withProjectType(ProjectType.NonBillable)
-          .build()
-      );
+      rows.push(new TimesheetRowBuilder().withProjectType(ProjectType.Internal).build());
+      rows.push(new TimesheetRowBuilder().withProjectType(ProjectType.NonBillable).build());
+      rows.push(new TimesheetRowBuilder().withProjectType(ProjectType.NonBillable).build());
 
-      const timesheet: Timesheet = new TimesheetBuilder()
-        .withRows(rows)
-        .build();
+      const timesheet: Timesheet = new TimesheetBuilder().withRows(rows).build();
 
       expect(timesheet.totalNonPlusHours()).toBe(0);
     });
@@ -556,23 +480,9 @@ describe("timesheet", () => {
 
         describe("not filled out up to today", () => {
           const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
-          const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([
-            2,
-            3,
-            4,
-            5,
-            6,
-            9,
-            10,
-            11
-          ]);
+          const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11]);
 
-          const timesheet: Timesheet = new Timesheet(
-            rows,
-            timesheetStartDate,
-            timesheetEndDate,
-            dateForToday
-          );
+          const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
 
           it("totals the plus hours correctly", () => {
             expect(timesheet.totalPlusHours()).toBe(64);
@@ -585,24 +495,9 @@ describe("timesheet", () => {
 
         describe("but filled out up to today", () => {
           const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
-          const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([
-            2,
-            3,
-            4,
-            5,
-            6,
-            9,
-            10,
-            11,
-            12
-          ]);
+          const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12]);
 
-          const timesheet: Timesheet = new Timesheet(
-            rows,
-            timesheetStartDate,
-            timesheetEndDate,
-            dateForToday
-          );
+          const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
 
           it("totals the plus hours correctly", () => {
             expect(timesheet.totalPlusHours()).toBe(72);
@@ -617,16 +512,9 @@ describe("timesheet", () => {
         const dateForToday: string = "2019-09-12"; // thursday
 
         const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
-        const rows: TimesheetRow[] = arrayBuilder
-          .plusHoursForDates([2, 3, 4, 5, 6])
-          .concat(arrayBuilder.nonPlusHoursForDates([9, 10, 11, 12, 13]));
+        const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6]).concat(arrayBuilder.nonPlusHoursForDates([9, 10, 11, 12, 13]));
 
-        const timesheet: Timesheet = new Timesheet(
-          rows,
-          timesheetStartDate,
-          timesheetEndDate,
-          dateForToday
-        );
+        const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
 
         it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(40);
@@ -644,25 +532,9 @@ describe("timesheet", () => {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
 
         const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
-        const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([
-          2,
-          3,
-          4,
-          5,
-          6,
-          9,
-          10,
-          11,
-          12,
-          13
-        ]);
+        const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13]);
 
-        const timesheet: Timesheet = new Timesheet(
-          rows,
-          timesheetStartDate,
-          timesheetEndDate,
-          dateForToday
-        );
+        const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
 
         it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(80);
@@ -679,16 +551,9 @@ describe("timesheet", () => {
         const dateForToday: string = "2019-09-10";
 
         const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
-        const rows: TimesheetRow[] = arrayBuilder
-          .plusHoursForDates([2, 3, 4, 5, 6, 9, 10])
-          .concat(arrayBuilder.plusHoursForDates([2])); // 16 hours on the 2nd
+        const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10]).concat(arrayBuilder.plusHoursForDates([2])); // 16 hours on the 2nd
 
-        const timesheet: Timesheet = new Timesheet(
-          rows,
-          timesheetStartDate,
-          timesheetEndDate,
-          dateForToday
-        );
+        const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
 
         it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(64);
@@ -702,16 +567,9 @@ describe("timesheet", () => {
         const dateForToday: string = "2019-09-13";
 
         const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
-        const rows: TimesheetRow[] = arrayBuilder
-          .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12])
-          .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
+        const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12]).concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
 
-        const timesheet: Timesheet = new Timesheet(
-          rows,
-          timesheetStartDate,
-          timesheetEndDate,
-          dateForToday
-        );
+        const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
 
         it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(80);
@@ -726,16 +584,9 @@ describe("timesheet", () => {
         const dateForToday: string = "2019-09-15";
 
         const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
-        const rows: TimesheetRow[] = arrayBuilder
-          .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
-          .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
+        const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13]).concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
 
-        const timesheet: Timesheet = new Timesheet(
-          rows,
-          timesheetStartDate,
-          timesheetEndDate,
-          dateForToday
-        );
+        const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
 
         it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(88);
@@ -749,16 +600,9 @@ describe("timesheet", () => {
         const dateForToday: string = "2019-09-16";
 
         const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
-        const rows: TimesheetRow[] = arrayBuilder
-          .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
-          .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
+        const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13]).concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
 
-        const timesheet: Timesheet = new Timesheet(
-          rows,
-          timesheetStartDate,
-          timesheetEndDate,
-          dateForToday
-        );
+        const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
 
         it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(88);
@@ -775,16 +619,9 @@ describe("timesheet", () => {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
         const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
 
-        const rows: TimesheetRow[] = arrayBuilder
-          .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 13])
-          .concat(arrayBuilder.nonPlusHoursForDates([12])); // non hours on the 12th
+        const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 13]).concat(arrayBuilder.nonPlusHoursForDates([12])); // non hours on the 12th
 
-        const timesheet: Timesheet = new Timesheet(
-          rows,
-          timesheetStartDate,
-          timesheetEndDate,
-          dateForToday
-        );
+        const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
 
         it("totals the plus hours correctly", () => {
           expect(timesheet.totalPlusHours()).toBe(72);
@@ -802,69 +639,34 @@ describe("timesheet", () => {
     const todayDateThatDoesntMatter: string = "2019-09-27";
 
     it("returns 0 if no hours for a date", () => {
-      const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
-        [7]
-      );
-      const timesheet: Timesheet = new Timesheet(
-        rows,
-        startDate,
-        endDate,
-        todayDateThatDoesntMatter
-      );
+      const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates([7]);
+      const timesheet: Timesheet = new Timesheet(rows, startDate, endDate, todayDateThatDoesntMatter);
 
       expect(timesheet.hoursForDate(1)).toBe(0);
     });
     it("returns hours if plus hours exist", () => {
-      const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
-        [7]
-      );
-      const timesheet: Timesheet = new Timesheet(
-        rows,
-        startDate,
-        endDate,
-        todayDateThatDoesntMatter
-      );
+      const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates([7]);
+      const timesheet: Timesheet = new Timesheet(rows, startDate, endDate, todayDateThatDoesntMatter);
 
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
     it("returns hours if non-plus hours exist", () => {
-      const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().nonPlusHoursForDates(
-        [7]
-      );
-      const timesheet: Timesheet = new Timesheet(
-        rows,
-        startDate,
-        endDate,
-        todayDateThatDoesntMatter
-      );
+      const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().nonPlusHoursForDates([7]);
+      const timesheet: Timesheet = new Timesheet(rows, startDate, endDate, todayDateThatDoesntMatter);
 
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
     it("returns sum if plus and non-plus exist", () => {
       const rowBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
-      const rows: TimesheetRow[] = rowBuilder
-        .plusHoursForDates([7])
-        .concat(rowBuilder.nonPlusHoursForDates([7]));
-      const timesheet: Timesheet = new Timesheet(
-        rows,
-        startDate,
-        endDate,
-        todayDateThatDoesntMatter
-      );
+      const rows: TimesheetRow[] = rowBuilder.plusHoursForDates([7]).concat(rowBuilder.nonPlusHoursForDates([7]));
+      const timesheet: Timesheet = new Timesheet(rows, startDate, endDate, todayDateThatDoesntMatter);
 
       expect(timesheet.hoursForDate(7)).toBe(16);
     });
     it("only cares about that date", () => {
       const rowBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
-      const rows: TimesheetRow[] = rowBuilder
-        .plusHoursForDates([7])
-        .concat(rowBuilder.nonPlusHoursForDates([10]));
-      const timesheet: Timesheet = new Timesheet(
-        rows,
-        startDate,
-        endDate,
-        todayDateThatDoesntMatter
-      );
+      const rows: TimesheetRow[] = rowBuilder.plusHoursForDates([7]).concat(rowBuilder.nonPlusHoursForDates([10]));
+      const timesheet: Timesheet = new Timesheet(rows, startDate, endDate, todayDateThatDoesntMatter);
 
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
@@ -872,74 +674,38 @@ describe("timesheet", () => {
   describe("numberOfRemainingWorkDays", () => {
     const startDate: string = "2019-09-01";
     const endDate: string = "2019-09-15";
-    const rowsThatDontMatter: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
-      [6]
-    );
+    const rowsThatDontMatter: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates([6]);
     it("returns zero when today is after the timesheet end", () => {
-      const timesheet: Timesheet = new Timesheet(
-        rowsThatDontMatter,
-        startDate,
-        endDate,
-        "2019-09-27"
-      );
+      const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-09-27");
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
     it("returns zero when today is in a weekend at the end of the timesheet", () => {
-      const timesheet: Timesheet = new Timesheet(
-        rowsThatDontMatter,
-        startDate,
-        endDate,
-        "2019-09-14"
-      );
+      const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-09-14");
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
     it("returns 1 when today is the last workday of the timesheet", () => {
-      const timesheet: Timesheet = new Timesheet(
-        rowsThatDontMatter,
-        startDate,
-        endDate,
-        "2019-09-13"
-      );
+      const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-09-13");
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(1);
     });
     it("returns 0 when today is the last workday of the timesheet and has hours", () => {
-      const rows: TimesheetRow[] = rowsThatDontMatter.concat(
-        new TimesheetRowArrayBuilder().plusHoursForDates([13])
-      );
+      const rows: TimesheetRow[] = rowsThatDontMatter.concat(new TimesheetRowArrayBuilder().plusHoursForDates([13]));
 
-      const timesheet: Timesheet = new Timesheet(
-        rows,
-        startDate,
-        endDate,
-        "2019-09-13"
-      );
+      const timesheet: Timesheet = new Timesheet(rows, startDate, endDate, "2019-09-13");
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
     it("returns 2 when today is the 2nd to last day in timesheet", () => {
-      const timesheet: Timesheet = new Timesheet(
-        rowsThatDontMatter,
-        startDate,
-        endDate,
-        "2019-09-12"
-      );
+      const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-09-12");
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(2);
     });
     it("returns 1 when today is 2nd to last day but has hours", () => {
-      const rows: TimesheetRow[] = rowsThatDontMatter.concat(
-        new TimesheetRowArrayBuilder().plusHoursForDates([12])
-      );
+      const rows: TimesheetRow[] = rowsThatDontMatter.concat(new TimesheetRowArrayBuilder().plusHoursForDates([12]));
 
-      const timesheet: Timesheet = new Timesheet(
-        rows,
-        startDate,
-        endDate,
-        "2019-09-12"
-      );
+      const timesheet: Timesheet = new Timesheet(rows, startDate, endDate, "2019-09-12");
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(1);
     });
@@ -950,45 +716,24 @@ describe("timesheet", () => {
         const saturday: string = "2019-09-07";
         const sunday: string = "2019-09-08";
 
-        const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
-          [7]
-        );
-        const timesheet: Timesheet = new Timesheet(
-          rows,
-          saturday,
-          sunday,
-          sunday
-        );
+        const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates([7]);
+        const timesheet: Timesheet = new Timesheet(rows, saturday, sunday, sunday);
 
         expect(timesheet.weekdaysInTimesheet()).toBe(0);
       });
       it("returns 1 when start/end date are the same weekday", () => {
         const monday: string = "2019-09-10";
 
-        const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
-          [10]
-        );
-        const timesheet: Timesheet = new Timesheet(
-          rows,
-          monday,
-          monday,
-          monday
-        );
+        const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates([10]);
+        const timesheet: Timesheet = new Timesheet(rows, monday, monday, monday);
 
         expect(timesheet.weekdaysInTimesheet()).toBe(1);
       });
       it("returns the correct number of weekdays in the 9/1/19 - 9/15/19 pay period", () => {
-        const rowArrayThatDoesntMatter: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
-          [8]
-        );
+        const rowArrayThatDoesntMatter: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates([8]);
         const dayForTodayThatDoesntMatter: string = "2019-09-27";
 
-        const timesheet: Timesheet = new Timesheet(
-          rowArrayThatDoesntMatter,
-          "2019-09-01",
-          "2019-09-15",
-          dayForTodayThatDoesntMatter
-        );
+        const timesheet: Timesheet = new Timesheet(rowArrayThatDoesntMatter, "2019-09-01", "2019-09-15", dayForTodayThatDoesntMatter);
 
         expect(timesheet.weekdaysInTimesheet()).toBe(10);
       });
@@ -1006,16 +751,9 @@ describe("timesheet", () => {
       .concat(helper.hoursOfTypeForDates([3, 4, 5], ProjectType.Bench))
       .concat(helper.hoursOfTypeForDates([6, 7, 8, 9], ProjectType.Core))
       .concat(helper.hoursOfTypeForDates([10, 11], ProjectType.Internal))
-      .concat(
-        helper.hoursOfTypeForDates([11, 12, 13], ProjectType.NonBillable)
-      );
+      .concat(helper.hoursOfTypeForDates([11, 12, 13], ProjectType.NonBillable));
 
-    const timesheet: Timesheet = new Timesheet(
-      rows,
-      startDate,
-      endDate,
-      todayDate
-    );
+    const timesheet: Timesheet = new Timesheet(rows, startDate, endDate, todayDate);
 
     const result: Array<{
       projectType: ProjectType;
@@ -1024,40 +762,22 @@ describe("timesheet", () => {
 
     it("breaks down categories correctly", () => {
       expect(result.length).toBe(5);
-      expect(result.find(i => i.projectType === ProjectType.Bill).total).toBe(
-        16
-      );
-      expect(result.find(i => i.projectType === ProjectType.Bench).total).toBe(
-        24
-      );
-      expect(result.find(i => i.projectType === ProjectType.Core).total).toBe(
-        32
-      );
-      expect(
-        result.find(i => i.projectType === ProjectType.Internal).total
-      ).toBe(16);
-      expect(
-        result.find(i => i.projectType === ProjectType.NonBillable).total
-      ).toBe(24);
+      expect(result.find(i => i.projectType === ProjectType.Bill).total).toBe(16);
+      expect(result.find(i => i.projectType === ProjectType.Bench).total).toBe(24);
+      expect(result.find(i => i.projectType === ProjectType.Core).total).toBe(32);
+      expect(result.find(i => i.projectType === ProjectType.Internal).total).toBe(16);
+      expect(result.find(i => i.projectType === ProjectType.NonBillable).total).toBe(24);
     });
     it("matches the sum of plus rows", () => {
-      const bill: number = result.find(i => i.projectType === ProjectType.Bill)
-        .total;
-      const core: number = result.find(i => i.projectType === ProjectType.Core)
-        .total;
-      const bench: number = result.find(
-        i => i.projectType === ProjectType.Bench
-      ).total;
+      const bill: number = result.find(i => i.projectType === ProjectType.Bill).total;
+      const core: number = result.find(i => i.projectType === ProjectType.Core).total;
+      const bench: number = result.find(i => i.projectType === ProjectType.Bench).total;
 
       expect(timesheet.totalPlusHours()).toBe(bill + core + bench);
     });
     it("matches the sum of non-plus rows", () => {
-      const internal: number = result.find(
-        i => i.projectType === ProjectType.Internal
-      ).total;
-      const nonBillable: number = result.find(
-        i => i.projectType === ProjectType.NonBillable
-      ).total;
+      const internal: number = result.find(i => i.projectType === ProjectType.Internal).total;
+      const nonBillable: number = result.find(i => i.projectType === ProjectType.NonBillable).total;
 
       expect(timesheet.totalNonPlusHours()).toBe(internal + nonBillable);
     });
@@ -1128,12 +848,7 @@ describe("timesheet", () => {
     rows.push(rediRow);
     rows.push(innovationRow);
 
-    const timesheet: Timesheet = new Timesheet(
-      rows,
-      "2019-09-01",
-      "2019-09-15",
-      "2019-09-27"
-    );
+    const timesheet: Timesheet = new Timesheet(rows, "2019-09-01", "2019-09-15", "2019-09-27");
 
     it("totals plus rows correctly", () => {
       expect(timesheet.totalPlusHours()).toBe(111);
@@ -1148,16 +863,8 @@ describe("timesheet", () => {
     });
 
     it("breaks down categories correctly", () => {
-      expect(
-        timesheet
-          .hoursByProjectType()
-          .find(i => i.projectType === ProjectType.Bill).total
-      ).toBe(64.25);
-      expect(
-        timesheet
-          .hoursByProjectType()
-          .find(i => i.projectType === ProjectType.Core).total
-      ).toBe(46.75);
+      expect(timesheet.hoursByProjectType().find(i => i.projectType === ProjectType.Bill).total).toBe(64.25);
+      expect(timesheet.hoursByProjectType().find(i => i.projectType === ProjectType.Core).total).toBe(46.75);
     });
   });
 });

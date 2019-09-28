@@ -11,53 +11,36 @@ export class Timesheet {
   private todaysDate: moment.Moment;
   private HOURS_IN_WORKDAY = 8;
 
-  constructor(
-    timesheetRows: TimesheetRow[],
-    timesheetStartDate: string,
-    timesheetEndDate: string,
-    todaysDate: string
-  ) {
+  constructor(timesheetRows: TimesheetRow[], timesheetStartDate: string, timesheetEndDate: string, todaysDate: string) {
     this.validateTimesheetRows(timesheetRows);
 
     this.timesheetRows = timesheetRows;
 
-    const momentStartDate: moment.Moment = this.validateTimesheetDate(
-      timesheetStartDate,
-      TimesheetDateType.Start
-    );
+    const momentStartDate: moment.Moment = this.validateTimesheetDate(timesheetStartDate, TimesheetDateType.Start);
     this.timesheetStartDate = momentStartDate;
 
-    const momentEndDate: moment.Moment = this.validateTimesheetDate(
-      timesheetEndDate,
-      TimesheetDateType.End
-    );
+    const momentEndDate: moment.Moment = this.validateTimesheetDate(timesheetEndDate, TimesheetDateType.End);
     this.timesheetEndDate = momentEndDate;
 
-    const momentTodayDate: moment.Moment = this.validateTimesheetDate(
-      todaysDate,
-      TimesheetDateType.Today
-    );
+    const momentTodayDate: moment.Moment = this.validateTimesheetDate(todaysDate, TimesheetDateType.Today);
     this.todaysDate = momentTodayDate;
   }
 
   public getLatestEntryDate = (): number => {
-    const allDatesThatHaveMoreThanZeroHours: number[] = this.timesheetRows.reduce(
-      (acc, val) => {
-        // outer reducer, for timesheet rows
-        return acc.concat(
-          val.entries.reduce((acc2, val2) => {
-            // inner reducer, for the date entries on a given row
-            if (val2.hoursAmount > 0) {
-              // we only care if there are more than 0 hours for the entry.
-              return acc.concat(val2.dayOfMonth);
-            } else {
-              return acc2;
-            }
-          }, [])
-        );
-      },
-      []
-    );
+    const allDatesThatHaveMoreThanZeroHours: number[] = this.timesheetRows.reduce((acc, val) => {
+      // outer reducer, for timesheet rows
+      return acc.concat(
+        val.entries.reduce((acc2, val2) => {
+          // inner reducer, for the date entries on a given row
+          if (val2.hoursAmount > 0) {
+            // we only care if there are more than 0 hours for the entry.
+            return acc.concat(val2.dayOfMonth);
+          } else {
+            return acc2;
+          }
+        }, [])
+      );
+    }, []);
 
     if (allDatesThatHaveMoreThanZeroHours.length > 0) {
       return Math.max(...allDatesThatHaveMoreThanZeroHours);
@@ -67,17 +50,13 @@ export class Timesheet {
   };
 
   public totalPlusHours = (): number => {
-    const allPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(val =>
-      val.isPlusProjectType()
-    );
+    const allPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(val => val.isPlusProjectType());
 
     return this.totalUpFilteredRows(allPlusHoursRows);
   };
 
   public totalNonPlusHours = (): number => {
-    const allNonPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(
-      val => !val.isPlusProjectType()
-    );
+    const allNonPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(val => !val.isPlusProjectType());
 
     return this.totalUpFilteredRows(allNonPlusHoursRows);
   };
@@ -86,48 +65,32 @@ export class Timesheet {
     const workingDays: number = this.weekdaysInTimesheet();
     const remainingWorkingDays: number = this.numberOfRemainingWorkDays();
     const expectedHours: number = workingDays * this.HOURS_IN_WORKDAY;
-    const actualHours: number =
-      this.totalPlusHours() + remainingWorkingDays * this.HOURS_IN_WORKDAY;
+    const actualHours: number = this.totalPlusHours() + remainingWorkingDays * this.HOURS_IN_WORKDAY;
 
     return actualHours - expectedHours;
   };
 
   public hoursByProjectType = () => {
-    const results: Array<{
-      projectType: ProjectType;
-      total: number;
-    }> = [];
+    const results: Array<{ projectType: ProjectType; total: number }> = [];
 
     Object.keys(ProjectType).forEach(key => {
-      const keyAsEnum: ProjectType =
-        ProjectType[key as keyof typeof ProjectType];
+      const keyAsEnum: ProjectType = ProjectType[key as keyof typeof ProjectType];
 
-      const filteredToProjectType: TimesheetRow[] = this.timesheetRows.filter(
-        val => val.projectType === keyAsEnum
-      );
+      const filteredToProjectType: TimesheetRow[] = this.timesheetRows.filter(val => val.projectType === keyAsEnum);
 
       const theTotal: number = this.totalUpFilteredRows(filteredToProjectType);
-      results.push({
-        projectType: keyAsEnum,
-        total: theTotal
-      });
+      results.push({ projectType: keyAsEnum, total: theTotal });
     });
 
     return results;
   };
 
   public weekdaysInTimesheet = (): number => {
-    return this.weekDaysBetweenDates(
-      this.timesheetStartDate,
-      this.timesheetEndDate
-    );
+    return this.weekDaysBetweenDates(this.timesheetStartDate, this.timesheetEndDate);
   };
 
   public numberOfRemainingWorkDays = (): number => {
-    let workingDaysLeft: number = this.weekDaysBetweenDates(
-      this.todaysDate,
-      this.timesheetEndDate
-    );
+    let workingDaysLeft: number = this.weekDaysBetweenDates(this.todaysDate, this.timesheetEndDate);
     if (this.hoursForDate(this.todaysDate.date()) > 0) {
       workingDaysLeft--;
     }
@@ -136,12 +99,8 @@ export class Timesheet {
   };
 
   public hoursForDate = (theDate: number): number => {
-    const allEntryArrays: DateEntry[][] = this.timesheetRows.map(
-      row => row.entries
-    );
-    const flattenedArray: DateEntry[] = ([] as DateEntry[]).concat(
-      ...allEntryArrays
-    );
+    const allEntryArrays: DateEntry[][] = this.timesheetRows.map(row => row.entries);
+    const flattenedArray: DateEntry[] = ([] as DateEntry[]).concat(...allEntryArrays);
 
     const filteredToTheDate: DateEntry[] = flattenedArray.filter(value => {
       return value.dayOfMonth === theDate;
@@ -153,17 +112,11 @@ export class Timesheet {
     return sumOfHours;
   };
 
-  private weekDaysBetweenDates = (
-    theStartDate: moment.Moment,
-    endDate: moment.Moment
-  ): number => {
+  private weekDaysBetweenDates = (theStartDate: moment.Moment, endDate: moment.Moment): number => {
     let totalWeekDays: number = 0;
     const startDate: moment.Moment = theStartDate.clone();
     while (startDate <= endDate) {
-      if (
-        startDate.format("ddd") !== "Sat" &&
-        startDate.format("ddd") !== "Sun"
-      ) {
+      if (startDate.format("ddd") !== "Sat" && startDate.format("ddd") !== "Sun") {
         totalWeekDays++; // add 1 to your counter if its not a weekend day
       }
 
@@ -195,15 +148,8 @@ export class Timesheet {
     }
   };
 
-  private validateTimesheetDate = (
-    timesheetStartDate: string,
-    type: TimesheetDateType
-  ) => {
-    if (
-      timesheetStartDate === null ||
-      timesheetStartDate === undefined ||
-      timesheetStartDate.trim().length === 0
-    ) {
+  private validateTimesheetDate = (timesheetStartDate: string, type: TimesheetDateType) => {
+    if (timesheetStartDate === null || timesheetStartDate === undefined || timesheetStartDate.trim().length === 0) {
       throw new Error(`${type} is invalid.`);
     }
 

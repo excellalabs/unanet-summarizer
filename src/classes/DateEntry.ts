@@ -3,28 +3,16 @@ export class DateEntry {
   public hoursAmount: number;
 
   constructor(dayOfMonth: string, hoursAmount: string) {
-    if (
-      dayOfMonth === null ||
-      dayOfMonth === undefined ||
-      dayOfMonth.trim().length === 0
-    ) {
-      throw new Error(
-        "Day of month is null or empty. Valid day of the month must be provided."
-      );
+    if (dayOfMonth === null || dayOfMonth === undefined || dayOfMonth.trim().length === 0) {
+      throw new Error("Day of month is null or empty. Valid day of the month must be provided.");
     }
 
-    if (
-      hoursAmount === undefined ||
-      hoursAmount === null ||
-      hoursAmount.trim().length === 0
-    ) {
+    if (hoursAmount === undefined || hoursAmount === null || hoursAmount.trim().length === 0) {
       this.hoursAmount = 0;
     } else {
       const parsedHours: number = Number.parseFloat(hoursAmount.trim());
       if (Number.isNaN(parsedHours)) {
-        throw new Error(
-          `Unable to parse a valid hours amount for dayOfMonth: '${dayOfMonth}'`
-        );
+        throw new Error(`Unable to parse a valid hours amount for dayOfMonth: '${dayOfMonth}'`);
       } else {
         this.hoursAmount = parsedHours;
       }
