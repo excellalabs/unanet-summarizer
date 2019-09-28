@@ -1,12 +1,17 @@
-import { Summarizer } from "../src/classes/classes";
-import { Helpers } from "./Helpers";
+import { DateEntry } from "../src/classes/DateEntry";
+import { ProjectType } from "../src/classes/ProjectType";
+import { Timesheet } from "../src/classes/Timesheet";
+import { TimesheetBuilder } from "../tests/Helpers/TimesheetBuilder";
+import { TimesheetRowArrayBuilder } from "../tests/Helpers/TimesheetRowArrayBuilder";
+import { TimesheetRowBuilder } from "../tests/Helpers/TimesheetRowBuilder";
+import { TimesheetRow } from "../src/classes/TimesheetRow";
 
 describe("timesheet", () => {
   describe("ctor", () => {
     describe("rows", () => {
       it("throws an exception with null rows list", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withRows(null).build();
+          new TimesheetBuilder().withRows(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");
@@ -14,7 +19,7 @@ describe("timesheet", () => {
 
       it("throws an exception with undefined rows list", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withRows(undefined).build();
+          new TimesheetBuilder().withRows(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("Must supply a timesheet rows list.");
@@ -22,9 +27,7 @@ describe("timesheet", () => {
 
       it("throws an exception with empty rows list", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder()
-            .withRows(new Array<Summarizer.TimesheetRow>())
-            .build();
+          new TimesheetBuilder().withRows(new Array<TimesheetRow>()).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet rows list is empty.");
@@ -34,7 +37,7 @@ describe("timesheet", () => {
     describe("timesheet start date", () => {
       it("throws an error when null", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withStartDate(null).build();
+          new TimesheetBuilder().withStartDate(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -42,7 +45,7 @@ describe("timesheet", () => {
 
       it("throws an error when undefined", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withStartDate(undefined).build();
+          new TimesheetBuilder().withStartDate(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -50,7 +53,7 @@ describe("timesheet", () => {
 
       it("throws an error when empty", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withStartDate("").build();
+          new TimesheetBuilder().withStartDate("").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -58,7 +61,7 @@ describe("timesheet", () => {
 
       it("throws an error when whitespace", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withStartDate("    ").build();
+          new TimesheetBuilder().withStartDate("    ").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -66,7 +69,7 @@ describe("timesheet", () => {
 
       it("throws an error when non-formatted date", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withStartDate("abcd").build();
+          new TimesheetBuilder().withStartDate("abcd").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet start date is invalid.");
@@ -76,7 +79,7 @@ describe("timesheet", () => {
         // this is just to ensure people are using it for recent timesheets; we introduced this in 2018.
 
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withStartDate("2009-12-31").build();
+          new TimesheetBuilder().withStartDate("2009-12-31").build();
         };
 
         expect(shouldBlowUp).toThrowError(
@@ -86,8 +89,8 @@ describe("timesheet", () => {
 
       it("is fine with a valid date", () => {
         const shouldBeFine: any = () => {
-          new Helpers.TimesheetBuilder().withStartDate("2010-01-01").build();
-          new Helpers.TimesheetBuilder().withStartDate("2019-09-08").build();
+          new TimesheetBuilder().withStartDate("2010-01-01").build();
+          new TimesheetBuilder().withStartDate("2019-09-08").build();
         };
         expect(shouldBeFine).not.toThrowError();
       });
@@ -96,7 +99,7 @@ describe("timesheet", () => {
     describe("timesheet end date", () => {
       it("throws an error when null", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withEndDate(null).build();
+          new TimesheetBuilder().withEndDate(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
@@ -104,7 +107,7 @@ describe("timesheet", () => {
 
       it("throws an error when undefined", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withEndDate(undefined).build();
+          new TimesheetBuilder().withEndDate(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
@@ -112,7 +115,7 @@ describe("timesheet", () => {
 
       it("throws an error when empty", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withEndDate("").build();
+          new TimesheetBuilder().withEndDate("").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
@@ -120,7 +123,7 @@ describe("timesheet", () => {
 
       it("throws an error when whitespace", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withEndDate("    ").build();
+          new TimesheetBuilder().withEndDate("    ").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
@@ -128,7 +131,7 @@ describe("timesheet", () => {
 
       it("throws an error when non-formatted date", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withEndDate("abcd").build();
+          new TimesheetBuilder().withEndDate("abcd").build();
         };
 
         expect(shouldBlowUp).toThrowError("timesheet end date is invalid.");
@@ -138,7 +141,7 @@ describe("timesheet", () => {
         // this is just to ensure people are using it for recent timesheets; we introduced this in 2018.
 
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withEndDate("2009-12-31").build();
+          new TimesheetBuilder().withEndDate("2009-12-31").build();
         };
 
         expect(shouldBlowUp).toThrowError(
@@ -148,8 +151,8 @@ describe("timesheet", () => {
 
       it("is fine with a valid date", () => {
         const shouldBeFine: any = () => {
-          new Helpers.TimesheetBuilder().withEndDate("01-01-2010").build();
-          new Helpers.TimesheetBuilder().withEndDate("2019-09-08").build();
+          new TimesheetBuilder().withEndDate("01-01-2010").build();
+          new TimesheetBuilder().withEndDate("2019-09-08").build();
         };
         expect(shouldBeFine).not.toThrowError();
       });
@@ -158,7 +161,7 @@ describe("timesheet", () => {
     describe("today's date", () => {
       it("throws an error when null", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withTodayDate(null).build();
+          new TimesheetBuilder().withTodayDate(null).build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -166,7 +169,7 @@ describe("timesheet", () => {
 
       it("throws an error when undefined", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withTodayDate(undefined).build();
+          new TimesheetBuilder().withTodayDate(undefined).build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -174,7 +177,7 @@ describe("timesheet", () => {
 
       it("throws an error when empty", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withTodayDate("").build();
+          new TimesheetBuilder().withTodayDate("").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -182,7 +185,7 @@ describe("timesheet", () => {
 
       it("throws an error when whitespace", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withTodayDate("     ").build();
+          new TimesheetBuilder().withTodayDate("     ").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -190,7 +193,7 @@ describe("timesheet", () => {
 
       it("throws an error when non-formatted date", () => {
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withTodayDate("abcd").build();
+          new TimesheetBuilder().withTodayDate("abcd").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date is invalid.");
@@ -200,7 +203,7 @@ describe("timesheet", () => {
         // this is just to ensure people are using it for recent timesheets; we introduced this in 2018.
 
         const shouldBlowUp: any = () => {
-          new Helpers.TimesheetBuilder().withTodayDate("2009-12-31").build();
+          new TimesheetBuilder().withTodayDate("2009-12-31").build();
         };
 
         expect(shouldBlowUp).toThrowError("today's date should be after 2009.");
@@ -208,8 +211,8 @@ describe("timesheet", () => {
 
       it("is fine with a valid date", () => {
         const shouldBeFine: any = () => {
-          new Helpers.TimesheetBuilder().withTodayDate("2010-01-01").build();
-          new Helpers.TimesheetBuilder().withTodayDate("2019-09-08").build();
+          new TimesheetBuilder().withTodayDate("2010-01-01").build();
+          new TimesheetBuilder().withTodayDate("2019-09-08").build();
         };
         expect(shouldBeFine).not.toThrowError();
       });
@@ -219,27 +222,25 @@ describe("timesheet", () => {
     const hoursAmountThatDoesntMatter: string = "8";
 
     it("returns the largest date number that has an entry", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
 
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter))
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("2", hoursAmountThatDoesntMatter))
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("3", hoursAmountThatDoesntMatter))
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("3", hoursAmountThatDoesntMatter))
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("1", hoursAmountThatDoesntMatter))
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("1", hoursAmountThatDoesntMatter))
           .build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -247,59 +248,53 @@ describe("timesheet", () => {
     });
 
     it("doesn't count zero time entries as a date to care about", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("2", hoursAmountThatDoesntMatter))
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("2", hoursAmountThatDoesntMatter))
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("3", "0.0"))
-          .build()
+        new TimesheetRowBuilder().withEntry(new DateEntry("3", "0.0")).build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("1", hoursAmountThatDoesntMatter))
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("1", hoursAmountThatDoesntMatter))
           .build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
       expect(timesheet.getLatestEntryDate()).toBe(2);
     });
     it("returns undefined when an empty timesheet", () => {
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder().build();
+      const timesheet: Timesheet = new TimesheetBuilder().build();
 
       expect(timesheet.getLatestEntryDate()).toBe(undefined);
     });
     it("returns undefined with a timesheet of all zero entries", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
       const zeroHours: string = "0.0";
 
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("2", zeroHours))
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("2", zeroHours))
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("10", zeroHours))
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("10", zeroHours))
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("30", zeroHours))
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("30", zeroHours))
           .build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -308,30 +303,28 @@ describe("timesheet", () => {
   });
   describe("totalPlusHours", () => {
     it("returns the sum of hours across all plus rows on a timesheet", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
 
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("11", "1.0"))
-          .withProjectType(Summarizer.ProjectType.Bench)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("11", "1.0"))
+          .withProjectType(ProjectType.Bench)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("12", "2.0"))
-          .withProjectType(Summarizer.ProjectType.Bill)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("12", "2.0"))
+          .withProjectType(ProjectType.Bill)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("13", "3.5"))
-          .withProjectType(Summarizer.ProjectType.Core)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("13", "3.5"))
+          .withProjectType(ProjectType.Core)
           .build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -339,42 +332,40 @@ describe("timesheet", () => {
     });
 
     it("doesn't count non-plus rows", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
 
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("11", "1.0"))
-          .withProjectType(Summarizer.ProjectType.Bench)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("11", "1.0"))
+          .withProjectType(ProjectType.Bench)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("12", "2.0"))
-          .withProjectType(Summarizer.ProjectType.Bill)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("12", "2.0"))
+          .withProjectType(ProjectType.Bill)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("13", "3.5"))
-          .withProjectType(Summarizer.ProjectType.Core)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("13", "3.5"))
+          .withProjectType(ProjectType.Core)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("13", "2"))
-          .withProjectType(Summarizer.ProjectType.Internal)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("13", "2"))
+          .withProjectType(ProjectType.Internal)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("13", "2"))
-          .withProjectType(Summarizer.ProjectType.NonBillable)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("13", "2"))
+          .withProjectType(ProjectType.NonBillable)
           .build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -382,29 +373,27 @@ describe("timesheet", () => {
     });
 
     it("returns 0 when there are no + rows", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("11", "1.0"))
-          .withProjectType(Summarizer.ProjectType.Internal)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("11", "1.0"))
+          .withProjectType(ProjectType.Internal)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("11", "1.0"))
-          .withProjectType(Summarizer.ProjectType.NonBillable)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("11", "1.0"))
+          .withProjectType(ProjectType.NonBillable)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("11", "1.0"))
-          .withProjectType(Summarizer.ProjectType.Internal)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("11", "1.0"))
+          .withProjectType(ProjectType.Internal)
           .build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -412,26 +401,18 @@ describe("timesheet", () => {
     });
 
     it("returns 0 when there are no entries in any rows", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withProjectType(Summarizer.ProjectType.Core)
-          .build()
+        new TimesheetRowBuilder().withProjectType(ProjectType.Core).build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withProjectType(Summarizer.ProjectType.Bench)
-          .build()
+        new TimesheetRowBuilder().withProjectType(ProjectType.Bench).build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withProjectType(Summarizer.ProjectType.Bill)
-          .build()
+        new TimesheetRowBuilder().withProjectType(ProjectType.Bill).build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -440,30 +421,28 @@ describe("timesheet", () => {
   });
   describe("totalNonPlusHours", () => {
     it("returns the sum of hours across all non-plus rows on a timesheet", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
 
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("11", "1.0"))
-          .withProjectType(Summarizer.ProjectType.Internal)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("11", "1.0"))
+          .withProjectType(ProjectType.Internal)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("12", "2.0"))
-          .withProjectType(Summarizer.ProjectType.NonBillable)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("12", "2.0"))
+          .withProjectType(ProjectType.NonBillable)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("13", "3.5"))
-          .withProjectType(Summarizer.ProjectType.Internal)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("13", "3.5"))
+          .withProjectType(ProjectType.Internal)
           .build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -471,42 +450,40 @@ describe("timesheet", () => {
     });
 
     it("doesn't count plus rows", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
 
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("11", "1.0"))
-          .withProjectType(Summarizer.ProjectType.NonBillable)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("11", "1.0"))
+          .withProjectType(ProjectType.NonBillable)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("12", "2.0"))
-          .withProjectType(Summarizer.ProjectType.Internal)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("12", "2.0"))
+          .withProjectType(ProjectType.Internal)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("13", "3.5"))
-          .withProjectType(Summarizer.ProjectType.Internal)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("13", "3.5"))
+          .withProjectType(ProjectType.Internal)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("13", "2"))
-          .withProjectType(Summarizer.ProjectType.Core)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("13", "2"))
+          .withProjectType(ProjectType.Core)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("13", "2"))
-          .withProjectType(Summarizer.ProjectType.Bench)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("13", "2"))
+          .withProjectType(ProjectType.Bench)
           .build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -514,29 +491,27 @@ describe("timesheet", () => {
     });
 
     it("returns 0 when there are no non-plus rows", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("11", "1.0"))
-          .withProjectType(Summarizer.ProjectType.Bill)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("11", "1.0"))
+          .withProjectType(ProjectType.Bill)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("11", "1.0"))
-          .withProjectType(Summarizer.ProjectType.Core)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("11", "1.0"))
+          .withProjectType(ProjectType.Core)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withEntry(new Summarizer.DateEntry("11", "1.0"))
-          .withProjectType(Summarizer.ProjectType.Bench)
+        new TimesheetRowBuilder()
+          .withEntry(new DateEntry("11", "1.0"))
+          .withProjectType(ProjectType.Bench)
           .build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -544,26 +519,22 @@ describe("timesheet", () => {
     });
 
     it("returns 0 when there are no entries in any rows", () => {
-      const rows: Summarizer.TimesheetRow[] = new Array<
-        Summarizer.TimesheetRow
-      >();
+      const rows: TimesheetRow[] = new Array<TimesheetRow>();
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withProjectType(Summarizer.ProjectType.Internal)
+        new TimesheetRowBuilder().withProjectType(ProjectType.Internal).build()
+      );
+      rows.push(
+        new TimesheetRowBuilder()
+          .withProjectType(ProjectType.NonBillable)
           .build()
       );
       rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withProjectType(Summarizer.ProjectType.NonBillable)
-          .build()
-      );
-      rows.push(
-        new Helpers.TimesheetRowBuilder()
-          .withProjectType(Summarizer.ProjectType.NonBillable)
+        new TimesheetRowBuilder()
+          .withProjectType(ProjectType.NonBillable)
           .build()
       );
 
-      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Timesheet = new TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -583,12 +554,19 @@ describe("timesheet", () => {
         const dateForToday: string = "2019-09-12"; // thursday
 
         describe("not filled out up to today", () => {
-          const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-          const rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates(
-            [2, 3, 4, 5, 6, 9, 10, 11]
-          );
+          const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
+          const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([
+            2,
+            3,
+            4,
+            5,
+            6,
+            9,
+            10,
+            11
+          ]);
 
-          const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+          const timesheet: Timesheet = new Timesheet(
             rows,
             timesheetStartDate,
             timesheetEndDate,
@@ -605,12 +583,20 @@ describe("timesheet", () => {
         });
 
         describe("but filled out up to today", () => {
-          const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-          const rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates(
-            [2, 3, 4, 5, 6, 9, 10, 11, 12]
-          );
+          const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
+          const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([
+            2,
+            3,
+            4,
+            5,
+            6,
+            9,
+            10,
+            11,
+            12
+          ]);
 
-          const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+          const timesheet: Timesheet = new Timesheet(
             rows,
             timesheetStartDate,
             timesheetEndDate,
@@ -629,12 +615,12 @@ describe("timesheet", () => {
       describe("timesheet complete before period ends", () => {
         const dateForToday: string = "2019-09-12"; // thursday
 
-        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        const rows: Summarizer.TimesheetRow[] = arrayBuilder
+        const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
+        const rows: TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6])
           .concat(arrayBuilder.nonPlusHoursForDates([9, 10, 11, 12, 13]));
 
-        const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+        const timesheet: Timesheet = new Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -656,8 +642,8 @@ describe("timesheet", () => {
       describe("timesheet complete after period ends", () => {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
 
-        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        const rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates([
+        const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
+        const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([
           2,
           3,
           4,
@@ -670,7 +656,7 @@ describe("timesheet", () => {
           13
         ]);
 
-        const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+        const timesheet: Timesheet = new Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -691,12 +677,12 @@ describe("timesheet", () => {
       describe("overage on incomplete timesheet", () => {
         const dateForToday: string = "2019-09-10";
 
-        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        const rows: Summarizer.TimesheetRow[] = arrayBuilder
+        const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
+        const rows: TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10])
           .concat(arrayBuilder.plusHoursForDates([2])); // 16 hours on the 2nd
 
-        const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+        const timesheet: Timesheet = new Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -714,12 +700,12 @@ describe("timesheet", () => {
       describe("overage on the last working day of the timesheet", () => {
         const dateForToday: string = "2019-09-13";
 
-        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        const rows: Summarizer.TimesheetRow[] = arrayBuilder
+        const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
+        const rows: TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
 
-        const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+        const timesheet: Timesheet = new Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -738,12 +724,12 @@ describe("timesheet", () => {
       describe("overage on the last calendar day of the timesheet", () => {
         const dateForToday: string = "2019-09-15";
 
-        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        const rows: Summarizer.TimesheetRow[] = arrayBuilder
+        const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
+        const rows: TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
 
-        const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+        const timesheet: Timesheet = new Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -761,12 +747,12 @@ describe("timesheet", () => {
       describe("overage after the timesheet is complete", () => {
         const dateForToday: string = "2019-09-16";
 
-        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-        const rows: Summarizer.TimesheetRow[] = arrayBuilder
+        const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
+        const rows: TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
 
-        const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+        const timesheet: Timesheet = new Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -786,13 +772,13 @@ describe("timesheet", () => {
     describe("tracking a timesheet with plus hour underages", () => {
       describe("timesheet incomplete after period ends", () => {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
-        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
 
-        const rows: Summarizer.TimesheetRow[] = arrayBuilder
+        const rows: TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 13])
           .concat(arrayBuilder.nonPlusHoursForDates([12])); // non hours on the 12th
 
-        const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+        const timesheet: Timesheet = new Timesheet(
           rows,
           timesheetStartDate,
           timesheetEndDate,
@@ -815,10 +801,10 @@ describe("timesheet", () => {
     const todayDateThatDoesntMatter: string = "2019-09-27";
 
     it("returns 0 if no hours for a date", () => {
-      const rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+      const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
         [7]
       );
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rows,
         startDate,
         endDate,
@@ -828,10 +814,10 @@ describe("timesheet", () => {
       expect(timesheet.hoursForDate(1)).toBe(0);
     });
     it("returns hours if plus hours exist", () => {
-      const rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+      const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
         [7]
       );
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rows,
         startDate,
         endDate,
@@ -841,10 +827,10 @@ describe("timesheet", () => {
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
     it("returns hours if non-plus hours exist", () => {
-      const rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().nonPlusHoursForDates(
+      const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().nonPlusHoursForDates(
         [7]
       );
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rows,
         startDate,
         endDate,
@@ -854,11 +840,11 @@ describe("timesheet", () => {
       expect(timesheet.hoursForDate(7)).toBe(8);
     });
     it("returns sum if plus and non-plus exist", () => {
-      const rowBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-      const rows: Summarizer.TimesheetRow[] = rowBuilder
+      const rowBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
+      const rows: TimesheetRow[] = rowBuilder
         .plusHoursForDates([7])
         .concat(rowBuilder.nonPlusHoursForDates([7]));
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rows,
         startDate,
         endDate,
@@ -868,11 +854,11 @@ describe("timesheet", () => {
       expect(timesheet.hoursForDate(7)).toBe(16);
     });
     it("only cares about that date", () => {
-      const rowBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
-      const rows: Summarizer.TimesheetRow[] = rowBuilder
+      const rowBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
+      const rows: TimesheetRow[] = rowBuilder
         .plusHoursForDates([7])
         .concat(rowBuilder.nonPlusHoursForDates([10]));
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rows,
         startDate,
         endDate,
@@ -885,11 +871,11 @@ describe("timesheet", () => {
   describe("numberOfRemainingWorkDays", () => {
     const startDate: string = "2019-09-01";
     const endDate: string = "2019-09-15";
-    const rowsThatDontMatter: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+    const rowsThatDontMatter: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
       [6]
     );
     it("returns zero when today is after the timesheet end", () => {
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rowsThatDontMatter,
         startDate,
         endDate,
@@ -899,7 +885,7 @@ describe("timesheet", () => {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
     it("returns zero when today is in a weekend at the end of the timesheet", () => {
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rowsThatDontMatter,
         startDate,
         endDate,
@@ -909,7 +895,7 @@ describe("timesheet", () => {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
     it("returns 1 when today is the last workday of the timesheet", () => {
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rowsThatDontMatter,
         startDate,
         endDate,
@@ -919,11 +905,11 @@ describe("timesheet", () => {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(1);
     });
     it("returns 0 when today is the last workday of the timesheet and has hours", () => {
-      const rows: Summarizer.TimesheetRow[] = rowsThatDontMatter.concat(
-        new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([13])
+      const rows: TimesheetRow[] = rowsThatDontMatter.concat(
+        new TimesheetRowArrayBuilder().plusHoursForDates([13])
       );
 
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rows,
         startDate,
         endDate,
@@ -933,7 +919,7 @@ describe("timesheet", () => {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
     it("returns 2 when today is the 2nd to last day in timesheet", () => {
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rowsThatDontMatter,
         startDate,
         endDate,
@@ -943,11 +929,11 @@ describe("timesheet", () => {
       expect(timesheet.numberOfRemainingWorkDays()).toBe(2);
     });
     it("returns 1 when today is 2nd to last day but has hours", () => {
-      const rows: Summarizer.TimesheetRow[] = rowsThatDontMatter.concat(
-        new Helpers.TimesheetRowArrayBuilder().plusHoursForDates([12])
+      const rows: TimesheetRow[] = rowsThatDontMatter.concat(
+        new TimesheetRowArrayBuilder().plusHoursForDates([12])
       );
 
-      const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+      const timesheet: Timesheet = new Timesheet(
         rows,
         startDate,
         endDate,
@@ -963,10 +949,10 @@ describe("timesheet", () => {
         const saturday: string = "2019-09-07";
         const sunday: string = "2019-09-08";
 
-        const rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+        const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
           [7]
         );
-        const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+        const timesheet: Timesheet = new Timesheet(
           rows,
           saturday,
           sunday,
@@ -978,10 +964,10 @@ describe("timesheet", () => {
       it("returns 1 when start/end date are the same weekday", () => {
         const monday: string = "2019-09-10";
 
-        const rows: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+        const rows: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
           [10]
         );
-        const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+        const timesheet: Timesheet = new Timesheet(
           rows,
           monday,
           monday,
@@ -991,12 +977,12 @@ describe("timesheet", () => {
         expect(timesheet.weekdaysInTimesheet()).toBe(1);
       });
       it("returns the correct number of weekdays in the 9/1/19 - 9/15/19 pay period", () => {
-        const rowArrayThatDoesntMatter: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
+        const rowArrayThatDoesntMatter: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates(
           [8]
         );
         const dayForTodayThatDoesntMatter: string = "2019-09-27";
 
-        const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+        const timesheet: Timesheet = new Timesheet(
           rowArrayThatDoesntMatter,
           "2019-09-01",
           "2019-09-15",
@@ -1012,27 +998,18 @@ describe("timesheet", () => {
     const endDate: string = "2019-09-15";
     const todayDate: string = "2019-09-13";
 
-    const helper: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+    const helper: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
 
-    const rows: Summarizer.TimesheetRow[] = new Array<Summarizer.TimesheetRow>()
-      .concat(helper.hoursOfTypeForDates([1, 2], Summarizer.ProjectType.Bill))
+    const rows: TimesheetRow[] = new Array<TimesheetRow>()
+      .concat(helper.hoursOfTypeForDates([1, 2], ProjectType.Bill))
+      .concat(helper.hoursOfTypeForDates([3, 4, 5], ProjectType.Bench))
+      .concat(helper.hoursOfTypeForDates([6, 7, 8, 9], ProjectType.Core))
+      .concat(helper.hoursOfTypeForDates([10, 11], ProjectType.Internal))
       .concat(
-        helper.hoursOfTypeForDates([3, 4, 5], Summarizer.ProjectType.Bench)
-      )
-      .concat(
-        helper.hoursOfTypeForDates([6, 7, 8, 9], Summarizer.ProjectType.Core)
-      )
-      .concat(
-        helper.hoursOfTypeForDates([10, 11], Summarizer.ProjectType.Internal)
-      )
-      .concat(
-        helper.hoursOfTypeForDates(
-          [11, 12, 13],
-          Summarizer.ProjectType.NonBillable
-        )
+        helper.hoursOfTypeForDates([11, 12, 13], ProjectType.NonBillable)
       );
 
-    const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+    const timesheet: Timesheet = new Timesheet(
       rows,
       startDate,
       endDate,
@@ -1040,112 +1017,106 @@ describe("timesheet", () => {
     );
 
     const result: Array<{
-      projectType: Summarizer.ProjectType;
+      projectType: ProjectType;
       total: number;
     }> = timesheet.hoursByProjectType();
 
     it("breaks down categories correctly", () => {
       expect(result.length).toBe(5);
+      expect(result.find(i => i.projectType === ProjectType.Bill).total).toBe(
+        16
+      );
+      expect(result.find(i => i.projectType === ProjectType.Bench).total).toBe(
+        24
+      );
+      expect(result.find(i => i.projectType === ProjectType.Core).total).toBe(
+        32
+      );
       expect(
-        result.find(i => i.projectType === Summarizer.ProjectType.Bill).total
+        result.find(i => i.projectType === ProjectType.Internal).total
       ).toBe(16);
       expect(
-        result.find(i => i.projectType === Summarizer.ProjectType.Bench).total
-      ).toBe(24);
-      expect(
-        result.find(i => i.projectType === Summarizer.ProjectType.Core).total
-      ).toBe(32);
-      expect(
-        result.find(i => i.projectType === Summarizer.ProjectType.Internal)
-          .total
-      ).toBe(16);
-      expect(
-        result.find(i => i.projectType === Summarizer.ProjectType.NonBillable)
-          .total
+        result.find(i => i.projectType === ProjectType.NonBillable).total
       ).toBe(24);
     });
     it("matches the sum of plus rows", () => {
-      const bill: number = result.find(
-        i => i.projectType === Summarizer.ProjectType.Bill
-      ).total;
-      const core: number = result.find(
-        i => i.projectType === Summarizer.ProjectType.Core
-      ).total;
+      const bill: number = result.find(i => i.projectType === ProjectType.Bill)
+        .total;
+      const core: number = result.find(i => i.projectType === ProjectType.Core)
+        .total;
       const bench: number = result.find(
-        i => i.projectType === Summarizer.ProjectType.Bench
+        i => i.projectType === ProjectType.Bench
       ).total;
 
       expect(timesheet.totalPlusHours()).toBe(bill + core + bench);
     });
     it("matches the sum of non-plus rows", () => {
       const internal: number = result.find(
-        i => i.projectType === Summarizer.ProjectType.Internal
+        i => i.projectType === ProjectType.Internal
       ).total;
       const nonBillable: number = result.find(
-        i => i.projectType === Summarizer.ProjectType.NonBillable
+        i => i.projectType === ProjectType.NonBillable
       ).total;
 
       expect(timesheet.totalNonPlusHours()).toBe(internal + nonBillable);
     });
   });
   describe("Sean's actual 9/1/2019-9/15/2019 timesheet", () => {
-    const rows: Summarizer.TimesheetRow[] = new Array<
-      Summarizer.TimesheetRow
-    >();
-    const nrecaRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
-      .withProjectType(Summarizer.ProjectType.Bill)
-      .withEntry(new Summarizer.DateEntry("4", "7.75"))
-      .withEntry(new Summarizer.DateEntry("5", "10.25"))
-      .withEntry(new Summarizer.DateEntry("6", "5.50"))
-      .withEntry(new Summarizer.DateEntry("9", "10.25"))
-      .withEntry(new Summarizer.DateEntry("10", "9.50"))
-      .withEntry(new Summarizer.DateEntry("11", "7.50"))
-      .withEntry(new Summarizer.DateEntry("12", "7"))
-      .withEntry(new Summarizer.DateEntry("13", ".5"))
+    const rows: TimesheetRow[] = new Array<TimesheetRow>();
+    const nrecaRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Bill)
+      .withEntry(new DateEntry("4", "7.75"))
+      .withEntry(new DateEntry("5", "10.25"))
+      .withEntry(new DateEntry("6", "5.50"))
+      .withEntry(new DateEntry("9", "10.25"))
+      .withEntry(new DateEntry("10", "9.50"))
+      .withEntry(new DateEntry("11", "7.50"))
+      .withEntry(new DateEntry("12", "7"))
+      .withEntry(new DateEntry("13", ".5"))
       .build();
 
-    const trainingRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
-      .withProjectType(Summarizer.ProjectType.Bill)
-      .withEntry(new Summarizer.DateEntry("3", "1.0"))
-      .withEntry(new Summarizer.DateEntry("5", "1.25"))
-      .withEntry(new Summarizer.DateEntry("11", ".75"))
-      .withEntry(new Summarizer.DateEntry("12", "0.0"))
-      .withEntry(new Summarizer.DateEntry("15", "3.0"))
+    const trainingRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Bill)
+      .withEntry(new DateEntry("3", "1.0"))
+      .withEntry(new DateEntry("5", "1.25"))
+      .withEntry(new DateEntry("11", ".75"))
+      .withEntry(new DateEntry("12", "0.0"))
+      .withEntry(new DateEntry("15", "3.0"))
       .build();
 
-    const holidayRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
-      .withProjectType(Summarizer.ProjectType.Core)
-      .withEntry(new Summarizer.DateEntry("2", "8"))
+    const holidayRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("2", "8"))
       .build();
 
-    const sickRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
-      .withProjectType(Summarizer.ProjectType.Core)
-      .withEntry(new Summarizer.DateEntry("4", "1"))
+    const sickRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("4", "1"))
       .build();
 
-    const bdRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
-      .withProjectType(Summarizer.ProjectType.Core)
-      .withEntry(new Summarizer.DateEntry("1", "3"))
-      .withEntry(new Summarizer.DateEntry("2", "3"))
-      .withEntry(new Summarizer.DateEntry("3", "10"))
-      .withEntry(new Summarizer.DateEntry("4", "1.75"))
-      .withEntry(new Summarizer.DateEntry("6", "3.75"))
-      .withEntry(new Summarizer.DateEntry("9", "1.50"))
-      .withEntry(new Summarizer.DateEntry("10", "0.25"))
-      .withEntry(new Summarizer.DateEntry("11", ".50"))
-      .withEntry(new Summarizer.DateEntry("13", "5.25"))
+    const bdRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("1", "3"))
+      .withEntry(new DateEntry("2", "3"))
+      .withEntry(new DateEntry("3", "10"))
+      .withEntry(new DateEntry("4", "1.75"))
+      .withEntry(new DateEntry("6", "3.75"))
+      .withEntry(new DateEntry("9", "1.50"))
+      .withEntry(new DateEntry("10", "0.25"))
+      .withEntry(new DateEntry("11", ".50"))
+      .withEntry(new DateEntry("13", "5.25"))
       .build();
 
-    const rediRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
-      .withProjectType(Summarizer.ProjectType.Core)
-      .withEntry(new Summarizer.DateEntry("10", "2.0"))
+    const rediRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("10", "2.0"))
       .build();
 
-    const innovationRow: Summarizer.TimesheetRow = new Helpers.TimesheetRowBuilder()
-      .withProjectType(Summarizer.ProjectType.Core)
-      .withEntry(new Summarizer.DateEntry("3", "3.25"))
-      .withEntry(new Summarizer.DateEntry("6", "1.0"))
-      .withEntry(new Summarizer.DateEntry("13", "2.50"))
+    const innovationRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("3", "3.25"))
+      .withEntry(new DateEntry("6", "1.0"))
+      .withEntry(new DateEntry("13", "2.50"))
       .build();
 
     rows.push(nrecaRow);
@@ -1156,7 +1127,7 @@ describe("timesheet", () => {
     rows.push(rediRow);
     rows.push(innovationRow);
 
-    const timesheet: Summarizer.Timesheet = new Summarizer.Timesheet(
+    const timesheet: Timesheet = new Timesheet(
       rows,
       "2019-09-01",
       "2019-09-15",
@@ -1179,12 +1150,12 @@ describe("timesheet", () => {
       expect(
         timesheet
           .hoursByProjectType()
-          .find(i => i.projectType === Summarizer.ProjectType.Bill).total
+          .find(i => i.projectType === ProjectType.Bill).total
       ).toBe(64.25);
       expect(
         timesheet
           .hoursByProjectType()
-          .find(i => i.projectType === Summarizer.ProjectType.Core).total
+          .find(i => i.projectType === ProjectType.Core).total
       ).toBe(46.75);
     });
   });
