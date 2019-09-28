@@ -85,7 +85,7 @@ describe("timesheet", () => {
       });
 
       it("is fine with a valid date", () => {
-        var shouldBeFine: any = function(): any {
+        const shouldBeFine: any = () => {
           new Helpers.TimesheetBuilder().withStartDate("2010-01-01").build();
           new Helpers.TimesheetBuilder().withStartDate("2019-09-08").build();
         };
@@ -147,7 +147,7 @@ describe("timesheet", () => {
       });
 
       it("is fine with a valid date", () => {
-        var shouldBeFine: any = function(): any {
+        const shouldBeFine: any = () => {
           new Helpers.TimesheetBuilder().withEndDate("01-01-2010").build();
           new Helpers.TimesheetBuilder().withEndDate("2019-09-08").build();
         };
@@ -207,7 +207,7 @@ describe("timesheet", () => {
       });
 
       it("is fine with a valid date", () => {
-        var shouldBeFine: any = function(): any {
+        const shouldBeFine: any = () => {
           new Helpers.TimesheetBuilder().withTodayDate("2010-01-01").build();
           new Helpers.TimesheetBuilder().withTodayDate("2019-09-08").build();
         };
@@ -216,10 +216,10 @@ describe("timesheet", () => {
     });
   });
   describe("getLatestEntryDate", () => {
-    var hoursAmountThatDoesntMatter: string = "8";
+    const hoursAmountThatDoesntMatter: string = "8";
 
     it("returns the largest date number that has an entry", () => {
-      var rows: Array<Summarizer.TimesheetRow> = new Array<
+      const rows: Summarizer.TimesheetRow[] = new Array<
         Summarizer.TimesheetRow
       >();
 
@@ -239,7 +239,7 @@ describe("timesheet", () => {
           .build()
       );
 
-      var timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
+      const timesheet: Summarizer.Timesheet = new Helpers.TimesheetBuilder()
         .withRows(rows)
         .build();
 
@@ -247,7 +247,7 @@ describe("timesheet", () => {
     });
 
     it("doesn't count zero time entries as a date to care about", () => {
-      var rows: Array<Summarizer.TimesheetRow> = new Array<
+      const rows: Summarizer.TimesheetRow[] = new Array<
         Summarizer.TimesheetRow
       >();
       rows.push(
