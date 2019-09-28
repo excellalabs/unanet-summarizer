@@ -66,83 +66,65 @@ export class Timesheet {
     }
   };
 
-  totalUpFilteredRows = (filteredRows: TimesheetRow[]): number => {
-    if (filteredRows.length === 0) {
-      return 0;
-    }
-
-    var allHours: number[] = filteredRows.reduce(
-      (acc, val) => {
-        return acc.concat(val.entries.map(entry => entry.hoursAmount));
-      },
-      [0]
-    );
-
-    return allHours.reduce((acc, val) => (acc += val));
-  };
-
-  totalPlusHours = (): number => {
-    var allPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(val =>
+  public totalPlusHours = (): number => {
+    const allPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(val =>
       val.isPlusProjectType()
     );
 
     return this.totalUpFilteredRows(allPlusHoursRows);
   };
 
-  totalNonPlusHours = (): number => {
-    var allNonPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(
+  public totalNonPlusHours = (): number => {
+    const allNonPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(
       val => !val.isPlusProjectType()
     );
 
     return this.totalUpFilteredRows(allNonPlusHoursRows);
   };
 
-  validateTimesheetRows = function(timesheetRows: TimesheetRow[]): void {
-    if (timesheetRows === null || timesheetRows === undefined) {
-      throw new Error("Must supply a timesheet rows list.");
-    }
-    if (timesheetRows.length === 0) {
-      throw new Error("timesheet rows list is empty.");
-    }
-  };
-
-  validateTimesheetDate = function(
-    timesheetStartDate: string,
-    type: TimesheetDateType
-  ): moment.Moment {
-    if (
-      timesheetStartDate === null ||
-      timesheetStartDate === undefined ||
-      timesheetStartDate.trim().length === 0
-    ) {
-      throw new Error(`${type} is invalid.`);
-    }
-
-    var date: moment.Moment = moment(timesheetStartDate);
-
-    if (!date.isValid()) {
-      throw new Error(`${type} is invalid.`);
-    }
-
-    if (date.year() < 2010) {
-      throw new Error(`${type} should be after 2009.`);
-    }
-
-    return date;
-  };
-
-  plusHoursTracking = (): number => {
-    var workingDays: number = this.weekdaysInTimesheet();
-    var remainingWorkingDays: number = this.numberOfRemainingWorkDays();
-    var expectedHours: number = workingDays * this.HOURS_IN_WORKDAY;
-    var actualHours: number =
+  public plusHoursTracking = (): number => {
+    const workingDays: number = this.weekdaysInTimesheet();
+    const remainingWorkingDays: number = this.numberOfRemainingWorkDays();
+    const expectedHours: number = workingDays * this.HOURS_IN_WORKDAY;
+    const actualHours: number =
       this.totalPlusHours() + remainingWorkingDays * this.HOURS_IN_WORKDAY;
 
     return actualHours - expectedHours;
   };
 
-  numberOfRemainingWorkDays = (): number => {
-    var workingDaysLeft: number = this.weekDaysBetweenDates(
+  public hoursByProjectType = () => {
+    const results: Array<{
+      projectType: ProjectType;
+      total: number;
+    }> = [];
+
+    Object.keys(ProjectType).forEach(key => {
+      const keyAsEnum: ProjectType =
+        ProjectType[key as keyof typeof ProjectType];
+
+      const filteredToProjectType: TimesheetRow[] = this.timesheetRows.filter(
+        val => val.projectType === keyAsEnum
+      );
+
+      const theTotal: number = this.totalUpFilteredRows(filteredToProjectType);
+      results.push({
+        projectType: keyAsEnum,
+        total: theTotal
+      });
+    });
+
+    return results;
+  };
+
+  public weekdaysInTimesheet = (): number => {
+    return this.weekDaysBetweenDates(
+      this.timesheetStartDate,
+      this.timesheetEndDate
+    );
+  };
+
+  public numberOfRemainingWorkDays = (): number => {
+    let workingDaysLeft: number = this.weekDaysBetweenDates(
       this.todaysDate,
       this.timesheetEndDate
     );
@@ -153,37 +135,30 @@ export class Timesheet {
     return workingDaysLeft;
   };
 
-  weekdaysInTimesheet = (): number => {
-    return this.weekDaysBetweenDates(
-      this.timesheetStartDate,
-      this.timesheetEndDate
-    );
-  };
-
-  hoursForDate = (theDate: number): number => {
-    var allEntryArrays: DateEntry[][] = this.timesheetRows.map(
+  public hoursForDate = (theDate: number): number => {
+    const allEntryArrays: DateEntry[][] = this.timesheetRows.map(
       row => row.entries
     );
-    var flattenedArray: DateEntry[] = ([] as DateEntry[]).concat(
+    const flattenedArray: DateEntry[] = ([] as DateEntry[]).concat(
       ...allEntryArrays
     );
 
-    var filteredToTheDate: DateEntry[] = flattenedArray.filter(value => {
+    const filteredToTheDate: DateEntry[] = flattenedArray.filter(value => {
       return value.dayOfMonth === theDate;
     });
 
-    var sumOfHours: number = filteredToTheDate.reduce((acc, val) => {
+    const sumOfHours: number = filteredToTheDate.reduce((acc, val) => {
       return acc + val.hoursAmount;
     }, 0);
     return sumOfHours;
   };
 
-  weekDaysBetweenDates = (
+  private weekDaysBetweenDates = (
     theStartDate: moment.Moment,
     endDate: moment.Moment
   ): number => {
-    var totalWeekDays: number = 0;
-    var startDate: moment.Moment = theStartDate.clone();
+    let totalWeekDays: number = 0;
+    const startDate: moment.Moment = theStartDate.clone();
     while (startDate <= endDate) {
       if (
         startDate.format("ddd") !== "Sat" &&
@@ -197,26 +172,51 @@ export class Timesheet {
     return totalWeekDays;
   };
 
-  hoursByProjectType = () => {
-    let results: Array<{
-      projectType: ProjectType;
-      total: number;
-    }> = [];
+  private totalUpFilteredRows = (filteredRows: TimesheetRow[]): number => {
+    if (filteredRows.length === 0) {
+      return 0;
+    }
 
-    Object.keys(ProjectType).forEach(key => {
-      var keyAsEnum: ProjectType = ProjectType[key as keyof typeof ProjectType];
+    const allHours: number[] = filteredRows.reduce(
+      (acc, val) => {
+        return acc.concat(val.entries.map(entry => entry.hoursAmount));
+      },
+      [0]
+    );
 
-      var filteredToProjectType: TimesheetRow[] = this.timesheetRows.filter(
-        val => val.projectType === keyAsEnum
-      );
+    return allHours.reduce((acc, val) => (acc += val));
+  };
+  private validateTimesheetRows = (timesheetRows: TimesheetRow[]) => {
+    if (timesheetRows === null || timesheetRows === undefined) {
+      throw new Error("Must supply a timesheet rows list.");
+    }
+    if (timesheetRows.length === 0) {
+      throw new Error("timesheet rows list is empty.");
+    }
+  };
 
-      var theTotal: number = this.totalUpFilteredRows(filteredToProjectType);
-      results.push({
-        projectType: keyAsEnum,
-        total: theTotal
-      });
-    });
+  private validateTimesheetDate = (
+    timesheetStartDate: string,
+    type: TimesheetDateType
+  ) => {
+    if (
+      timesheetStartDate === null ||
+      timesheetStartDate === undefined ||
+      timesheetStartDate.trim().length === 0
+    ) {
+      throw new Error(`${type} is invalid.`);
+    }
 
-    return results;
+    const date: moment.Moment = moment(timesheetStartDate);
+
+    if (!date.isValid()) {
+      throw new Error(`${type} is invalid.`);
+    }
+
+    if (date.year() < 2010) {
+      throw new Error(`${type} should be after 2009.`);
+    }
+
+    return date;
   };
 }
