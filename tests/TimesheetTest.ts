@@ -1,10 +1,11 @@
 import { DateEntry } from "../src/classes/DateEntry";
 import { ProjectType } from "../src/classes/ProjectType";
 import { Timesheet } from "../src/classes/Timesheet";
+import { TimesheetRow } from "../src/classes/TimesheetRow";
+
 import { TimesheetBuilder } from "../tests/Helpers/TimesheetBuilder";
 import { TimesheetRowArrayBuilder } from "../tests/Helpers/TimesheetRowArrayBuilder";
 import { TimesheetRowBuilder } from "../tests/Helpers/TimesheetRowBuilder";
-import { TimesheetRow } from "../src/classes/TimesheetRow";
 
 describe("timesheet", () => {
   describe("ctor", () => {
