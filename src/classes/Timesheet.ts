@@ -7,8 +7,8 @@ import { TimesheetRow } from "./TimesheetRow";
 export class Timesheet {
   public timesheetStartDate: moment.Moment;
   public timesheetEndDate: moment.Moment;
+  public todaysDate: moment.Moment;
   private timesheetRows: TimesheetRow[];
-  private todaysDate: moment.Moment;
   private HOURS_IN_WORKDAY = 8;
 
   constructor(timesheetRows: TimesheetRow[], timesheetStartDate: string, timesheetEndDate: string, todaysDate: string) {

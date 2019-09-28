@@ -29,8 +29,16 @@ describe("timesheet loader", () => {
       const loader = new EditModeLoader(editModeDom.window.document.title);
       const timesheet = loader.getTimesheet();
 
-      const expectedStartDate = moment("2019-09-30");
-      expect(expectedStartDate.isSame(timesheet.timesheetEndDate)).toBe(true);
+      const expectedEndDate = moment("2019-09-30");
+      expect(expectedEndDate.isSame(timesheet.timesheetEndDate)).toBe(true);
+    });
+
+    it("uses today's date correctly", () => {
+      const loader = new EditModeLoader(editModeDom.window.document.title);
+      const timesheet = loader.getTimesheet();
+
+      const expectedTodayDate = moment();
+      expect(expectedTodayDate.isSame(timesheet.todaysDate, "date")).toBe(true);
     });
   });
 
