@@ -40,18 +40,18 @@ export class Timesheet {
     this.todaysDate = momentTodayDate;
   }
 
-  getLatestEntryDate = (): number => {
+  public getLatestEntryDate = (): number => {
     const allDatesThatHaveMoreThanZeroHours: number[] = this.timesheetRows.reduce(
       (acc, val) => {
         // outer reducer, for timesheet rows
         return acc.concat(
-          val.entries.reduce((acc, val) => {
+          val.entries.reduce((acc2, val2) => {
             // inner reducer, for the date entries on a given row
-            if (val.hoursAmount > 0) {
+            if (val2.hoursAmount > 0) {
               // we only care if there are more than 0 hours for the entry.
-              return acc.concat(val.dayOfMonth);
+              return acc.concat(val2.dayOfMonth);
             } else {
-              return acc;
+              return acc2;
             }
           }, [])
         );
