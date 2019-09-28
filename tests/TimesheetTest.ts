@@ -583,7 +583,7 @@ describe("timesheet", () => {
         const dateForToday: string = "2019-09-12"; // thursday
 
         describe("not filled out up to today", () => {
-          var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+          const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
           const rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates(
             [2, 3, 4, 5, 6, 9, 10, 11]
           );
@@ -605,7 +605,7 @@ describe("timesheet", () => {
         });
 
         describe("but filled out up to today", () => {
-          var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+          const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
           const rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates(
             [2, 3, 4, 5, 6, 9, 10, 11, 12]
           );
@@ -629,7 +629,7 @@ describe("timesheet", () => {
       describe("timesheet complete before period ends", () => {
         const dateForToday: string = "2019-09-12"; // thursday
 
-        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         const rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6])
           .concat(arrayBuilder.nonPlusHoursForDates([9, 10, 11, 12, 13]));
@@ -656,7 +656,7 @@ describe("timesheet", () => {
       describe("timesheet complete after period ends", () => {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
 
-        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         const rows: Summarizer.TimesheetRow[] = arrayBuilder.plusHoursForDates([
           2,
           3,
@@ -689,9 +689,9 @@ describe("timesheet", () => {
 
     describe("tracking a timesheet with plus hour overages", () => {
       describe("overage on incomplete timesheet", () => {
-        var dateForToday: string = "2019-09-10";
+        const dateForToday: string = "2019-09-10";
 
-        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         const rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10])
           .concat(arrayBuilder.plusHoursForDates([2])); // 16 hours on the 2nd
@@ -712,9 +712,9 @@ describe("timesheet", () => {
         });
       });
       describe("overage on the last working day of the timesheet", () => {
-        var dateForToday: string = "2019-09-13";
+        const dateForToday: string = "2019-09-13";
 
-        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         const rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
@@ -736,9 +736,9 @@ describe("timesheet", () => {
       });
 
       describe("overage on the last calendar day of the timesheet", () => {
-        var dateForToday: string = "2019-09-15";
+        const dateForToday: string = "2019-09-15";
 
-        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         const rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
@@ -759,9 +759,9 @@ describe("timesheet", () => {
         });
       });
       describe("overage after the timesheet is complete", () => {
-        var dateForToday: string = "2019-09-16";
+        const dateForToday: string = "2019-09-16";
 
-        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
         const rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13])
           .concat(arrayBuilder.plusHoursForDates([12])); // 16 hours on the 12th
@@ -786,7 +786,7 @@ describe("timesheet", () => {
     describe("tracking a timesheet with plus hour underages", () => {
       describe("timesheet incomplete after period ends", () => {
         const dateForToday: string = "2019-09-16"; // next day after time sheet closes
-        var arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
+        const arrayBuilder: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
 
         const rows: Summarizer.TimesheetRow[] = arrayBuilder
           .plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 13])
@@ -810,8 +810,8 @@ describe("timesheet", () => {
     });
   });
   describe("hoursForDate", () => {
-    var startDate: string = "2019-09-01";
-    var endDate: string = "2019-09-15";
+    const startDate: string = "2019-09-01";
+    const endDate: string = "2019-09-15";
     var todayDateThatDoesntMatter: string = "2019-09-27";
 
     it("returns 0 if no hours for a date", () => {
@@ -883,8 +883,8 @@ describe("timesheet", () => {
     });
   });
   describe("numberOfRemainingWorkDays", () => {
-    var startDate: string = "2019-09-01";
-    var endDate: string = "2019-09-15";
+    const startDate: string = "2019-09-01";
+    const endDate: string = "2019-09-15";
     var rowsThatDontMatter: Summarizer.TimesheetRow[] = new Helpers.TimesheetRowArrayBuilder().plusHoursForDates(
       [6]
     );
@@ -1008,8 +1008,8 @@ describe("timesheet", () => {
     });
   });
   describe("hoursByProjectType", () => {
-    var startDate: string = "2019-09-01";
-    var endDate: string = "2019-09-15";
+    const startDate: string = "2019-09-01";
+    const endDate: string = "2019-09-15";
     var todayDate: string = "2019-09-13";
 
     var helper: Helpers.TimesheetRowArrayBuilder = new Helpers.TimesheetRowArrayBuilder();
