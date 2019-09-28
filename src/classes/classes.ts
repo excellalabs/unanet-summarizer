@@ -1,6 +1,31 @@
 import * as moment from "moment";
 
 export module Summarizer {
+  enum TimesheetDateType {
+    Start = "timesheet start date",
+    End = "timesheet end date",
+    Today = "today's date"
+  }
+
+  export enum ProjectType {
+    Bill = "CLI-BILL+",
+    Core = "EXC-CORE+",
+    Bench = "EXC-BENCH+",
+    Internal = "EXC-INT",
+    NonBillable = "CLI-NB"
+  }
+
+  export enum PlusProjectTypes {
+    Bill = ProjectType.Bill,
+    Core = ProjectType.Core,
+    Bench = ProjectType.Bench
+  }
+
+  export enum NonPlusProjectTypes {
+    Internal = ProjectType.Internal,
+    NonBillable = ProjectType.NonBillable
+  }
+
   export class DateEntry {
     dayOfMonth: number;
     hoursAmount: number;
@@ -23,7 +48,7 @@ export module Summarizer {
       ) {
         this.hoursAmount = 0;
       } else {
-        var parsedHours = Number.parseFloat(hoursAmount.trim());
+        var parsedHours: number = Number.parseFloat(hoursAmount.trim());
         if (Number.isNaN(parsedHours)) {
           throw new Error(
             `Unable to parse a valid hours amount for dayOfMonth: '${dayOfMonth}'`
@@ -33,7 +58,7 @@ export module Summarizer {
         }
       }
 
-      var parsedDayOfMonth = Number.parseInt(dayOfMonth.trim());
+      var parsedDayOfMonth: number = Number.parseInt(dayOfMonth.trim(), 10);
       if (Number.isNaN(parsedDayOfMonth)) {
         throw new Error(
           `Unable to parse dayOfMonth: input was '${dayOfMonth}'`
@@ -67,25 +92,6 @@ export module Summarizer {
     }
   }
 
-  export enum ProjectType {
-    Bill = "CLI-BILL+",
-    Core = "EXC-CORE+",
-    Bench = "EXC-BENCH+",
-    Internal = "EXC-INT",
-    NonBillable = "CLI-NB"
-  }
-
-  export enum PlusProjectTypes {
-    Bill = ProjectType.Bill,
-    Core = ProjectType.Core,
-    Bench = ProjectType.Bench
-  }
-
-  export enum NonPlusProjectTypes {
-    Internal = ProjectType.Internal,
-    NonBillable = ProjectType.NonBillable
-  }
-
   export class Timesheet {
     timesheetRows: Array<Summarizer.TimesheetRow>;
     timesheetStartDate: moment.Moment;
@@ -103,19 +109,19 @@ export module Summarizer {
 
       this.timesheetRows = timesheetRows;
 
-      var momentStartDate = this.validateTimesheetDate(
+      var momentStartDate: moment.Moment = this.validateTimesheetDate(
         timesheetStartDate,
         TimesheetDateType.Start
       );
       this.timesheetStartDate = momentStartDate;
 
-      var momentEndDate = this.validateTimesheetDate(
+      var momentEndDate: moment.Moment = this.validateTimesheetDate(
         timesheetEndDate,
         TimesheetDateType.End
       );
       this.timesheetEndDate = momentEndDate;
 
-      var momentTodayDate = this.validateTimesheetDate(
+      var momentTodayDate: moment.Moment = this.validateTimesheetDate(
         todaysDate,
         TimesheetDateType.Today
       );
@@ -123,7 +129,7 @@ export module Summarizer {
     }
 
     getLatestEntryDate = (): number => {
-      var allDatesThatHaveMoreThanZeroHours = this.timesheetRows.reduce(
+      var allDatesThatHaveMoreThanZeroHours: number[] = this.timesheetRows.reduce(
         (acc, val) => {
           // outer reducer, for timesheet rows
           return acc.concat(
@@ -153,7 +159,7 @@ export module Summarizer {
         return 0;
       }
 
-      var allHours = filteredRows.reduce(
+      var allHours: number[] = filteredRows.reduce(
         (acc, val) => {
           return acc.concat(val.entries.map(entry => entry.hoursAmount));
         },
@@ -164,7 +170,7 @@ export module Summarizer {
     };
 
     totalPlusHours = (): number => {
-      var allPlusHoursRows = this.timesheetRows.filter(val =>
+      var allPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(val =>
         val.isPlusProjectType()
       );
 
@@ -172,7 +178,7 @@ export module Summarizer {
     };
 
     totalNonPlusHours = (): number => {
-      var allNonPlusHoursRows = this.timesheetRows.filter(
+      var allNonPlusHoursRows: TimesheetRow[] = this.timesheetRows.filter(
         val => !val.isPlusProjectType()
       );
 
@@ -181,7 +187,7 @@ export module Summarizer {
 
     validateTimesheetRows = function(
       timesheetRows: Array<Summarizer.TimesheetRow>
-    ) {
+    ): void {
       if (timesheetRows === null || timesheetRows === undefined) {
         throw new Error("Must supply a timesheet rows list.");
       }
@@ -202,7 +208,7 @@ export module Summarizer {
         throw new Error(`${type} is invalid.`);
       }
 
-      var date = moment(timesheetStartDate);
+      var date: moment.Moment = moment(timesheetStartDate);
 
       if (!date.isValid()) {
         throw new Error(`${type} is invalid.`);
@@ -216,17 +222,17 @@ export module Summarizer {
     };
 
     plusHoursTracking = (): number => {
-      var workingDays = this.weekdaysInTimesheet();
-      var remainingWorkingDays = this.numberOfRemainingWorkDays();
-      var expectedHours = workingDays * this.HOURS_IN_WORKDAY;
-      var actualHours =
+      var workingDays: number = this.weekdaysInTimesheet();
+      var remainingWorkingDays: number = this.numberOfRemainingWorkDays();
+      var expectedHours: number = workingDays * this.HOURS_IN_WORKDAY;
+      var actualHours: number =
         this.totalPlusHours() + remainingWorkingDays * this.HOURS_IN_WORKDAY;
 
       return actualHours - expectedHours;
     };
 
     numberOfRemainingWorkDays = (): number => {
-      var workingDaysLeft = this.weekDaysBetweenDates(
+      var workingDaysLeft: number = this.weekDaysBetweenDates(
         this.todaysDate,
         this.timesheetEndDate
       );
@@ -245,14 +251,18 @@ export module Summarizer {
     };
 
     hoursForDate = (theDate: number): number => {
-      var allEntryArrays = this.timesheetRows.map(row => row.entries);
-      var flattenedArray = ([] as DateEntry[]).concat(...allEntryArrays);
+      var allEntryArrays: DateEntry[][] = this.timesheetRows.map(
+        row => row.entries
+      );
+      var flattenedArray: DateEntry[] = ([] as DateEntry[]).concat(
+        ...allEntryArrays
+      );
 
-      var filteredToTheDate = flattenedArray.filter(value => {
+      var filteredToTheDate: DateEntry[] = flattenedArray.filter(value => {
         return value.dayOfMonth === theDate;
       });
 
-      var sumOfHours = filteredToTheDate.reduce((acc, val) => {
+      var sumOfHours: number = filteredToTheDate.reduce((acc, val) => {
         return acc + val.hoursAmount;
       }, 0);
       return sumOfHours;
@@ -262,25 +272,43 @@ export module Summarizer {
       theStartDate: moment.Moment,
       endDate: moment.Moment
     ): number => {
-      var totalWeekDays = 0;
-      var startDate = theStartDate.clone();
+      var totalWeekDays: number = 0;
+      var startDate: moment.Moment = theStartDate.clone();
       while (startDate <= endDate) {
         if (
           startDate.format("ddd") !== "Sat" &&
           startDate.format("ddd") !== "Sun"
         ) {
-          totalWeekDays++; //add 1 to your counter if its not a weekend day
+          totalWeekDays++; // add 1 to your counter if its not a weekend day
         }
 
         startDate.add(1, "day");
       }
       return totalWeekDays;
     };
-  }
 
-  enum TimesheetDateType {
-    Start = "timesheet start date",
-    End = "timesheet end date",
-    Today = "today's date"
+    hoursByProjectType = () => {
+      let results: Array<{
+        projectType: Summarizer.ProjectType;
+        total: number;
+      }> = [];
+
+      Object.keys(ProjectType).forEach(key => {
+        var keyAsEnum: ProjectType =
+          ProjectType[key as keyof typeof ProjectType];
+
+        var filteredToProjectType: TimesheetRow[] = this.timesheetRows.filter(
+          val => val.projectType === keyAsEnum
+        );
+
+        var theTotal: number = this.totalUpFilteredRows(filteredToProjectType);
+        results.push({
+          projectType: keyAsEnum,
+          total: theTotal
+        });
+      });
+
+      return results;
+    };
   }
 }
