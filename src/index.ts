@@ -19,6 +19,19 @@ window.summarizeUnanetTimeForReal = (() => {
   const CSS_CLASS = "unanet-summary";
   const TIMESHEET_FORM_ID = "time";
 
+  const generateSummaryTemplate = () => {
+    const theSummary = {
+      hoursByProjectType: summarizer.timesheet.hoursByProjectType(),
+      plusHoursTracking: summarizer.timesheet.plusHoursTracking(),
+      totalNonPlusHours: summarizer.timesheet.totalNonPlusHours(),
+      totalPlusHours: summarizer.timesheet.totalPlusHours()
+    };
+
+    console.log("theSummary", theSummary);
+
+    return template(theSummary);
+  };
+
   const createContainer = () => {
     const container = document.createElement("div");
     container.id = CONTAINER_ID;
@@ -47,7 +60,7 @@ window.summarizeUnanetTimeForReal = (() => {
 
   const onInputChanged = (event: { target: any }) => {
     if (event.target instanceof HTMLInputElement) {
-      getContainer().innerHTML = template(summarizer.timesheet);
+      getContainer().innerHTML = generateSummaryTemplate();
     }
   };
 
@@ -59,6 +72,6 @@ window.summarizeUnanetTimeForReal = (() => {
       timesheetForm.addEventListener("change", onInputChanged);
     }
 
-    getContainer().innerHTML = template(summarizer.timesheet);
+    getContainer().innerHTML = generateSummaryTemplate();
   };
 })();

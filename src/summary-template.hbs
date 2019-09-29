@@ -8,27 +8,23 @@
     </tr>
     <tr>
       {{#each hoursByProjectType}}
-        <th>{{ this.projectType }}</th>
+      <th>{{ projectType }}</th>
       {{/each}}
       <th>+ Hours</th>
       <th>Non + Hours</th>
       <th>Grand Total</th>
-      <th>Potential Hours</th>
-      <th>Your + Hours</th>
       <th>Tracking</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       {{#each hoursByProjectType}}
-        <td>{{ this.totalHours }}</td>
+      <td>{{ total }}</td>
       {{/each}}
-      <td>{{ totalPlusHoursResult }}</td>
-      <td>{{ totalNonPlusHoursResult }}</td>
-      <td>{{ totalHoursResult }}</td>
-      <td>{{ hoursTargetForPayPeriod }}</td>
-      <td>{{ totalPlusHoursResult }}</td>
-      <td>{{ hoursForTracking }}</td>
+      <td>{{ totalPlusHours }}</td>
+      <td>{{ totalNonPlusHours }}</td>
+      <td>{{ totalPlusHours + totalNonPlusHours }}</td>
+      <td>{{ plusHoursTracking }}</td>
     </tr>
   </tbody>
 </table>
