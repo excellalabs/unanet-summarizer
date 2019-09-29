@@ -4,6 +4,7 @@ describe("summarizer", () => {
   describe("ctor", () => {
     it("blows up if timesheet is null", () => {
       const shouldBlowUp = () => {
+        // tslint:disable-next-line:no-unused-expression
         new Summarizer(null);
       };
 
@@ -11,6 +12,7 @@ describe("summarizer", () => {
     });
     it("blows up if timesheet is undefined", () => {
       const shouldBlowUp = () => {
+        // tslint:disable-next-line:no-unused-expression
         new Summarizer(undefined);
       };
 
