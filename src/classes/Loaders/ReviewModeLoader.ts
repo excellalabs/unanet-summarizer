@@ -3,8 +3,9 @@ import { DateEntry } from "../DateEntry";
 import { ProjectType } from "../ProjectType";
 import { Timesheet } from "../Timesheet";
 import { TimesheetRow } from "../TimesheetRow";
+import { ITimesheetLoader } from "./ITimesheetLoader";
 
-export class ReviewModeLoader {
+export class ReviewModeLoader implements ITimesheetLoader {
   private pageTitle: string;
   private startDateString: string;
   private endDateString: string;
