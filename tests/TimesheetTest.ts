@@ -495,9 +495,8 @@ describe("timesheet", () => {
 
         describe("adding hours when today is a weekend", () => {
           it("increases the tracking hours", () => {
-            const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13]);
-            rows.concat(arrayBuilder.plusHoursForDates([14]));
-            const saturday = "2019-09-14";
+            const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 7]);
+            const saturday = "2019-09-07";
 
             const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, saturday);
 
