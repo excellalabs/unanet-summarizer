@@ -4,7 +4,7 @@ import { ProjectType } from "../ProjectType";
 import { Timesheet } from "../Timesheet";
 import { TimesheetRow } from "../TimesheetRow";
 
-export class EditModeLoader {
+export class ReviewModeLoader {
   private pageTitle: string;
   private startDateString: string;
   private endDateString: string;
@@ -15,10 +15,10 @@ export class EditModeLoader {
     this.pageTitle = pageTitle;
     this.todayDate = moment();
     this.timesheetTable = timesheetTable;
-    this.parseTimesheetDateStrings(this.pageTitle);
   }
 
   public getTimesheet = (): Timesheet => {
+    this.parseTimesheetDateStrings(this.pageTitle);
     const timesheetRows = this.parseTimesheetRows(this.timesheetTable);
     return new Timesheet(timesheetRows, this.startDateString, this.endDateString, this.todayDate.format("YYYY-MM-DD"));
   };
@@ -31,11 +31,13 @@ export class EditModeLoader {
   };
 
   private parseTimesheetRows = (timesheetTable: Element): TimesheetRow[] => {
-    const dateHeaderCells = this.toArray(timesheetTable.querySelectorAll("thead > tr > td.hours-weekday > span.dom, thead > tr > td.hours-weekend > span.dom"));
+    const dateHeaderCells = this.toArray(timesheetTable.querySelectorAll("thead > tr > td.weekday, thead > tr > td.weekend"));
+    const arrayOfDates = dateHeaderCells.map(x => {
+      const text = x.textContent;
+      return text.substr(3, text.length);
+    });
 
-    const arrayOfDates = dateHeaderCells.map(x => x.textContent);
-
-    const rows = timesheetTable.querySelectorAll("tbody > tr");
+    const rows = timesheetTable.querySelectorAll("tbody > tr.s1");
 
     const result = new Array<TimesheetRow>();
 
@@ -43,16 +45,16 @@ export class EditModeLoader {
       if (row !== null && row !== undefined) {
         const entries = new Array<DateEntry>();
 
-        const projectTypeElement: HTMLInputElement = row.querySelector("td.project-type > input");
+        const projectTypeElement: HTMLInputElement = row.querySelector(":nth-child(4)");
 
         if (projectTypeElement !== null && projectTypeElement !== undefined) {
-          const projectType = projectTypeElement.value;
+          const projectType = projectTypeElement.textContent;
 
           if (projectType !== null && projectType !== undefined && projectType.trim().length > 0) {
-            const entryCells: HTMLInputElement[] = this.toInputArray(row.querySelectorAll("td.weekday-hours > input, td.weekend-hours > input"));
+            const entryCells = this.toArray(row.querySelectorAll("td.weekday, td.weekend"));
 
             entryCells.forEach((cell, index) => {
-              const newEntry = new DateEntry(arrayOfDates[index], cell.value);
+              const newEntry = new DateEntry(arrayOfDates[index], cell.textContent);
               entries.push(newEntry);
             });
 

@@ -1,7 +1,7 @@
 import { JSDOM } from "jsdom";
 import moment = require("moment");
-import { EditModeLoader } from "../src/classes/Loaders/EditModeLoader";
-import { ProjectType } from "../src/classes/ProjectType";
+import { EditModeLoader } from "../../src/classes/Loaders/EditModeLoader";
+import { ProjectType } from "../../src/classes/ProjectType";
 
 describe("timesheet loader", () => {
   describe("edit mode", () => {
@@ -61,34 +61,6 @@ describe("timesheet loader", () => {
       const timesheet = loader.getTimesheet();
 
       expect(timesheet.totalPlusHours()).toBe(83.25);
-    });
-  });
-
-  describe("review mode", () => {
-    let reviewModeDom: JSDOM;
-
-    beforeAll(async () => {
-      const reviewModePromise = JSDOM.fromFile("tests/Fixtures/timesheetInReviewMode.html").then(dom => {
-        reviewModeDom = dom;
-      });
-
-      await reviewModePromise;
-    });
-
-    it("(sanity check) finds Sean's name", () => {
-      expect(reviewModeDom.window.document.title).toContain("Sean Killeen");
-    });
-  });
-  xdescribe("supervisee mode", () => {
-    // TODO: waiting until I actually have a supervisee timesheet html
-
-    let superviseeDom: JSDOM;
-
-    beforeAll(async () => {
-      const superviseePromise = JSDOM.fromFile("tests/Fixtures/superviseeTimesheet.html").then(dom => {
-        superviseeDom = dom;
-      });
-      await superviseePromise;
     });
   });
 });
