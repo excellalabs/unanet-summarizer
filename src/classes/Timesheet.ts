@@ -91,7 +91,7 @@ export class Timesheet {
 
   public numberOfRemainingWorkDays = (): number => {
     let workingDaysLeft: number = this.weekDaysBetweenDates(this.todaysDate, this.timesheetEndDate);
-    if (this.hoursForDate(this.todaysDate.date()) > 0) {
+    if (this.hoursForDate(this.todaysDate.date()) > 0 && this.isWeekday(this.todaysDate)) {
       workingDaysLeft--;
     }
 
@@ -112,11 +112,16 @@ export class Timesheet {
     return sumOfHours;
   };
 
+  private isWeekday = (theDate: moment.Moment): boolean => {
+    const formattedDate = theDate.format("ddd").toLowerCase();
+    return formattedDate !== "sat" && formattedDate !== "sun";
+  };
+
   private weekDaysBetweenDates = (theStartDate: moment.Moment, endDate: moment.Moment): number => {
     let totalWeekDays: number = 0;
     const startDate: moment.Moment = theStartDate.clone();
     while (startDate <= endDate) {
-      if (startDate.format("ddd") !== "Sat" && startDate.format("ddd") !== "Sun") {
+      if (this.isWeekday(startDate)) {
         totalWeekDays++; // add 1 to your counter if its not a weekend day
       }
 
