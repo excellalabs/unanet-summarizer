@@ -1,57 +1,78 @@
-interface Window { 
-    summarizeUnanetTimeForReal: any; 
+import { Summarizer } from "./classes/Summarizer";
+
+declare global {
+  // tslint:disable-next-line:interface-name
+  interface Window {
+    summarizeUnanetTimeForReal: any;
+  }
 }
 
-const template = require('./summary-template.hbs');
-const css = require('./summarizer-style.css').default;
-const summarize = require('./unanet-summarizer');
+const template = require("./summary-template.hbs");
+const css = require("./summarizer-style.css").default;
 
-window.summarizeUnanetTimeForReal = (function() {
-  const CONTAINER_ID = 'unanet-summarizer';
-  const STYLESHEET_ID = 'unanet-summarizer-style';
-  const CSS_CLASS = 'unanet-summary';
-  const TIMESHEET_FORM_ID = 'time';
+window.summarizeUnanetTimeForReal = (() => {
+  const timesheetTable = document.querySelector("table.timesheet");
+  let summarizer = new Summarizer(window.document.location.href, window.document.title, timesheetTable);
 
-    var createContainer = function() {
-        var container = document.createElement('div');
-      container.id = CONTAINER_ID;
-      container.className = CSS_CLASS;
-      return document.body.insertBefore(container, document.body.firstChild);
+  const CONTAINER_ID = "unanet-summarizer";
+  const STYLESHEET_ID = "unanet-summarizer-style";
+  const CSS_CLASS = "unanet-summary";
+  const TIMESHEET_FORM_ID = "time";
+
+  const generateSummaryTemplate = () => {
+    const theSummary = {
+      grandTotalHours: summarizer.timesheet.totalPlusHours() + summarizer.timesheet.totalNonPlusHours(),
+      hoursByProjectType: summarizer.timesheet.hoursByProjectType(),
+      plusHoursTracking: summarizer.timesheet.plusHoursTracking(),
+      totalNonPlusHours: summarizer.timesheet.totalNonPlusHours(),
+      totalPlusHours: summarizer.timesheet.totalPlusHours()
+    };
+
+    return template(theSummary);
   };
 
-  var getContainer = function() {
-      return document.getElementById(CONTAINER_ID) || createContainer();
+  const createContainer = () => {
+    const container = document.createElement("div");
+    container.id = CONTAINER_ID;
+    container.className = CSS_CLASS;
+    return document.body.insertBefore(container, document.body.firstChild);
   };
 
-  var getTimesheetForm = function() {
-      return document.getElementById(TIMESHEET_FORM_ID);
+  const getContainer = () => {
+    return document.getElementById(CONTAINER_ID) || createContainer();
   };
 
-  var createStylesheet = function() {
-      var style = document.createElement('style');
-      style.id = STYLESHEET_ID;
-      style.appendChild(document.createTextNode(css));
-      return document.head.appendChild(style);
+  const getTimesheetForm = () => {
+    return document.getElementById(TIMESHEET_FORM_ID);
   };
 
-  var getStylesheet = function() {
-      return document.getElementById(STYLESHEET_ID) || createStylesheet();
+  const createStylesheet = () => {
+    const style = document.createElement("style");
+    style.id = STYLESHEET_ID;
+    style.appendChild(document.createTextNode(css));
+    return document.head.appendChild(style);
   };
 
-  var onInputChanged = function(event: { target: any; }) {
-      if (event.target instanceof HTMLInputElement) {
-          getContainer().innerHTML = template(summarize());
-      }
+  const getStylesheet = () => {
+    return document.getElementById(STYLESHEET_ID) || createStylesheet();
   };
 
-  return function() {
-      var stylesheet = getStylesheet();
-      var timesheetForm = getTimesheetForm();
+  const onInputChanged = (event: { target: any }) => {
+    if (event.target instanceof HTMLInputElement) {
+      summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"));
 
-      if (timesheetForm) {
-          timesheetForm.addEventListener('change', onInputChanged);
-      }
+      getContainer().innerHTML = generateSummaryTemplate();
+    }
+  };
 
-      getContainer().innerHTML = template(summarize());
+  return () => {
+    const stylesheet = getStylesheet();
+    const timesheetForm = getTimesheetForm();
+
+    if (timesheetForm) {
+      timesheetForm.addEventListener("change", onInputChanged);
+    }
+
+    getContainer().innerHTML = generateSummaryTemplate();
   };
 })();
