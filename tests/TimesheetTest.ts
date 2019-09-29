@@ -477,9 +477,9 @@ describe("timesheet", () => {
     describe("tracking a totally balanced timesheet", () => {
       describe("timesheet incomplete before period ends", () => {
         const dateForToday: string = "2019-09-12"; // thursday
+        const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
 
         describe("not filled out up to today", () => {
-          const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
           const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11]);
 
           const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
@@ -493,8 +493,19 @@ describe("timesheet", () => {
           });
         });
 
+        describe("adding hours when today is a weekend", () => {
+          it("increases the tracking hours", () => {
+            const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12, 13]);
+            rows.concat(arrayBuilder.plusHoursForDates([14]));
+            const saturday = "2019-09-14";
+
+            const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, saturday);
+
+            expect(timesheet.plusHoursTracking()).toBe(8);
+          });
+        });
+
         describe("but filled out up to today", () => {
-          const arrayBuilder: TimesheetRowArrayBuilder = new TimesheetRowArrayBuilder();
           const rows: TimesheetRow[] = arrayBuilder.plusHoursForDates([2, 3, 4, 5, 6, 9, 10, 11, 12]);
 
           const timesheet: Timesheet = new Timesheet(rows, timesheetStartDate, timesheetEndDate, dateForToday);
