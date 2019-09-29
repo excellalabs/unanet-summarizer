@@ -91,7 +91,7 @@ export class Timesheet {
 
   public numberOfRemainingWorkDays = (): number => {
     let workingDaysLeft: number = this.weekDaysBetweenDates(this.todaysDate, this.timesheetEndDate);
-    if (this.hoursForDate(this.todaysDate.date()) > 0) {
+    if (this.hoursForDate(this.todaysDate.date()) > 0 && this.isWeekday(this.todaysDate)) {
       workingDaysLeft--;
     }
 
