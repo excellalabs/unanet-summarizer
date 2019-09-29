@@ -60,7 +60,6 @@ export class ReviewModeLoader {
 
             const matchingEnumObj = Object.values(ProjectType).find(x => x.valueOf() === projectType);
             const theRow = new TimesheetRow(matchingEnumObj, entries);
-            console.log("theRow", theRow);
             result.push(theRow);
           }
         }
