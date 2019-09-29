@@ -19,41 +19,41 @@ window.summarizeUnanetTimeForReal = (() => {
   const CSS_CLASS = "unanet-summary";
   const TIMESHEET_FORM_ID = "time";
 
-  var createContainer = () => {
-    var container = document.createElement("div");
+  const createContainer = () => {
+    const container = document.createElement("div");
     container.id = CONTAINER_ID;
     container.className = CSS_CLASS;
     return document.body.insertBefore(container, document.body.firstChild);
   };
 
-  var getContainer = () => {
+  const getContainer = () => {
     return document.getElementById(CONTAINER_ID) || createContainer();
   };
 
-  var getTimesheetForm = () => {
+  const getTimesheetForm = () => {
     return document.getElementById(TIMESHEET_FORM_ID);
   };
 
-  var createStylesheet = () => {
-    var style = document.createElement("style");
+  const createStylesheet = () => {
+    const style = document.createElement("style");
     style.id = STYLESHEET_ID;
     style.appendChild(document.createTextNode(css));
     return document.head.appendChild(style);
   };
 
-  var getStylesheet = () => {
+  const getStylesheet = () => {
     return document.getElementById(STYLESHEET_ID) || createStylesheet();
   };
 
-  var onInputChanged = function(event: { target: any }) {
+  const onInputChanged = (event: { target: any }) => {
     if (event.target instanceof HTMLInputElement) {
       getContainer().innerHTML = template(summarizer.timesheet);
     }
   };
 
-  return function() {
-    var stylesheet = getStylesheet();
-    var timesheetForm = getTimesheetForm();
+  return () => {
+    const stylesheet = getStylesheet();
+    const timesheetForm = getTimesheetForm();
 
     if (timesheetForm) {
       timesheetForm.addEventListener("change", onInputChanged);
