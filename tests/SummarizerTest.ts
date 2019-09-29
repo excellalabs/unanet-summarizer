@@ -26,12 +26,14 @@ describe("summarizer", () => {
       await Promise.all([editModePromise, reviewModePromise]);
     });
     it("sets edit mode when URL is edit", async () => {
-      const sut = new Summarizer(editModeDom.window.URL.toString(), editModeDom.window.document.title, editTimesheetTable);
+      const url = editModeDom.window.location.href;
+      const sut = new Summarizer(url, editModeDom.window.document.title, editTimesheetTable);
 
       expect(sut.timesheetMode).toBe(TimesheetMode.Edit);
     });
     it("sets review mode when url is view URL", () => {
-      const sut = new Summarizer(reviewModeDom.window.URL.toString(), reviewModeDom.window.document.title, reviewTimesheetTable);
+      const url = reviewModeDom.window.location.href;
+      const sut = new Summarizer(url, reviewModeDom.window.document.title, reviewTimesheetTable);
 
       expect(sut.timesheetMode).toBe(TimesheetMode.View);
     });

@@ -5,17 +5,17 @@ import { ProjectType } from "../../src/classes/ProjectType";
 
 describe("timesheet loader", () => {
   describe("review mode", () => {
-    let editModeDom: JSDOM;
+    let reviewModeDom: JSDOM;
     let pageTitle: string = "";
     let timesheetTable: Element;
     beforeAll(async () => {
-      const editModePromise = JSDOM.fromFile("tests/Fixtures/timesheetInReviewMode.html").then(dom => {
-        editModeDom = dom;
-        pageTitle = editModeDom.window.document.title;
-        timesheetTable = editModeDom.window.document.querySelector("table.timesheet");
+      const reviewModePromise = JSDOM.fromFile("tests/Fixtures/timesheetInReviewMode.html").then(dom => {
+        reviewModeDom = dom;
+        pageTitle = reviewModeDom.window.document.title;
+        timesheetTable = reviewModeDom.window.document.querySelector("table.timesheet");
       });
 
-      await editModePromise;
+      await reviewModePromise;
     });
 
     it("(sanity check) finds Sean's name", () => {

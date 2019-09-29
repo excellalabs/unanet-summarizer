@@ -15,7 +15,7 @@ export class Summarizer {
     this.title = title;
     this.timesheetTable = timesheetTable;
 
-    const isViewMode = url.indexOf("time/view") > -1;
+    const isViewMode = url.toString().indexOf("time/view") > -1;
     this.timesheetMode = isViewMode ? TimesheetMode.View : TimesheetMode.Edit;
 
     this.loader = this.getLoader();
