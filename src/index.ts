@@ -12,7 +12,7 @@ const css = require("./summarizer-style.css").default;
 
 window.summarizeUnanetTimeForReal = (() => {
   const timesheetTable = document.querySelector("table.timesheet");
-  const summarizer = new Summarizer(window.document.location.href, window.document.title, timesheetTable);
+  let summarizer = new Summarizer(window.document.location.href, window.document.title, timesheetTable);
 
   const CONTAINER_ID = "unanet-summarizer";
   const STYLESHEET_ID = "unanet-summarizer-style";
@@ -21,13 +21,12 @@ window.summarizeUnanetTimeForReal = (() => {
 
   const generateSummaryTemplate = () => {
     const theSummary = {
+      grandTotalHours: summarizer.timesheet.totalPlusHours() + summarizer.timesheet.totalNonPlusHours(),
       hoursByProjectType: summarizer.timesheet.hoursByProjectType(),
       plusHoursTracking: summarizer.timesheet.plusHoursTracking(),
       totalNonPlusHours: summarizer.timesheet.totalNonPlusHours(),
       totalPlusHours: summarizer.timesheet.totalPlusHours()
     };
-
-    console.log("theSummary", theSummary);
 
     return template(theSummary);
   };
@@ -60,6 +59,8 @@ window.summarizeUnanetTimeForReal = (() => {
 
   const onInputChanged = (event: { target: any }) => {
     if (event.target instanceof HTMLInputElement) {
+      summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"));
+
       getContainer().innerHTML = generateSummaryTemplate();
     }
   };
