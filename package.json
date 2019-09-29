@@ -26,5 +26,8 @@
   },
   "dependencies": {
     "moment": "^2.24.0"
+  },
+  "resolutions": {
+    "**/fsevents": "^1.2.9"
   }
 }
