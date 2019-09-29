@@ -1,13 +1,13 @@
 import { EditModeLoader } from "./Loaders/EditModeLoader";
 import { ITimesheetLoader } from "./Loaders/ITimesheetLoader";
+import { ReviewModeLoader } from "./Loaders/ReviewModeLoader";
 import { Timesheet } from "./Timesheet";
 import { TimesheetMode } from "./TimesheetMode";
-import { ReviewModeLoader } from "./Loaders/ReviewModeLoader";
 
 export class Summarizer {
   public loader: ITimesheetLoader;
   public timesheetMode: TimesheetMode;
-  private timesheet: Timesheet;
+  public timesheet: Timesheet;
   private timesheetTable: Element;
   private title: string;
 
