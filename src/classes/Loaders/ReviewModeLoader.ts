@@ -37,7 +37,7 @@ export class ReviewModeLoader {
       return text.substr(3, text.length);
     });
 
-    const rows = timesheetTable.querySelectorAll("tbody > tr.s1");
+    const rows = timesheetTable.querySelectorAll("tbody > tr:not(.row-change)");
 
     const result = new Array<TimesheetRow>();
 
@@ -59,7 +59,9 @@ export class ReviewModeLoader {
             });
 
             const matchingEnumObj = Object.values(ProjectType).find(x => x.valueOf() === projectType);
-            result.push(new TimesheetRow(matchingEnumObj, entries));
+            const theRow = new TimesheetRow(matchingEnumObj, entries);
+            console.log("theRow", theRow);
+            result.push(theRow);
           }
         }
       }
