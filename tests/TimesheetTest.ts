@@ -945,5 +945,10 @@ describe("timesheet", () => {
 
       expect(billable).toBe(16);
     });
+    it("tracks core hours correctly", () => {
+      const billable = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Core).total;
+
+      expect(billable).toBe(64);
+    });
   });
 });
