@@ -877,4 +877,73 @@ describe("timesheet", () => {
       expect(timesheet.hoursByProjectType().find(i => i.projectType === ProjectType.Core).total).toBe(46.75);
     });
   });
+
+  describe("Alex's timesheet issue", () => {
+    let rows: TimesheetRow[] = new Array<TimesheetRow>();
+
+    const nrecaRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Bill)
+      .withEntry(new DateEntry("3", "8.50"))
+      .withEntry(new DateEntry("4", "7.50"))
+      .build();
+
+    const holidayRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("2", "8"))
+      .build();
+
+    const solutionRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Internal)
+      .withEntry(new DateEntry("3", ".75"))
+      .build();
+
+    const demoRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Internal)
+      .withEntry(new DateEntry("1", "3"))
+      .withEntry(new DateEntry("2", "8"))
+      .withEntry(new DateEntry("3", "2"))
+      .withEntry(new DateEntry("4", "2"))
+      .withEntry(new DateEntry("5", "3"))
+      .withEntry(new DateEntry("6", "2"))
+      .withEntry(new DateEntry("7", "0"))
+      .withEntry(new DateEntry("8", "3"))
+      .withEntry(new DateEntry("11", "2"))
+      .withEntry(new DateEntry("13", "0"))
+      .withEntry(new DateEntry("15", "1"))
+      .build();
+
+    const eventsRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("5", "8"))
+      .withEntry(new DateEntry("6", "8"))
+      .withEntry(new DateEntry("10", "8"))
+      .withEntry(new DateEntry("11", "8"))
+      .withEntry(new DateEntry("12", "8"))
+      .withEntry(new DateEntry("13", "8"))
+      .build();
+
+    const eventsRow2: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Internal)
+      .withEntry(new DateEntry("4", "4"))
+      .withEntry(new DateEntry("7", "8"))
+      .withEntry(new DateEntry("8", "5"))
+      .withEntry(new DateEntry("9", "10"))
+      .withEntry(new DateEntry("14", "13"))
+      .build();
+
+    const eventsRow3: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("9", "8"))
+      .build();
+
+    rows = rows.concat(nrecaRow, holidayRow, solutionRow, demoRow, eventsRow, eventsRow2, eventsRow3);
+
+    const timesheet = new Timesheet(rows, "2019-09-01", "2019-09-05", "2019-10-01");
+
+    it("tracks billable hours correctly", () => {
+      const billable = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Bill).total;
+
+      expect(billable).toBe(16);
+    });
+  });
 });
