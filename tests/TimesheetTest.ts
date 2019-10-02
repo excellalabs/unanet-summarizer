@@ -950,10 +950,22 @@ describe("timesheet", () => {
 
       expect(billable).toBe(64);
     });
+
     it("tracks int hours correctly", () => {
       const billable = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Internal).total;
 
       expect(billable).toBe(66.75);
+    });
+
+    it("tracks total plus correctly", () => {
+      const plusHours = timesheet.totalPlusHours();
+
+      expect(plusHours).toBe(80);
+    });
+    it("tracks non-plus correctly", () => {
+      const plusHours = timesheet.totalPlusHours();
+
+      expect(plusHours).toBe(66.75);
     });
   });
 });
