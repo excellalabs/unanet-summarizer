@@ -957,6 +957,12 @@ describe("timesheet", () => {
       expect(intHours).toBe(66.75);
     });
 
+    it("tracks bench hours correctly", () => {
+      const bench = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Bench).total;
+
+      expect(bench).toBe(0);
+    });
+
     it("tracks total plus correctly", () => {
       const plusHours = timesheet.totalPlusHours();
 
@@ -972,6 +978,11 @@ describe("timesheet", () => {
       const totalHours = timesheet.totalNonPlusHours() + timesheet.totalPlusHours();
 
       expect(totalHours).toBe(146.75);
+    });
+    it("has correct tracking amount", () => {
+      const tracking = timesheet.plusHoursTracking();
+
+      expect(tracking).toBe(0);
     });
   });
 });
