@@ -690,6 +690,28 @@ describe("timesheet", () => {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
+    it("returns zero when today is the first of the month after the timesheet end", () => {
+      const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-10-01");
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
+    it("returns zero when today is the first of the month after the timesheet end even when there are hours on the last day", () => {
+      const timeOnLastDay: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates([15]);
+      const timesheet: Timesheet = new Timesheet(timeOnLastDay, startDate, endDate, "2019-10-01");
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
+    it("returns zero when today is the first of the month after the timesheet end even when there are non-plus hours on the last day", () => {
+      const timeOnLastDay: TimesheetRow[] = new TimesheetRowArrayBuilder().nonPlusHoursForDates([15]);
+      const timesheet: Timesheet = new Timesheet(timeOnLastDay, startDate, endDate, "2019-10-01");
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
+    it("returns zero when today is a month after the timesheet end", () => {
+      const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-10-30");
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
     it("returns zero when today is in a weekend at the end of the timesheet", () => {
       const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-09-14");
 
@@ -744,6 +766,14 @@ describe("timesheet", () => {
         const dayForTodayThatDoesntMatter: string = "2019-09-27";
 
         const timesheet: Timesheet = new Timesheet(rowArrayThatDoesntMatter, "2019-09-01", "2019-09-15", dayForTodayThatDoesntMatter);
+
+        expect(timesheet.weekdaysInTimesheet()).toBe(10);
+      });
+      it("returns the correct number of weekdays in the 9/1/19 - 9/15/19 pay period on 10/1", () => {
+        const rowArrayThatDoesntMatter: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates([8]);
+        const octoberFirst: string = "2019-10-01";
+
+        const timesheet: Timesheet = new Timesheet(rowArrayThatDoesntMatter, "2019-09-01", "2019-09-15", octoberFirst);
 
         expect(timesheet.weekdaysInTimesheet()).toBe(10);
       });
@@ -875,6 +905,118 @@ describe("timesheet", () => {
     it("breaks down categories correctly", () => {
       expect(timesheet.hoursByProjectType().find(i => i.projectType === ProjectType.Bill).total).toBe(64.25);
       expect(timesheet.hoursByProjectType().find(i => i.projectType === ProjectType.Core).total).toBe(46.75);
+    });
+  });
+
+  describe("Alex's timesheet issue", () => {
+    let rows: TimesheetRow[] = new Array<TimesheetRow>();
+
+    const nrecaRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Bill)
+      .withEntry(new DateEntry("3", "8.50"))
+      .withEntry(new DateEntry("4", "7.50"))
+      .build();
+
+    const holidayRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("2", "8"))
+      .build();
+
+    const solutionRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Internal)
+      .withEntry(new DateEntry("3", ".75"))
+      .build();
+
+    const demoRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Internal)
+      .withEntry(new DateEntry("1", "3"))
+      .withEntry(new DateEntry("2", "8"))
+      .withEntry(new DateEntry("3", "2"))
+      .withEntry(new DateEntry("4", "2"))
+      .withEntry(new DateEntry("5", "3"))
+      .withEntry(new DateEntry("6", "2"))
+      .withEntry(new DateEntry("7", "0"))
+      .withEntry(new DateEntry("8", "3"))
+      .withEntry(new DateEntry("11", "2"))
+      .withEntry(new DateEntry("13", "0"))
+      .withEntry(new DateEntry("15", "1"))
+      .build();
+
+    const eventsRow: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("5", "8"))
+      .withEntry(new DateEntry("6", "8"))
+      .withEntry(new DateEntry("10", "8"))
+      .withEntry(new DateEntry("11", "8"))
+      .withEntry(new DateEntry("12", "8"))
+      .withEntry(new DateEntry("13", "8"))
+      .build();
+
+    const eventsRow2: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Internal)
+      .withEntry(new DateEntry("4", "4"))
+      .withEntry(new DateEntry("7", "8"))
+      .withEntry(new DateEntry("8", "5"))
+      .withEntry(new DateEntry("9", "10"))
+      .withEntry(new DateEntry("14", "13"))
+      .build();
+
+    const eventsRow3: TimesheetRow = new TimesheetRowBuilder()
+      .withProjectType(ProjectType.Core)
+      .withEntry(new DateEntry("9", "8"))
+      .build();
+
+    rows = rows.concat(nrecaRow, holidayRow, solutionRow, demoRow, eventsRow, eventsRow2, eventsRow3);
+
+    const timesheet = new Timesheet(rows, "2019-09-01", "2019-09-15", "2019-10-01");
+
+    it("tracks billable hours correctly", () => {
+      const billable = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Bill).total;
+
+      expect(billable).toBe(16);
+    });
+    it("tracks core hours correctly", () => {
+      const coreHours = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Core).total;
+
+      expect(coreHours).toBe(64);
+    });
+
+    it("tracks int hours correctly", () => {
+      const intHours = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Internal).total;
+
+      expect(intHours).toBe(66.75);
+    });
+
+    it("tracks bench hours correctly", () => {
+      const bench = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Bench).total;
+
+      expect(bench).toBe(0);
+    });
+
+    it("tracks total plus correctly", () => {
+      const plusHours = timesheet.totalPlusHours();
+
+      expect(plusHours).toBe(80);
+    });
+    it("tracks non-plus correctly", () => {
+      const nonPlus = timesheet.totalNonPlusHours();
+
+      expect(nonPlus).toBe(66.75);
+    });
+
+    it("tracks total correctly", () => {
+      const totalHours = timesheet.totalNonPlusHours() + timesheet.totalPlusHours();
+
+      expect(totalHours).toBe(146.75);
+    });
+
+    it("has correct tracking amount", () => {
+      const tracking = timesheet.plusHoursTracking();
+
+      expect(tracking).toBe(0);
+    });
+    it("has the correct working days", () => {
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
   });
 });

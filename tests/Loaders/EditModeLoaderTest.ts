@@ -26,7 +26,7 @@ describe("timesheet loader", () => {
       const loader = new EditModeLoader(pageTitle, timesheetTable);
       const timesheet = loader.getTimesheet();
 
-      const expectedStartDate = moment("2019-09-16");
+      const expectedStartDate = moment("2019-09-16").startOf("day");
       expect(expectedStartDate.isSame(timesheet.timesheetStartDate)).toBe(true);
     });
 
@@ -34,7 +34,7 @@ describe("timesheet loader", () => {
       const loader = new EditModeLoader(pageTitle, timesheetTable);
       const timesheet = loader.getTimesheet();
 
-      const expectedEndDate = moment("2019-09-30");
+      const expectedEndDate = moment("2019-09-30").startOf("day");
       expect(expectedEndDate.isSame(timesheet.timesheetEndDate)).toBe(true);
     });
 
@@ -42,7 +42,7 @@ describe("timesheet loader", () => {
       const loader = new EditModeLoader(pageTitle, timesheetTable);
       const timesheet = loader.getTimesheet();
 
-      const expectedTodayDate = moment();
+      const expectedTodayDate = moment().startOf("day");
       expect(expectedTodayDate.isSame(timesheet.todaysDate, "date")).toBe(true);
     });
 
