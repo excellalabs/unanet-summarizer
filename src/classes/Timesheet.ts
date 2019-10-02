@@ -63,13 +63,9 @@ export class Timesheet {
 
   public plusHoursTracking = (): number => {
     const workingDays: number = this.weekdaysInTimesheet();
-    console.log("workingDays", workingDays);
     const remainingWorkingDays: number = this.numberOfRemainingWorkDays();
-    console.log("remainingWorkingDays", remainingWorkingDays);
     const expectedHours: number = workingDays * this.HOURS_IN_WORKDAY;
-    console.log("expectedHours", expectedHours);
     const actualHours: number = this.totalPlusHours() + remainingWorkingDays * this.HOURS_IN_WORKDAY;
-    console.log("actualHours", actualHours);
 
     return actualHours - expectedHours;
   };
