@@ -757,6 +757,14 @@ describe("timesheet", () => {
 
         expect(timesheet.weekdaysInTimesheet()).toBe(10);
       });
+      it("returns the correct number of weekdays in the 9/1/19 - 9/15/19 pay period on 10/1", () => {
+        const rowArrayThatDoesntMatter: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates([8]);
+        const octoberFirst: string = "2019-10-01";
+
+        const timesheet: Timesheet = new Timesheet(rowArrayThatDoesntMatter, "2019-09-01", "2019-09-15", octoberFirst);
+
+        expect(timesheet.weekdaysInTimesheet()).toBe(10);
+      });
     });
   });
   describe("hoursByProjectType", () => {
