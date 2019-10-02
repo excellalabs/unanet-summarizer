@@ -967,5 +967,11 @@ describe("timesheet", () => {
 
       expect(nonPlus).toBe(66.75);
     });
+
+    it("tracks total correctly", () => {
+      const totalHours = timesheet.totalNonPlusHours() + timesheet.totalPlusHours();
+
+      expect(totalHours).toBe(146.75);
+    });
   });
 });
