@@ -66,7 +66,6 @@ export class Timesheet {
     const remainingWorkingDays: number = this.numberOfRemainingWorkDays();
     const expectedHours: number = workingDays * this.HOURS_IN_WORKDAY;
     const actualHours: number = this.totalPlusHours() + remainingWorkingDays * this.HOURS_IN_WORKDAY;
-
     return actualHours - expectedHours;
   };
 

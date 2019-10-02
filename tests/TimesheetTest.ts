@@ -968,7 +968,7 @@ describe("timesheet", () => {
 
     rows = rows.concat(nrecaRow, holidayRow, solutionRow, demoRow, eventsRow, eventsRow2, eventsRow3);
 
-    const timesheet = new Timesheet(rows, "2019-09-01", "2019-09-05", "2019-10-01");
+    const timesheet = new Timesheet(rows, "2019-09-01", "2019-09-15", "2019-10-01");
 
     it("tracks billable hours correctly", () => {
       const billable = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Bill).total;
