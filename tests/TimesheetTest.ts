@@ -695,8 +695,20 @@ describe("timesheet", () => {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
+    it("returns zero when today is the first of the month after the timesheet end even when there are hours on the last day", () => {
+      const timeOnLastDay: TimesheetRow[] = new TimesheetRowArrayBuilder().plusHoursForDates([15]);
+      const timesheet: Timesheet = new Timesheet(timeOnLastDay, startDate, endDate, "2019-10-01");
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
+    it("returns zero when today is the first of the month after the timesheet end even when there are non-plus hours on the last day", () => {
+      const timeOnLastDay: TimesheetRow[] = new TimesheetRowArrayBuilder().nonPlusHoursForDates([15]);
+      const timesheet: Timesheet = new Timesheet(timeOnLastDay, startDate, endDate, "2019-10-01");
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
     it("returns zero when today is a month after the timesheet end", () => {
-      const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-10-27");
+      const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-10-30");
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
