@@ -123,7 +123,7 @@ export class Timesheet {
 
   private weekDaysBetweenDates = (theStartDate: moment.Moment, endDate: moment.Moment): number => {
     let totalWeekDays: number = 0;
-    const startDate: moment.Moment = theStartDate.clone();
+    const startDate: moment.Moment = theStartDate.clone().startOf("day");
     while (startDate <= endDate) {
       if (this.isWeekday(startDate)) {
         totalWeekDays++; // add 1 to your counter if its not a weekend day
@@ -162,7 +162,7 @@ export class Timesheet {
       throw new Error(`${type} is invalid.`);
     }
 
-    const date: moment.Moment = moment(timesheetStartDate);
+    const date: moment.Moment = moment(timesheetStartDate).startOf("day");
 
     if (!date.isValid()) {
       throw new Error(`${type} is invalid.`);

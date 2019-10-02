@@ -14,7 +14,7 @@ export class EditModeLoader implements ITimesheetLoader {
 
   constructor(pageTitle: string, timesheetTable: Element) {
     this.pageTitle = pageTitle;
-    this.todayDate = moment();
+    this.todayDate = moment().startOf("day");
     this.timesheetTable = timesheetTable;
     this.parseTimesheetDateStrings(this.pageTitle);
   }
