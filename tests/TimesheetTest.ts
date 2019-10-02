@@ -946,15 +946,15 @@ describe("timesheet", () => {
       expect(billable).toBe(16);
     });
     it("tracks core hours correctly", () => {
-      const billable = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Core).total;
+      const coreHours = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Core).total;
 
-      expect(billable).toBe(64);
+      expect(coreHours).toBe(64);
     });
 
     it("tracks int hours correctly", () => {
-      const billable = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Internal).total;
+      const intHours = timesheet.hoursByProjectType().find(x => x.projectType === ProjectType.Internal).total;
 
-      expect(billable).toBe(66.75);
+      expect(intHours).toBe(66.75);
     });
 
     it("tracks total plus correctly", () => {
@@ -963,9 +963,9 @@ describe("timesheet", () => {
       expect(plusHours).toBe(80);
     });
     it("tracks non-plus correctly", () => {
-      const plusHours = timesheet.totalPlusHours();
+      const nonPlus = timesheet.totalNonPlusHours();
 
-      expect(plusHours).toBe(66.75);
+      expect(nonPlus).toBe(66.75);
     });
   });
 });
