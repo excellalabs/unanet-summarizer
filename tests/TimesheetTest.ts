@@ -690,6 +690,16 @@ describe("timesheet", () => {
 
       expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
     });
+    it("returns zero when today is the first of the month after the timesheet end", () => {
+      const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-10-01");
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
+    it("returns zero when today is a month after the timesheet end", () => {
+      const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-10-27");
+
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
     it("returns zero when today is in a weekend at the end of the timesheet", () => {
       const timesheet: Timesheet = new Timesheet(rowsThatDontMatter, startDate, endDate, "2019-09-14");
 
@@ -979,6 +989,7 @@ describe("timesheet", () => {
 
       expect(totalHours).toBe(146.75);
     });
+
     it("has correct tracking amount", () => {
       const tracking = timesheet.plusHoursTracking();
 
