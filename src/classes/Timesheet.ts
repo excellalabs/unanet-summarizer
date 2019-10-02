@@ -121,9 +121,10 @@ export class Timesheet {
     return formattedDate !== "sat" && formattedDate !== "sun";
   };
 
-  private weekDaysBetweenDates = (theStartDate: moment.Moment, endDate: moment.Moment): number => {
+  private weekDaysBetweenDates = (theStartDate: moment.Moment, theEndDate: moment.Moment): number => {
     let totalWeekDays: number = 0;
     const startDate: moment.Moment = theStartDate.clone().startOf("day");
+    const endDate: moment.Moment = theEndDate.clone().startOf("day");
     while (startDate <= endDate) {
       if (this.isWeekday(startDate)) {
         totalWeekDays++; // add 1 to your counter if its not a weekend day
