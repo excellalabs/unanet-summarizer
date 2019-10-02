@@ -1003,5 +1003,8 @@ describe("timesheet", () => {
 
       expect(tracking).toBe(0);
     });
+    it("has the correct working days", () => {
+      expect(timesheet.numberOfRemainingWorkDays()).toBe(0);
+    });
   });
 });
