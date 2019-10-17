@@ -23,6 +23,7 @@ window.summarizeUnanetTimeForReal = (() => {
     const theSummary = {
       grandTotalHours: summarizer.timesheet.totalPlusHours() + summarizer.timesheet.totalNonPlusHours(),
       hoursByProjectType: summarizer.timesheet.hoursByProjectType(),
+      plusHoursInPayPeriod: summarizer.timesheet.expectedPlusHours(),
       plusHoursTracking: summarizer.timesheet.plusHoursTracking(),
       totalNonPlusHours: summarizer.timesheet.totalNonPlusHours(),
       totalPlusHours: summarizer.timesheet.totalPlusHours()
