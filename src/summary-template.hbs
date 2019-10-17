@@ -28,7 +28,11 @@
       <td>{{ grandTotalHours }}</td>
       <td>{{ plusHoursInPayPeriod }}</td>
       <td>{{ totalPlusHours }}</td>
+      {{#if negativeTracking }}
+      <td class="negative-tracking">{{ plusHoursTracking }}</td>
+      {{else}}
       <td>{{ plusHoursTracking }}</td>
+      {{/if}}
     </tr>
   </tbody>
 </table>
