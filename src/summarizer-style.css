@@ -6,6 +6,23 @@
   border: 2px solid;
 }
 
-.unanet-summary table > tbody td {
+.unanet-summary table>tbody td {
   text-align: center;
+}
+
+.summary-header {
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.summary-header.project-types {
+  background-color: #4F81BD;
+}
+
+.summary-header.totals {
+  background-color: #F79646;
+}
+
+.summary-header.tracking {
+  background-color: #9BBB59;
 }

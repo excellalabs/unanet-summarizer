@@ -2,9 +2,9 @@
 <table>
   <thead>
     <tr>
-      <th colspan="{{ hoursByProjectType.length }}">Project Types</th>
-      <th colspan="3">Totals</th>
-      <th colspan="3">Pay Period Tracking</th>
+      <th colspan="{{ hoursByProjectType.length }}" class="summary-header project-types">Project Types</th>
+      <th colspan="3" class="summary-header totals">Totals</th>
+      <th colspan="3" class="summary-header tracking">Pay Period Tracking</th>
     </tr>
     <tr>
       {{#each hoursByProjectType}}
