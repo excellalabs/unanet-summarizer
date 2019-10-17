@@ -61,12 +61,14 @@ export class Timesheet {
     return this.totalUpFilteredRows(allNonPlusHoursRows);
   };
 
+  public expectedPlusHours = (): number => {
+    return this.weekdaysInTimesheet() * this.HOURS_IN_WORKDAY;
+  };
+
   public plusHoursTracking = (): number => {
-    const workingDays: number = this.weekdaysInTimesheet();
     const remainingWorkingDays: number = this.numberOfRemainingWorkDays();
-    const expectedHours: number = workingDays * this.HOURS_IN_WORKDAY;
     const actualHours: number = this.totalPlusHours() + remainingWorkingDays * this.HOURS_IN_WORKDAY;
-    return actualHours - expectedHours;
+    return actualHours - this.expectedPlusHours();
   };
 
   public hoursByProjectType = () => {
