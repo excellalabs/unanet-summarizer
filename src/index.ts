@@ -23,7 +23,8 @@ window.summarizeUnanetTimeForReal = (() => {
     const theSummary = {
       grandTotalHours: summarizer.timesheet.totalPlusHours() + summarizer.timesheet.totalNonPlusHours(),
       hoursByProjectType: summarizer.timesheet.hoursByProjectType(),
-      hoursPerWorkday: (summarizer.timesheet.totalPlusHours() + summarizer.timesheet.totalNonPlusHours()) / summarizer.timesheet.weekdaysInTimesheet(),
+      // TODO: Need to divide total hours by number of days worked, not remaining days
+      hoursPerWorkday: ((summarizer.timesheet.totalPlusHours() + summarizer.timesheet.totalNonPlusHours()) / summarizer.timesheet.numberOfRemainingWorkDays()).toFixed(2),
       negativeTracking: summarizer.timesheet.plusHoursTracking() < 0,
       plusHoursInPayPeriod: summarizer.timesheet.expectedPlusHours(),
       plusHoursTracking: summarizer.timesheet.plusHoursTracking(),
