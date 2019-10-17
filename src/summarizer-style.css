@@ -26,3 +26,15 @@
 .summary-header.tracking {
   background-color: #9BBB59;
 }
+
+.summary-subheader.project-types {
+  background-color: #DCE6F1;
+}
+
+.summary-subheader.totals {
+  background-color: #FDE9D9;
+}
+
+.summary-subheader.tracking {
+  background-color: #EBF1DE;
+}

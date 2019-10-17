@@ -8,12 +8,12 @@
     </tr>
     <tr>
       {{#each hoursByProjectType}}
-      <th>{{ projectType }}</th>
+      <th class="summary-subheader project-types">{{ projectType }}</th>
       {{/each}}
-      <th>+ Hours</th>
-      <th>Non + Hours</th>
-      <th>Grand Total</th>
-      <th>Tracking</th>
+      <th class="summary-subheader totals">+ Hours</th>
+      <th class="summary-subheader totals">Non + Hours</th>
+      <th class="summary-subheader totals">Grand Total</th>
+      <th class="summary-subheader tracking">Tracking</th>
     </tr>
   </thead>
   <tbody>
