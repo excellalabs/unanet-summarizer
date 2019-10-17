@@ -27,12 +27,20 @@
   background-color: #9BBB59;
 }
 
+.summary-header.other-calcs {
+  background-color: #8064A2;
+}
+
 .summary-subheader.project-types {
   background-color: #DCE6F1;
 }
 
 .summary-subheader.totals {
   background-color: #FDE9D9;
+}
+
+.summary-subheader.other-calcs {
+  background-color: #E4DFEC;
 }
 
 .summary-subheader.tracking {
