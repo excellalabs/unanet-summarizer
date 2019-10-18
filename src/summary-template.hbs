@@ -50,7 +50,8 @@
         title="How you are tracking so far for the pay period. Assumes 8 hours per workday that you haven't logged yet.">
         {{ plusHoursTracking }}</td>
       {{/if}}
-      <td>{{ hoursPerWorkday }}</td>
+      <td title="On average, how many total hours ('+' and non) you've worked across all days you've worked.">
+        {{ hoursPerWorkday }}</td>
     </tr>
   </tbody>
 </table>
