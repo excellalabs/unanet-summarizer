@@ -5,7 +5,7 @@
       <th colspan="{{ hoursByProjectType.length }}" class="summary-header project-types">Project Types</th>
       <th colspan="3" class="summary-header totals">Totals</th>
       <th colspan="3" class="summary-header tracking">Pay Period Tracking</th>
-      <th colspan="1" class="summary-header other-calcs">Other Calculations</th>
+      <th colspan="2" class="summary-header other-calcs">Other Calculations</th>
     </tr>
     <tr>
       {{#each hoursByProjectType}}
@@ -29,6 +29,9 @@
       <th class="summary-subheader other-calcs"
         title="On average, how many total hours ('+' and non) you've worked across all days you've worked.">
         Hours / Workday</th>
+      <th class="summary-subheader other-calcs"
+        title="Like the tracking number, but includes non '+' hours as well, so it's more of an FYI than an official tracking.">
+        Over/Under</th>
     </tr>
   </thead>
   <tbody>
@@ -52,6 +55,9 @@
       {{/if}}
       <td title="On average, how many total hours ('+' and non) you've worked across all days you've worked.">
         {{ hoursPerWorkday }}</td>
+      <td
+        title="Like the tracking number, but includes non '+' hours as well, so it's more of an FYI than an official tracking.">
+        1111</td>
     </tr>
   </tbody>
 </table>
