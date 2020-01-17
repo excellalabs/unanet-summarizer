@@ -31,7 +31,6 @@ export class Summarizer {
   }
 
   public savePriorPeriodOverUnder = (): void => {
-    console.log("summarizer savePriorPeriodOverUnder()");
     const overUnderTextBox: HTMLInputElement = document.getElementById("priorPeriodOverUnder") as HTMLInputElement;
     const key = this.getStorageKey();
     if (this.isLocalStorageAvailable) {

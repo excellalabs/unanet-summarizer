@@ -81,7 +81,6 @@ window.summarizeUnanetTimeForReal = (() => {
   };
 
   const onPriorPeriodAmountChanged = () => {
-    console.log("onPriorPeriodAmountChanged()");
     summarizer.savePriorPeriodOverUnder();
     summarize();
   };
