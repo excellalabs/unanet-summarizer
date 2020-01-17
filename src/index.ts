@@ -1,3 +1,4 @@
+import { StorageManager } from "./classes/Storage/StorageManager";
 import { Summarizer } from "./classes/Summarizer";
 
 declare global {
@@ -11,8 +12,9 @@ const template = require("./summary-template.hbs");
 const css = require("./summarizer-style.css").default;
 
 window.summarizeUnanetTimeForReal = (() => {
+  const theStorageManager = new StorageManager();
   const timesheetTable = document.querySelector("table.timesheet");
-  let summarizer = new Summarizer(window.document.location.href, window.document.title, timesheetTable);
+  let summarizer = new Summarizer(window.document.location.href, window.document.title, timesheetTable, theStorageManager);
 
   const CONTAINER_ID = "unanet-summarizer";
   const STYLESHEET_ID = "unanet-summarizer-style";
@@ -29,7 +31,8 @@ window.summarizeUnanetTimeForReal = (() => {
       negativeTracking: summarizer.timesheet.plusHoursTracking() < 0,
       overUnder: (grandTotal - daysWorked * 8).toFixed(2),
       plusHoursInPayPeriod: summarizer.timesheet.expectedPlusHours(),
-      plusHoursTracking: summarizer.timesheet.plusHoursTracking(),
+      plusHoursTracking: summarizer.timesheet.plusHoursTracking() + summarizer.priorPeriodAmount,
+      priorOverUnderAmount: summarizer.priorPeriodAmount,
       totalNonPlusHours: summarizer.timesheet.totalNonPlusHours(),
       totalPlusHours: summarizer.timesheet.totalPlusHours()
     };
@@ -63,22 +66,35 @@ window.summarizeUnanetTimeForReal = (() => {
     return document.getElementById(STYLESHEET_ID) || createStylesheet();
   };
 
+  const updateContainerWithTemplate = () => {
+    getContainer().innerHTML = generateSummaryTemplate();
+    document.getElementById("priorPeriodOverUnder").addEventListener("blur", onPriorPeriodAmountChanged);
+  };
+
   const onInputChanged = (event: { target: any }) => {
     if (event.target instanceof HTMLInputElement) {
-      summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"));
-
-      getContainer().innerHTML = generateSummaryTemplate();
+      summarize();
     }
   };
 
+  const summarize = () => {
+    summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"), theStorageManager);
+    updateContainerWithTemplate();
+  };
+
+  const onPriorPeriodAmountChanged = () => {
+    summarizer.savePriorPeriodOverUnder();
+    summarize();
+  };
+
   return () => {
-    const stylesheet = getStylesheet();
+    getStylesheet();
     const timesheetForm = getTimesheetForm();
 
     if (timesheetForm) {
       timesheetForm.addEventListener("change", onInputChanged);
     }
 
-    getContainer().innerHTML = generateSummaryTemplate();
+    summarize();
   };
 })();

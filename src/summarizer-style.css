@@ -1,3 +1,14 @@
+/* Office colors courtesy of https://www.linkedin.com/pulse/microsoft-office-standard-colors-magic-rgb-codes-david-gray/ */
+
+.priorPeriodOverUnder {
+  width: 75px;
+  text-align: center;
+}
+
+tr.dataRow>td {
+  vertical-align: middle;
+}
+
 .unanet-summary {
   padding: 0 0 20px 20px;
 }
@@ -27,6 +38,10 @@
   background-color: #9BBB59;
 }
 
+.summary-header.prior-period {
+  background-color: #4BACC6;
+}
+
 .summary-header.other-calcs {
   background-color: #8064A2;
 }
@@ -45,6 +60,10 @@
 
 .summary-subheader.tracking {
   background-color: #EBF1DE;
+}
+
+.summary-subheader.prior-period {
+  background-color: #DAEEF3;
 }
 
 .negative-tracking {
