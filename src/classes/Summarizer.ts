@@ -24,14 +24,20 @@ export class Summarizer {
     this.timesheet = this.loader.getTimesheet();
   }
 
+  private getStorageKey = (): string => {
+    const timesheetKey = new URLSearchParams(document.location.search).get("timesheetkey");
+    const storageKey = timesheetKey ?? new Date().toISOString();
+
+    return `summarizer-${storageKey}`;
+  };
+
   private getPriorOverUnder = (): number => {
-    const itemBySheetId: string = "summarizer-47129";
-    const itemByDate: string = "summarizer-2020-01-17";
+    const storageKey = this.getStorageKey();
 
-    const thing: string = localStorage.getItem(itemBySheetId) ?? localStorage.getItem(itemByDate) ?? sessionStorage.getItem(itemBySheetId) ?? sessionStorage.getItem(itemByDate);
+    const valueRetrievedFromStorage: string = localStorage.getItem(storageKey) ?? sessionStorage.getItem(storageKey);
 
-    if (thing && thing.length > 0) {
-      const parsedAmount: number = Number.parseInt(thing, 10);
+    if (valueRetrievedFromStorage && valueRetrievedFromStorage.length > 0) {
+      const parsedAmount: number = Number.parseInt(valueRetrievedFromStorage, 10);
       return parsedAmount;
     }
 
