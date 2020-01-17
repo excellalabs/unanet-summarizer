@@ -64,22 +64,26 @@ window.summarizeUnanetTimeForReal = (() => {
     return document.getElementById(STYLESHEET_ID) || createStylesheet();
   };
 
+  const updateContainerWithTemplate = () => {
+    getContainer().innerHTML = generateSummaryTemplate();
+  };
+
   const onInputChanged = (event: { target: any }) => {
     if (event.target instanceof HTMLInputElement) {
       summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"));
 
-      getContainer().innerHTML = generateSummaryTemplate();
+      updateContainerWithTemplate();
     }
   };
 
   return () => {
-    const stylesheet = getStylesheet();
+    getStylesheet();
     const timesheetForm = getTimesheetForm();
 
     if (timesheetForm) {
       timesheetForm.addEventListener("change", onInputChanged);
     }
 
-    getContainer().innerHTML = generateSummaryTemplate();
+    updateContainerWithTemplate();
   };
 })();
