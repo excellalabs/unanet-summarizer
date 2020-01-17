@@ -1,10 +1,10 @@
 export class StorageUtility {
-  public checkLocalStorageAvailability = (): boolean => {
-    const testValue = "summarizer-ls-test";
+  private TEST_VALUE: string = "summarizer-ls-test";
 
+  public checkLocalStorageAvailability = (): boolean => {
     try {
-      localStorage.setItem(testValue, testValue);
-      localStorage.removeItem(testValue);
+      localStorage.setItem(this.TEST_VALUE, this.TEST_VALUE);
+      localStorage.removeItem(this.TEST_VALUE);
       return true;
     } catch (e) {
       return false;
@@ -12,11 +12,9 @@ export class StorageUtility {
   };
 
   public checkSessionStorageAvailability = (): boolean => {
-    const testValue = "summarizer-ls-test";
-
     try {
-      sessionStorage.setItem(testValue, testValue);
-      sessionStorage.removeItem(testValue);
+      sessionStorage.setItem(this.TEST_VALUE, this.TEST_VALUE);
+      sessionStorage.removeItem(this.TEST_VALUE);
       return true;
     } catch (e) {
       return false;
