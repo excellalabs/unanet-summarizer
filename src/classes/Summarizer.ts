@@ -13,11 +13,13 @@ export class Summarizer {
   private timesheetTable: Element;
   private title: string;
   private storageManager: IStorageManager;
+  private theURL: URL;
 
   constructor(url: string, title: string, timesheetTable: Element, storageManager: IStorageManager) {
     this.storageManager = storageManager;
     this.title = title;
     this.timesheetTable = timesheetTable;
+    this.theURL = new URL(url);
     this.priorPeriodAmount = this.getPriorOverUnder();
 
     const isViewMode = url.toString().indexOf("time/view") > -1;
@@ -35,7 +37,7 @@ export class Summarizer {
   };
 
   private getStorageKey = (): string => {
-    const timesheetKey = new URLSearchParams(document.location.search).get("timesheetkey");
+    const timesheetKey = new URLSearchParams(this.theURL.search).get("timesheetkey");
     const storageKey = timesheetKey ?? new Date().toISOString();
 
     return `summarizer-${storageKey}`;
