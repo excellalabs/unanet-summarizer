@@ -1,3 +1,4 @@
+import { StorageManager } from "./classes/Storage/StorageManager";
 import { Summarizer } from "./classes/Summarizer";
 
 declare global {
@@ -11,8 +12,9 @@ const template = require("./summary-template.hbs");
 const css = require("./summarizer-style.css").default;
 
 window.summarizeUnanetTimeForReal = (() => {
+  const theStorageManager = new StorageManager();
   const timesheetTable = document.querySelector("table.timesheet");
-  let summarizer = new Summarizer(window.document.location.href, window.document.title, timesheetTable);
+  let summarizer = new Summarizer(window.document.location.href, window.document.title, timesheetTable, theStorageManager);
 
   const CONTAINER_ID = "unanet-summarizer";
   const STYLESHEET_ID = "unanet-summarizer-style";
@@ -76,7 +78,7 @@ window.summarizeUnanetTimeForReal = (() => {
   };
 
   const summarize = () => {
-    summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"));
+    summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"), theStorageManager);
     updateContainerWithTemplate();
   };
 

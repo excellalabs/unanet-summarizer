@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom";
+import { StubStorageManager } from "../src/classes/Storage/StubStorageManager";
 import { Summarizer } from "../src/classes/Summarizer";
 import { TimesheetMode } from "../src/classes/TimesheetMode";
 
@@ -27,13 +28,13 @@ describe("summarizer", () => {
     });
     it("sets edit mode when URL is edit", async () => {
       const url = editModeDom.window.location.href;
-      const sut = new Summarizer(url, editModeDom.window.document.title, editTimesheetTable);
+      const sut = new Summarizer(url, editModeDom.window.document.title, editTimesheetTable, new StubStorageManager());
 
       expect(sut.timesheetMode).toBe(TimesheetMode.Edit);
     });
     it("sets review mode when url is view URL", () => {
       const url = reviewModeDom.window.location.href;
-      const sut = new Summarizer(url, reviewModeDom.window.document.title, reviewTimesheetTable);
+      const sut = new Summarizer(url, reviewModeDom.window.document.title, reviewTimesheetTable, new StubStorageManager());
 
       expect(sut.timesheetMode).toBe(TimesheetMode.View);
     });

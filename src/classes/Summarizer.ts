@@ -1,7 +1,7 @@
 import { EditModeLoader } from "./Loaders/EditModeLoader";
 import { ITimesheetLoader } from "./Loaders/ITimesheetLoader";
 import { ReviewModeLoader } from "./Loaders/ReviewModeLoader";
-import { StorageUtility } from "./StorageUtility";
+import { IStorageManager } from "./Storage/IStorageManager";
 import { Timesheet } from "./Timesheet";
 import { TimesheetMode } from "./TimesheetMode";
 
@@ -12,13 +12,10 @@ export class Summarizer {
   public priorPeriodAmount: number;
   private timesheetTable: Element;
   private title: string;
-  private isLocalStorageAvailable: boolean;
-  private isSessionStorageAvailable: boolean;
+  private storageManager: IStorageManager;
 
-  constructor(url: string, title: string, timesheetTable: Element) {
-    const storageUtility = new StorageUtility();
-    this.isLocalStorageAvailable = storageUtility.checkLocalStorageAvailability();
-    this.isSessionStorageAvailable = storageUtility.checkSessionStorageAvailability();
+  constructor(url: string, title: string, timesheetTable: Element, storageManager: IStorageManager) {
+    this.storageManager = storageManager;
     this.title = title;
     this.timesheetTable = timesheetTable;
     this.priorPeriodAmount = this.getPriorOverUnder();
@@ -33,13 +30,8 @@ export class Summarizer {
   public savePriorPeriodOverUnder = (): void => {
     const overUnderTextBox: HTMLInputElement = document.getElementById("priorPeriodOverUnder") as HTMLInputElement;
     const key = this.getStorageKey();
-    if (this.isLocalStorageAvailable) {
-      localStorage.setItem(key, overUnderTextBox.value);
-    } else {
-      if (this.isSessionStorageAvailable) {
-        sessionStorage.setItem(key, overUnderTextBox.value);
-      }
-    }
+
+    this.storageManager.setItem(key, overUnderTextBox.value);
   };
 
   private getStorageKey = (): string => {
