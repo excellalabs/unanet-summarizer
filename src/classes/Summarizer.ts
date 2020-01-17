@@ -49,7 +49,7 @@ export class Summarizer {
     const valueRetrievedFromStorage: string = this.storageManager.getItem(storageKey);
 
     if (valueRetrievedFromStorage && valueRetrievedFromStorage.length > 0) {
-      const parsedAmount: number = Number.parseInt(valueRetrievedFromStorage, 10);
+      const parsedAmount: number = Number.parseFloat(valueRetrievedFromStorage) || 0.0;
       return parsedAmount;
     }
 
