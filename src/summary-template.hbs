@@ -40,7 +40,8 @@
   </thead>
   <tbody>
     <tr class="dataRow">
-      <td><input type="text" id="priorPeriodOverUnder" class="priorPeriodOverUnder" placeholder="0"></td>
+      <td><input type="text" id="priorPeriodOverUnder" class="priorPeriodOverUnder" value="{{ priorOverUnderAmount }}">
+      </td>
       {{#each hoursByProjectType}}
       <td>{{ total }}</td>
       {{/each}}
