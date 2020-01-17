@@ -46,7 +46,7 @@ export class Summarizer {
   private getPriorOverUnder = (): number => {
     const storageKey = this.getStorageKey();
 
-    const valueRetrievedFromStorage: string = localStorage.getItem(storageKey) ?? sessionStorage.getItem(storageKey);
+    const valueRetrievedFromStorage: string = this.storageManager.getItem(storageKey);
 
     if (valueRetrievedFromStorage && valueRetrievedFromStorage.length > 0) {
       const parsedAmount: number = Number.parseInt(valueRetrievedFromStorage, 10);
