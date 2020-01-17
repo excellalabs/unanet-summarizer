@@ -29,7 +29,7 @@ window.summarizeUnanetTimeForReal = (() => {
       negativeTracking: summarizer.timesheet.plusHoursTracking() < 0,
       overUnder: (grandTotal - daysWorked * 8).toFixed(2),
       plusHoursInPayPeriod: summarizer.timesheet.expectedPlusHours(),
-      plusHoursTracking: summarizer.timesheet.plusHoursTracking(),
+      plusHoursTracking: summarizer.timesheet.plusHoursTracking() + summarizer.priorPeriodAmount,
       priorOverUnderAmount: summarizer.priorPeriodAmount,
       totalNonPlusHours: summarizer.timesheet.totalNonPlusHours(),
       totalPlusHours: summarizer.timesheet.totalPlusHours()
