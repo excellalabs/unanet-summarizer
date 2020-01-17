@@ -11,8 +11,12 @@ export class Summarizer {
   public priorPeriodAmount: number;
   private timesheetTable: Element;
   private title: string;
+  private isLocalStorageAvailable: boolean;
+  private isSessionStorageAvailable: boolean;
 
   constructor(url: string, title: string, timesheetTable: Element) {
+    this.isLocalStorageAvailable = this.checkLocalStorageAvailability();
+    this.isSessionStorageAvailable = this.checkSessionStorageAvailability();
     this.title = title;
     this.timesheetTable = timesheetTable;
     this.priorPeriodAmount = this.getPriorOverUnder();
@@ -24,11 +28,49 @@ export class Summarizer {
     this.timesheet = this.loader.getTimesheet();
   }
 
+  public savePriorPeriodOverUnder = (): void => {
+    console.log("summarizer savePriorPeriodOverUnder()");
+    const overUnderTextBox: HTMLInputElement = document.getElementById("priorPeriodOverUnder") as HTMLInputElement;
+    const key = this.getStorageKey();
+    if (this.isLocalStorageAvailable) {
+      localStorage.setItem(key, overUnderTextBox.value);
+    } else {
+      if (this.isSessionStorageAvailable) {
+        sessionStorage.setItem(key, overUnderTextBox.value);
+      }
+    }
+  };
+
   private getStorageKey = (): string => {
     const timesheetKey = new URLSearchParams(document.location.search).get("timesheetkey");
     const storageKey = timesheetKey ?? new Date().toISOString();
 
     return `summarizer-${storageKey}`;
+  };
+
+  // TODO: Extract into some kind of Utils class
+  private checkLocalStorageAvailability = (): boolean => {
+    const testValue = "summarizer-ls-test";
+
+    try {
+      localStorage.setItem(testValue, testValue);
+      localStorage.removeItem(testValue);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  private checkSessionStorageAvailability = (): boolean => {
+    const testValue = "summarizer-ls-test";
+
+    try {
+      sessionStorage.setItem(testValue, testValue);
+      sessionStorage.removeItem(testValue);
+      return true;
+    } catch (e) {
+      return false;
+    }
   };
 
   private getPriorOverUnder = (): number => {

@@ -66,14 +66,24 @@ window.summarizeUnanetTimeForReal = (() => {
 
   const updateContainerWithTemplate = () => {
     getContainer().innerHTML = generateSummaryTemplate();
+    document.getElementById("priorPeriodOverUnder").addEventListener("blur", onPriorPeriodAmountChanged);
   };
 
   const onInputChanged = (event: { target: any }) => {
     if (event.target instanceof HTMLInputElement) {
-      summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"));
-
-      updateContainerWithTemplate();
+      summarize();
     }
+  };
+
+  const summarize = () => {
+    summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"));
+    updateContainerWithTemplate();
+  };
+
+  const onPriorPeriodAmountChanged = () => {
+    console.log("onPriorPeriodAmountChanged()");
+    summarizer.savePriorPeriodOverUnder();
+    summarize();
   };
 
   return () => {
