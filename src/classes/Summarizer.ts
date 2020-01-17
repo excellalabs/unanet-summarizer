@@ -1,6 +1,7 @@
 import { EditModeLoader } from "./Loaders/EditModeLoader";
 import { ITimesheetLoader } from "./Loaders/ITimesheetLoader";
 import { ReviewModeLoader } from "./Loaders/ReviewModeLoader";
+import { StorageUtility } from "./StorageUtility";
 import { Timesheet } from "./Timesheet";
 import { TimesheetMode } from "./TimesheetMode";
 
@@ -15,8 +16,9 @@ export class Summarizer {
   private isSessionStorageAvailable: boolean;
 
   constructor(url: string, title: string, timesheetTable: Element) {
-    this.isLocalStorageAvailable = this.checkLocalStorageAvailability();
-    this.isSessionStorageAvailable = this.checkSessionStorageAvailability();
+    const storageUtility = new StorageUtility();
+    this.isLocalStorageAvailable = storageUtility.checkLocalStorageAvailability();
+    this.isSessionStorageAvailable = storageUtility.checkSessionStorageAvailability();
     this.title = title;
     this.timesheetTable = timesheetTable;
     this.priorPeriodAmount = this.getPriorOverUnder();
@@ -46,31 +48,6 @@ export class Summarizer {
     const storageKey = timesheetKey ?? new Date().toISOString();
 
     return `summarizer-${storageKey}`;
-  };
-
-  // TODO: Extract into some kind of Utils class
-  private checkLocalStorageAvailability = (): boolean => {
-    const testValue = "summarizer-ls-test";
-
-    try {
-      localStorage.setItem(testValue, testValue);
-      localStorage.removeItem(testValue);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-
-  private checkSessionStorageAvailability = (): boolean => {
-    const testValue = "summarizer-ls-test";
-
-    try {
-      sessionStorage.setItem(testValue, testValue);
-      sessionStorage.removeItem(testValue);
-      return true;
-    } catch (e) {
-      return false;
-    }
   };
 
   private getPriorOverUnder = (): number => {
