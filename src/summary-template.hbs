@@ -2,12 +2,16 @@
 <table>
   <thead>
     <tr>
+      <th colspan="1" class="summary-header">Prior Period</th>
       <th colspan="{{ hoursByProjectType.length }}" class="summary-header project-types">Project Types</th>
       <th colspan="3" class="summary-header totals">Totals</th>
       <th colspan="3" class="summary-header tracking">Pay Period Tracking</th>
       <th colspan="2" class="summary-header other-calcs">Other Calculations</th>
     </tr>
     <tr>
+      <th class="summary-subheader"
+        title="A positive or negative number for the '+' hours from your last pay period (so we can help balance it with this one.)">
+        "+" over / under</th>
       {{#each hoursByProjectType}}
       <th class="summary-subheader project-types">{{ projectType }}</th>
       {{/each}}
@@ -36,6 +40,7 @@
   </thead>
   <tbody>
     <tr>
+      <td>Test</td>
       {{#each hoursByProjectType}}
       <td>{{ total }}</td>
       {{/each}}
