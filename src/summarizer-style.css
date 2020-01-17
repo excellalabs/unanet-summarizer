@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+tr.dataRow>td {
+  vertical-align: middle;
+}
+
 .unanet-summary {
   padding: 0 0 20px 20px;
 }
