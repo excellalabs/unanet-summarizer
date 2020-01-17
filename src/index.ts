@@ -93,6 +93,6 @@ window.summarizeUnanetTimeForReal = (() => {
       timesheetForm.addEventListener("change", onInputChanged);
     }
 
-    updateContainerWithTemplate();
+    summarize();
   };
 })();
