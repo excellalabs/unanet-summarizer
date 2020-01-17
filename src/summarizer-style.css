@@ -27,6 +27,10 @@
   background-color: #9BBB59;
 }
 
+.summary-header.prior-period {
+  background-color: #4BACC6;
+}
+
 .summary-header.other-calcs {
   background-color: #8064A2;
 }
@@ -45,6 +49,10 @@
 
 .summary-subheader.tracking {
   background-color: #EBF1DE;
+}
+
+.summary-subheader.prior-period {
+  background-color: #DAEEF3;
 }
 
 .negative-tracking {
