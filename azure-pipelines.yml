@@ -19,10 +19,12 @@ steps:
     npm install
     npm run build
   displayName: 'Install & Build'
+  workingDirectory: ./bookmarklet
 
 - script: |
     npm run test
   displayName: 'Run Test'
+  workingDirectory: ./bookmarklet
 
 - task: CopyFiles@2
   inputs:
