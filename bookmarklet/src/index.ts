@@ -1,6 +1,6 @@
+import { request } from "http";
 import { StorageManager } from "./classes/Storage/StorageManager";
 import { Summarizer } from "./classes/Summarizer";
-
 declare global {
   // tslint:disable-next-line:interface-name
   interface Window {
@@ -80,6 +80,29 @@ window.summarizeUnanetTimeForReal = (() => {
     }
   };
 
+  const logAnalytics = () => {
+    // a fire and forget request to our analytics service.
+    const req = request({
+      host: "https://unanetsummarizeranalytics.azurewebsites.net",
+      path: "/api/AnalyticsHttpTrigger",
+      port: "80",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    req.write(
+      JSON.stringify({
+        timesheetuser: "Sean Killeen",
+        timestamp: new Date().toJSON(),
+        username: "Sean Killeen"
+      })
+    );
+
+    req.end();
+  };
+
   const summarize = () => {
     summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"), theStorageManager);
     updateContainerWithTemplate();
@@ -88,6 +111,7 @@ window.summarizeUnanetTimeForReal = (() => {
   const onPriorPeriodAmountChanged = () => {
     summarizer.savePriorPeriodOverUnder();
     summarize();
+    logAnalytics();
   };
 
   return () => {
