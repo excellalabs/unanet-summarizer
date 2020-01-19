@@ -17,7 +17,7 @@ namespace Excella.Function
 
         // NOTE: We are choosing to use AnalyticsEntry here which will attempt to modelbind for us. We could also use HttpRequest and get the full request.
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] AnalyticsEntry incomingModelBoundObject,
-        [Table("analytics-entries")]ICollector<AnalyticsEntry> tableBinding,
+        [Table("analyticsentries")]ICollector<AnalyticsEntry> tableBinding,
         ILogger log)
     {
       log.LogInformation("Incoming analytics entry: {AnalyticsEntry}", incomingModelBoundObject);
