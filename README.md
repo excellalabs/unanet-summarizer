@@ -44,6 +44,7 @@ This bookmarklet adds injects the JavaScript file if it doesn't exist, and then 
 ### How to build locally
 
 - Pull this repository
+- `cd bookmarklet`
 - `npm install` gets the dependencies
 - `npm run build` builds & outputs to `dist` folder
 
