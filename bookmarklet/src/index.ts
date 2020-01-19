@@ -83,9 +83,9 @@ window.summarizeUnanetTimeForReal = (() => {
   const logAnalytics = () => {
     // a fire and forget request to our analytics service.
     const req = request({
-      host: "https://unanetsummarizeranalytics.azurewebsites.net",
+      host: "unanetsummarizeranalytics.azurewebsites.net",
       path: "/api/AnalyticsHttpTrigger",
-      port: "80",
+      protocol: "https",
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -111,7 +111,6 @@ window.summarizeUnanetTimeForReal = (() => {
   const onPriorPeriodAmountChanged = () => {
     summarizer.savePriorPeriodOverUnder();
     summarize();
-    logAnalytics();
   };
 
   return () => {
@@ -123,5 +122,6 @@ window.summarizeUnanetTimeForReal = (() => {
     }
 
     summarize();
+    logAnalytics();
   };
 })();
