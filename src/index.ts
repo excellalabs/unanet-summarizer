@@ -24,14 +24,15 @@ window.summarizeUnanetTimeForReal = (() => {
   const generateSummaryTemplate = () => {
     const grandTotal = summarizer.timesheet.totalPlusHours() + summarizer.timesheet.totalNonPlusHours();
     const daysWorked = summarizer.timesheet.weekdaysInTimesheet() - summarizer.timesheet.numberOfRemainingWorkDays();
+    const trackingPlusPriorPeriod = summarizer.timesheet.plusHoursTracking() + summarizer.priorPeriodAmount;
     const theSummary = {
       grandTotalHours: grandTotal,
       hoursByProjectType: summarizer.timesheet.hoursByProjectType(),
       hoursPerWorkday: (grandTotal / daysWorked).toFixed(2),
-      negativeTracking: summarizer.timesheet.plusHoursTracking() < 0,
+      negativeTracking: trackingPlusPriorPeriod < 0,
       overUnder: (grandTotal - daysWorked * 8).toFixed(2),
       plusHoursInPayPeriod: summarizer.timesheet.expectedPlusHours(),
-      plusHoursTracking: summarizer.timesheet.plusHoursTracking() + summarizer.priorPeriodAmount,
+      plusHoursTracking: trackingPlusPriorPeriod,
       priorOverUnderAmount: summarizer.priorPeriodAmount,
       totalNonPlusHours: summarizer.timesheet.totalNonPlusHours(),
       totalPlusHours: summarizer.timesheet.totalPlusHours()
