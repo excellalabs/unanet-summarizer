@@ -40,7 +40,10 @@
   </thead>
   <tbody>
     <tr class="dataRow">
-      <td><input type="text" id="priorPeriodOverUnder" class="priorPeriodOverUnder" value="{{ priorOverUnderAmount }}">
+      <td><input type="text" id="priorPeriodOverUnder" class="priorPeriodOverUnder" value="{{ priorOverUnderAmount }}"
+          {{#if isFirstPayPeriod}} disabled
+          title="textbox is disabled because hours can only be carried over from the first to the second pay period, not from the prior month."
+          {{/if}}>
       </td>
       {{#each hoursByProjectType}}
       <td>{{ total }}</td>
