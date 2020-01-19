@@ -26,7 +26,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: '/home/vsts/work/1/s/dist' #For some reason, I think we need to hard-code this.
+    sourceFolder: '/home/vsts/work/1/s/bookmarklet/dist' #For some reason, I think we need to hard-code this.
     targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy Files to Staging Directory'
 
