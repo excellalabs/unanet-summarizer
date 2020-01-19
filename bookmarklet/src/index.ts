@@ -1,4 +1,4 @@
-import { request } from "http";
+import axios from "axios";
 import { StorageManager } from "./classes/Storage/StorageManager";
 import { Summarizer } from "./classes/Summarizer";
 declare global {
@@ -81,26 +81,11 @@ window.summarizeUnanetTimeForReal = (() => {
   };
 
   const logAnalytics = () => {
-    // a fire and forget request to our analytics service.
-    const req = request({
-      host: "unanetsummarizeranalytics.azurewebsites.net",
-      path: "/api/AnalyticsHttpTrigger",
-      protocol: "https",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      }
+    axios.post("https://unanetsummarizeranalytics.azurewebsites.net/api/AnalyticsHttpTrigger", {
+      timesheetuser: "Sean Killeen",
+      timestamp: new Date().toJSON(),
+      username: "Sean Killeen"
     });
-
-    req.write(
-      JSON.stringify({
-        timesheetuser: "Sean Killeen",
-        timestamp: new Date().toJSON(),
-        username: "Sean Killeen"
-      })
-    );
-
-    req.end();
   };
 
   const summarize = () => {
