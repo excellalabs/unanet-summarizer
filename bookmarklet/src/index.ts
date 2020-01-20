@@ -81,10 +81,13 @@ window.summarizeUnanetTimeForReal = (() => {
   };
 
   const logAnalytics = () => {
+    const theUsername = getLoginName();
+    const theTimesheetUser = getTimesheetName();
+
     axios.post("https://unanetsummarizeranalytics.azurewebsites.net/api/AnalyticsHttpTrigger", {
-      timesheetuser: "Sean Killeen",
+      timesheetuser: theTimesheetUser,
       timestamp: new Date().toJSON(),
-      username: "Sean Killeen"
+      username: theUsername
     });
   };
 
@@ -96,6 +99,26 @@ window.summarizeUnanetTimeForReal = (() => {
   const onPriorPeriodAmountChanged = () => {
     summarizer.savePriorPeriodOverUnder();
     summarize();
+  };
+
+  const getLoginName = (): string => {
+    const fullText = document
+      .getElementById("page-footer")
+      .getElementsByClassName("about")[0]
+      .getElementsByTagName("a")[0].text;
+
+    return fullText
+      .substring(fullText.lastIndexOf("("))
+      .replace("(", "")
+      .replace(")", "");
+  };
+
+  const getTimesheetName = (): string => {
+    const fullText = document.getElementById("title-subsection").innerHTML;
+
+    const replaced = fullText.replace(" – Timesheet for ", "");
+
+    return replaced.substring(0, replaced.indexOf(" ("));
   };
 
   return () => {
