@@ -1,6 +1,6 @@
+import axios from "axios";
 import { StorageManager } from "./classes/Storage/StorageManager";
 import { Summarizer } from "./classes/Summarizer";
-
 declare global {
   // tslint:disable-next-line:interface-name
   interface Window {
@@ -80,6 +80,17 @@ window.summarizeUnanetTimeForReal = (() => {
     }
   };
 
+  const logAnalytics = () => {
+    const theUsername = getLoginName();
+    const theTimesheetUser = getTimesheetName();
+
+    axios.post("https://unanetsummarizeranalytics.azurewebsites.net/api/AnalyticsHttpTrigger", {
+      timesheetuser: theTimesheetUser,
+      timestamp: new Date().toJSON(),
+      username: theUsername
+    });
+  };
+
   const summarize = () => {
     summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"), theStorageManager);
     updateContainerWithTemplate();
@@ -88,6 +99,26 @@ window.summarizeUnanetTimeForReal = (() => {
   const onPriorPeriodAmountChanged = () => {
     summarizer.savePriorPeriodOverUnder();
     summarize();
+  };
+
+  const getLoginName = (): string => {
+    const fullText = document
+      .getElementById("page-footer")
+      .getElementsByClassName("about")[0]
+      .getElementsByTagName("a")[0].text;
+
+    return fullText
+      .substring(fullText.lastIndexOf("("))
+      .replace("(", "")
+      .replace(")", "");
+  };
+
+  const getTimesheetName = (): string => {
+    const fullText = document.getElementById("title-subsection").innerHTML;
+
+    const replaced = fullText.replace(" – Timesheet for ", "");
+
+    return replaced.substring(0, replaced.indexOf(" ("));
   };
 
   return () => {
@@ -99,5 +130,6 @@ window.summarizeUnanetTimeForReal = (() => {
     }
 
     summarize();
+    logAnalytics();
   };
 })();
