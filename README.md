@@ -60,3 +60,9 @@ This bookmarklet adds injects the JavaScript file if it doesn't exist, and then 
 - Download the PowerBI file (Azure --> `unanet-summarizer` RG --> `unanetsummarizer` storage account --> `analytics-powerbi` container --> `UnanetSummarizer.pbix`
 - Open the powerbi file
 - If prompted for the storage URL, use `https://summarizeranalytics.table.core.windows.net/analyticsentries` (the table storage within the `summarizeranalytics` storage group)
+
+### A note on our build & release process
+
+- The build and deployment steps run within Azure DevOps (status linked from this README file)
+- A release is created upon a successful build
+- The release is automatically pushed to production. By this, we mean the built JS output is pushed into the blob that we're using to serve the content.
