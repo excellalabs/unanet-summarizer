@@ -54,3 +54,9 @@ This bookmarklet adds injects the JavaScript file if it doesn't exist, and then 
 - open unanet
 - edit a timesheet
 - click the debug bookmarklet
+
+### To Run the PowerBI analytics
+
+- Download the PowerBI file (Azure --> `unanet-summarizer` RG --> `unanetsummarizer` storage account --> `analytics-powerbi` container --> `UnanetSummarizer.pbix`
+- Open the powerbi file
+- If prompted for the storage URL, use `https://summarizeranalytics.table.core.windows.net/analyticsentries` (the table storage within the `summarizeranalytics` storage group)
