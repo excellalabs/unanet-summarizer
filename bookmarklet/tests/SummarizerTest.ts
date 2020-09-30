@@ -1,3 +1,4 @@
+import "jasmine";
 import { JSDOM } from "jsdom";
 import { StubStorageManager } from "../src/classes/Storage/StubStorageManager";
 import { Summarizer } from "../src/classes/Summarizer";

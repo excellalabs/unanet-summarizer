@@ -1,3 +1,4 @@
+import "jasmine";
 import { JSDOM } from "jsdom";
 import moment = require("moment");
 import { EditModeLoader } from "../../src/classes/Loaders/EditModeLoader";
