@@ -1,3 +1,4 @@
+import "jasmine";
 import { DateEntry } from "../../src/classes/DateEntry";
 import { ProjectType } from "../../src/classes/ProjectType";
 import { TimesheetRow } from "../../src/classes/TimesheetRow";

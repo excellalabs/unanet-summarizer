@@ -4,7 +4,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.config.development.js",
     "build": "webpack",
-    "test": "jasmine-ts --config=jasmine.json"
+    "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json"
   },
   "devDependencies": {
     "@types/jasmine": "^3.5.14",
@@ -13,7 +13,6 @@
     "handlebars": "^4.7.6",
     "handlebars-loader": "^1.7.1",
     "jasmine": "^3.6.1",
-    "jasmine-ts": "^0.3.0",
     "jsdom": "^16.4.0",
     "raw-loader": "^4.0.1",
     "ts-loader": "^8.0.4",

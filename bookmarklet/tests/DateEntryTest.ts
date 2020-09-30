@@ -1,3 +1,4 @@
+import "jasmine";
 import { DateEntry } from "../src/classes/DateEntry";
 
 describe("constructor", () => {
