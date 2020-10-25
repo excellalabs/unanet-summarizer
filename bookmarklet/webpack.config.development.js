@@ -7,6 +7,7 @@ module.exports = Object.assign(webpackConfig, {
   devServer: {
     contentBase: "./dist",
     inline: false,
+    open: "Google Chrome",
   },
   plugins: [
     new CopyPlugin({
