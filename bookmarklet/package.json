@@ -2,7 +2,7 @@
   "name": "unanet-summarizer",
   "version": "0.1.0",
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.config.development.js",
+    "start": "webpack serve --config webpack.config.development.js",
     "build": "webpack",
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json"
   },
@@ -12,15 +12,15 @@
     "copy-webpack-plugin": "^6.2.1",
     "handlebars": "^4.7.6",
     "handlebars-loader": "^1.7.1",
-    "jasmine": "^3.6.1",
+    "jasmine": "^3.6.2",
     "jsdom": "^16.4.0",
-    "raw-loader": "^4.0.1",
+    "raw-loader": "^4.0.2",
     "ts-loader": "^8.0.6",
     "ts-node": "^9.0.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.0.3",
     "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
+    "webpack-cli": "^4.1.0",
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
