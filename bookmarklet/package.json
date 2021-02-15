@@ -10,7 +10,7 @@
     "@types/jasmine": "^3.6.2",
     "@types/jsdom": "^16.2.6",
     "copy-webpack-plugin": "^7.0.0",
-    "handlebars": "^4.7.6",
+    "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.1",
     "jasmine": "^3.6.3",
     "jsdom": "^16.4.0",
