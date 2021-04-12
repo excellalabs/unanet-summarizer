@@ -7,20 +7,20 @@
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json"
   },
   "devDependencies": {
-    "@types/jasmine": "^3.6.7",
-    "@types/jsdom": "^16.2.7",
-    "copy-webpack-plugin": "^8.0.0",
+    "@types/jasmine": "^3.6.9",
+    "@types/jsdom": "^16.2.10",
+    "copy-webpack-plugin": "^8.1.1",
     "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.1",
     "jasmine": "^3.7.0",
-    "jsdom": "^16.5.1",
+    "jsdom": "^16.5.3",
     "raw-loader": "^4.0.2",
-    "ts-loader": "^8.0.18",
+    "ts-loader": "^8.1.0",
     "ts-node": "^9.1.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.2.3",
-    "webpack": "^5.26.3",
-    "webpack-cli": "^4.5.0",
+    "typescript": "^4.2.4",
+    "webpack": "^5.31.2",
+    "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
