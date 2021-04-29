@@ -4,36 +4,36 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+  - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '12.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "12.x"
+    displayName: "Install Node.js"
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'Install & Build'
-  workingDirectory: ./bookmarklet
+  - script: |
+      npm install
+      npm run build
+    displayName: "Install & Build"
+    workingDirectory: ./bookmarklet
 
-- script: |
-    npm run test
-  displayName: 'Run Test'
-  workingDirectory: ./bookmarklet
+  - script: |
+      npm run test
+    displayName: "Run Test"
+    workingDirectory: ./bookmarklet
 
-- task: CopyFiles@2
-  inputs:
-    sourceFolder: '/home/vsts/work/1/s/bookmarklet/dist' #For some reason, I think we need to hard-code this.
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Copy Files to Staging Directory'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: "/home/vsts/work/1/s/bookmarklet/dist" #For some reason, I think we need to hard-code this.
+      targetFolder: "$(Build.ArtifactStagingDirectory)"
+    displayName: "Copy Files to Staging Directory"
 
-- task: PublishPipelineArtifact@0
-  displayName: 'Publish Staged Artifacts'
-  inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)'
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  - task: PublishPipelineArtifact@0
+    displayName: "Publish Staged Artifacts"
+    inputs:
+      targetPath: "$(Build.ArtifactStagingDirectory)"
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
