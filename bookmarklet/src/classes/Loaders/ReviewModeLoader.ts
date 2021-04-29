@@ -32,7 +32,7 @@ export class ReviewModeLoader implements ITimesheetLoader {
   };
 
   private parseTimesheetRows = (timesheetTable: Element): TimesheetRow[] => {
-    const dateHeaderCells = this.toArray(timesheetTable.querySelectorAll("thead > tr > td.weekday, thead > tr > td.weekend"));
+    const dateHeaderCells = this.toArray(timesheetTable.querySelectorAll("thead > tr > th.weekday, thead > tr > th.weekend"));
     const arrayOfDates = dateHeaderCells.map(x => {
       const text = x.textContent;
       return text.substr(3, text.length);
