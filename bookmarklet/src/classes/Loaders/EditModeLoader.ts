@@ -32,7 +32,7 @@ export class EditModeLoader implements ITimesheetLoader {
   };
 
   private parseTimesheetRows = (timesheetTable: Element): TimesheetRow[] => {
-    const dateHeaderCells = this.toArray(timesheetTable.querySelectorAll("thead > tr > td.hours-weekday > span.dom, thead > tr > td.hours-weekend > span.dom"));
+    const dateHeaderCells = this.toArray(timesheetTable.querySelectorAll("thead > tr > th.hours-weekday > span.dom, thead > tr > th.hours-weekend > span.dom"));
 
     const arrayOfDates = dateHeaderCells.map(x => x.textContent);
 
