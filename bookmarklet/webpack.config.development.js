@@ -1,3 +1,4 @@
+const path = require("path");
 const webpackConfig = require("./webpack.config");
 const CopyPlugin = require("copy-webpack-plugin");
 
@@ -5,9 +6,10 @@ module.exports = Object.assign(webpackConfig, {
   mode: "development",
   devtool: "inline-source-map",
   devServer: {
-    contentBase: "./dist",
-    inline: false,
-    open: "Google Chrome",
+    static: {
+      directory: path.join(__dirname, "dist"),
+    },
+    open: true,
   },
   plugins: [
     new CopyPlugin({
