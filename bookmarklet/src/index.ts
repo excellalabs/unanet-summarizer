@@ -1,6 +1,15 @@
 import axios from "axios";
 import { StorageManager } from "./classes/Storage/StorageManager";
 import { Summarizer } from "./classes/Summarizer";
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+const appInsights = new ApplicationInsights({
+  config: {
+    connectionString: 'InstrumentationKey=bc4aaeaf-3165-4d05-b59a-ca9b832ee24f;IngestionEndpoint=https://eastus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus2.livediagnostics.monitor.azure.com/quickpulseservice.svc',
+    /* ...Other Configuration Options... */
+  }
+});
+appInsights.loadAppInsights();
+appInsights.trackPageView(); // Manually call trackPageView to establish the current user/session/pageview
 declare global {
   // tslint:disable-next-line:interface-name
   interface Window {
