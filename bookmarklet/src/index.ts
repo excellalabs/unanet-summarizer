@@ -12,8 +12,10 @@ const template = require("./summary-template.hbs");
 const css = require("./summarizer-style.css").default;
 
 window.summarizeUnanetTimeForReal = (() => {
+  console.log("summarizeUnanetTimeForReal() called");
   const theStorageManager = new StorageManager();
   const timesheetTable = document.querySelector("table.timesheet");
+  console.log("creating summarizer")
   let summarizer = new Summarizer(window.document.location.href, window.document.title, timesheetTable, theStorageManager);
 
   const CONTAINER_ID = "unanet-summarizer";
@@ -22,10 +24,12 @@ window.summarizeUnanetTimeForReal = (() => {
   const TIMESHEET_FORM_ID = "time";
 
   const generateSummaryTemplate = () => {
+    console.log("generateSummaryTemplate() called");
     const grandTotal = summarizer.timesheet.totalPlusHours() + summarizer.timesheet.totalNonPlusHours();
     const daysWorked = summarizer.timesheet.weekdaysInTimesheet() - summarizer.timesheet.numberOfRemainingWorkDays();
     const trackingPlusPriorPeriod = summarizer.timesheet.plusHoursTracking() + summarizer.priorPeriodAmount;
     const firstPayPeriod = summarizer.timesheet.timesheetStartDate.date() === 1;
+    console.log("creating theSummary");
     const theSummary = {
       grandTotalHours: grandTotal,
       hoursByProjectType: summarizer.timesheet.hoursByProjectType(),
@@ -44,6 +48,7 @@ window.summarizeUnanetTimeForReal = (() => {
   };
 
   const createContainer = () => {
+    console.log("createContainer() called");
     const container = document.createElement("div");
     container.id = CONTAINER_ID;
     container.className = CSS_CLASS;
@@ -51,14 +56,17 @@ window.summarizeUnanetTimeForReal = (() => {
   };
 
   const getContainer = () => {
+    console.log("getContainer() called");
     return document.getElementById(CONTAINER_ID) || createContainer();
   };
 
   const getTimesheetForm = () => {
+    console.log("getTimesheetForm() called");
     return document.getElementById(TIMESHEET_FORM_ID);
   };
 
   const createStylesheet = () => {
+    console.log("createStylesheet() called");
     const style = document.createElement("style");
     style.id = STYLESHEET_ID;
     style.appendChild(document.createTextNode(css));
@@ -66,21 +74,25 @@ window.summarizeUnanetTimeForReal = (() => {
   };
 
   const getStylesheet = () => {
+    console.log("getStylesheet() called");
     return document.getElementById(STYLESHEET_ID) || createStylesheet();
   };
 
   const updateContainerWithTemplate = () => {
+    console.log("updateContainerWithTemplate() called");
     getContainer().innerHTML = generateSummaryTemplate();
     document.getElementById("priorPeriodOverUnder").addEventListener("blur", onPriorPeriodAmountChanged);
   };
 
   const onInputChanged = (event: { target: any }) => {
     if (event.target instanceof HTMLInputElement) {
+      console.log("calling the summarize() function");
       summarize();
     }
   };
 
   const logAnalytics = () => {
+    console.log("logAnalytics() called");
     const theUsername = getLoginName();
     const theTimesheetUser = getTimesheetName();
 
@@ -92,16 +104,19 @@ window.summarizeUnanetTimeForReal = (() => {
   };
 
   const summarize = () => {
+    console.log("summarize() called");
     summarizer = new Summarizer(window.document.location.href, window.document.title, document.querySelector("table.timesheet"), theStorageManager);
     updateContainerWithTemplate();
   };
 
   const onPriorPeriodAmountChanged = () => {
+    console.log("onPriorPeriodAmountChanged() called");
     summarizer.savePriorPeriodOverUnder();
     summarize();
   };
 
   const getLoginName = (): string => {
+    console.log("getLoginName() called");
     const fullText = document
       .getElementById("page-footer")
       .getElementsByClassName("about")[0]
@@ -114,6 +129,7 @@ window.summarizeUnanetTimeForReal = (() => {
   };
 
   const getTimesheetName = (): string => {
+    console.log("getTimesheetName() called");
     const fullText = document.getElementById("title-subsection").innerHTML;
 
     const replaced = fullText.replace(" – Timesheet for ", "");
@@ -126,7 +142,10 @@ window.summarizeUnanetTimeForReal = (() => {
     const timesheetForm = getTimesheetForm();
 
     if (timesheetForm) {
+      console.log("Adding timesheet change listener");
       timesheetForm.addEventListener("change", onInputChanged);
+    } else {
+      console.log("FYI, no timesheetForm. Might not be on an editable page.");
     }
 
     summarize();
