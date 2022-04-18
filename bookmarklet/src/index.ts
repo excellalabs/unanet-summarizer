@@ -44,6 +44,7 @@ window.summarizeUnanetTimeForReal = (() => {
       totalPlusHours: summarizer.timesheet.totalPlusHours()
     };
 
+    console.log("timesheet summary:", theSummary);
     return template(theSummary);
   };
 
@@ -95,6 +96,8 @@ window.summarizeUnanetTimeForReal = (() => {
     console.log("logAnalytics() called");
     const theUsername = getLoginName();
     const theTimesheetUser = getTimesheetName();
+    console.log("logging for username:", theUsername);
+    console.log("logging for timesheet user:", theTimesheetUser);
 
     axios.post("https://unanetsummarizeranalytics.azurewebsites.net/api/AnalyticsHttpTrigger", {
       timesheetuser: theTimesheetUser,
