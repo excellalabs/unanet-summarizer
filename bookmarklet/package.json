@@ -7,28 +7,28 @@
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json"
   },
   "devDependencies": {
-    "@types/jasmine": "^4.0.2",
+    "@types/jasmine": "^4.0.3",
     "@types/jsdom": "^16.2.14",
-    "copy-webpack-plugin": "^10.2.4",
+    "copy-webpack-plugin": "^11.0.0",
     "dns-packet": "^5.3.1",
     "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.1",
-    "jasmine": "^4.0.2",
+    "jasmine": "^4.1.0",
     "jsdom": "^19.0.0",
     "path-parse": "^1.0.7",
     "raw-loader": "^4.0.2",
-    "ts-loader": "^9.2.6",
+    "ts-loader": "^9.3.0",
     "ts-node": "^10.4.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.6.3",
-    "webpack": "^5.71.0",
+    "typescript": "^4.7.2",
+    "webpack": "^5.72.1",
     "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.8.1"
+    "webpack-dev-server": "^4.9.0"
   },
   "dependencies": {
-    "@microsoft/applicationinsights-web": "^2.7.4",
-    "axios": "^0.26.1",
-    "moment": "^2.29.2"
+    "@microsoft/applicationinsights-web": "^2.8.3",
+    "axios": "^0.27.2",
+    "moment": "^2.29.3"
   },
   "resolutions": {
     "**/fsevents": "^1.2.9"
