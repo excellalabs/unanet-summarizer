@@ -7,7 +7,7 @@
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json"
   },
   "devDependencies": {
-    "@types/jasmine": "^4.0.2",
+    "@types/jasmine": "^4.0.3",
     "@types/jsdom": "^16.2.14",
     "copy-webpack-plugin": "^11.0.0",
     "dns-packet": "^5.3.1",
