@@ -28,7 +28,7 @@
   "dependencies": {
     "@microsoft/applicationinsights-web": "^2.8.5",
     "axios": "^0.27.2",
-    "moment": "^2.29.3"
+    "moment": "^2.29.4"
   },
   "resolutions": {
     "**/fsevents": "^1.2.9"
