@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@types/jasmine": "^4.0.3",
-    "@types/jsdom": "^16.2.14",
+    "@types/jsdom": "^16.2.15",
     "copy-webpack-plugin": "^11.0.0",
     "dns-packet": "^5.4.0",
     "handlebars": "^4.7.7",
