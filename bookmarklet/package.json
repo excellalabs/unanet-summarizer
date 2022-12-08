@@ -12,7 +12,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "dns-packet": "^5.4.0",
     "handlebars": "^4.7.7",
-    "handlebars-loader": "^1.7.2",
+    "handlebars-loader": "^1.7.3",
     "jasmine": "^4.5.0",
     "jsdom": "^20.0.3",
     "path-parse": "^1.0.7",
