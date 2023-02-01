@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@microsoft/applicationinsights-web": "^2.8.9",
-    "axios": "^1.2.6",
+    "axios": "^1.3.0",
     "moment": "^2.29.4"
   },
   "resolutions": {
