@@ -4,7 +4,7 @@
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![Build Status](https://dev.azure.com/excellaco/unanet-summarizer/_apis/build/status/excellalabs.unanet-summarizer?branchName=master)](https://dev.azure.com/excellaco/unanet-summarizer/_build/latest?definitionId=5&branchName=master) | [![Deployment Status](https://vsrm.dev.azure.com/excellaco/_apis/public/Release/badge/ab42bd87-c4a4-44b8-9bcc-02ab7408d6c0/1/1)](https://dev.azure.com/excellaco/unanet-summarizer/_release?definitionId=1) |
 
-A link that you can add to your browser's bookmarks that adds a summary and some time-keeping helpers to your unanet timesheet page.
+A link that you can add to any browser's bookmarks which adds a summary and some time-keeping helpers to your unanet timesheet page.
 
 ![screenshot of the tool in action](bookmarklet/summarizer-screenshot.png)
 
