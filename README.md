@@ -28,7 +28,7 @@ Drag the link below to your browser's bookmarks or bookmark toolbar (you can ren
 
 <a href="javascript:(function(){ var onload=function(){ window.summarizeUnanetTime(); }; if(!window.summarizeUnanetTime){var s=document.createElement('script');s.src='https://excellalabs.github.io/unanet-summarizer/unanet-summarizer.js';s.onload=onload;document.body.appendChild(s)} else { onload(); } })();">Summarize Unanet</a>
 
-Here's an animation of how that might work:
+Here's an animation of how that might work in a Firefox browser:
 
 > ![Demo of dragging the link to bookmarks](images/demo_adding-bookmarklet.gif)
 
