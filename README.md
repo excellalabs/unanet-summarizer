@@ -52,11 +52,11 @@ A: On many browsers, you can display a "bookmarks bar" below the main place wher
 
 ### How it Works - Behind the Scenes
 
-- The bookmarklet loads our script.
-- This script scrapes the DOM in the web page to capture time entries and places them into an array
-- It then uses several reducers to summarize the time in various ways
-- It uses some rudimentary string templates to put together some contents
-- It then puts those contents into a new section which it renders on top of the timesheet.
+* The bookmarklet loads our script.
+* This script scrapes the DOM in the web page to capture time entries and places them into an array
+* It then uses several reducers to summarize the time in various ways
+* It uses some rudimentary string templates to put together some contents
+* It then puts those contents into a new section which it renders on top of the timesheet.
 
 ### How We're Deploying This
 
