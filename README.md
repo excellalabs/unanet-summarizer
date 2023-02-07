@@ -34,7 +34,7 @@ Here's an animation of how that might work in a Firefox browser:
 
 ### How to Use the Bookmarklet
 
-When you're on your timesheet (or viewihng your supervisees' timesheet), click the bookmarklet link to see the time summary.
+When you're on your timesheet (or viewing your supervisees' timesheet), click the bookmarklet link to see the time summary.
 
 > ![Demo of using the bookmarklet on a timesheet](images/demo_adding-bookmarklet.gif)
 
