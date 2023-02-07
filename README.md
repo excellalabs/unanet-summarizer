@@ -60,9 +60,9 @@ A: On many browsers, you can display a "bookmarks bar" below the main place wher
 
 ### How We're Deploying This
 
-- We first developed a JavaScript that could be executed in the browser's console
-- We then served that from GitHub pages (thanks, GitHub!)
-- We then created a bookmarklet that can load the script and execute it
+* We first developed a JavaScript that could be executed in the browser's console
+* We then served that from GitHub pages (thanks, GitHub!)
+* We then created a bookmarklet that can load the script and execute it
 
 ### Explaining the Bookmarklet
 
@@ -78,26 +78,26 @@ This bookmarklet adds injects the JavaScript file if it doesn't exist, and then 
 
 ### How to build locally
 
-- Pull this repository
-- `cd bookmarklet`
-- `npm install` gets the dependencies
-- `npm run build` builds & outputs to `dist` folder
+* Pull this repository
+* `cd bookmarklet`
+* `npm install` gets the dependencies
+* `npm run build` builds & outputs to `dist` folder
 
 ### How to test locally
 
-- `npm start` allows you to view a bookmarklet for debug that you drag to your bookmarks bar
-- open unanet
-- edit a timesheet
-- click the debug bookmarklet
+* `npm start` allows you to view a bookmarklet for debug that you drag to your bookmarks bar
+* open unanet
+* edit a timesheet
+* click the debug bookmarklet
 
 ### To Run the PowerBI analytics
 
-- Download the PowerBI file (Azure --> `unanet-summarizer` RG --> `unanetsummarizer` storage account --> `analytics-powerbi` container --> `UnanetSummarizer.pbix`
-- Open the powerbi file
-- If prompted for the storage URL, use `https://summarizeranalytics.table.core.windows.net/analyticsentries` (the table storage within the `summarizeranalytics` storage group)
+* Download the PowerBI file (Azure --> `unanet-summarizer` RG --> `unanetsummarizer` storage account --> `analytics-powerbi` container --> `UnanetSummarizer.pbix`
+* Open the powerbi file
+* If prompted for the storage URL, use `https://summarizeranalytics.table.core.windows.net/analyticsentries` (the table storage within the `summarizeranalytics` storage group)
 
 ### A note on our build & release process
 
-- The build and deployment steps run within Azure DevOps (status linked from this README file)
-- A release is created upon a successful build
-- The release is automatically pushed to production. By this, we mean the built JS output is pushed into the blob that we're using to serve the content.
+* The build and deployment steps run within Azure DevOps (status linked from this README file)
+* A release is created upon a successful build
+* The release is automatically pushed to production. By this, we mean the built JS output is pushed into the blob that we're using to serve the content.
