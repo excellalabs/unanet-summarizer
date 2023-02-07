@@ -28,6 +28,16 @@ Drag the link below to your browser's bookmarks or bookmark toolbar (you can ren
 
 <a href="javascript:(function(){ var onload=function(){ window.summarizeUnanetTime(); }; if(!window.summarizeUnanetTime){var s=document.createElement('script');s.src='https://excellalabs.github.io/unanet-summarizer/unanet-summarizer.js';s.onload=onload;document.body.appendChild(s)} else { onload(); } })();">Summarize Unanet</a>
 
+Here's an animation of how that might work:
+
+> ![Demo of dragging the link to bookmarks](images/demo_adding-bookmarklet.gif)
+
+### How to Use the Bookmarklet
+
+When you're on your timesheet (or viewihng your supervisees' timesheet), click the bookmarklet link to see the time summary.
+
+> ![Demo of using the bookmarklet on a timesheet](images/demo_adding-bookmarklet.gif)
+
 ### Common Questions
 
 #### Q: What's a Bookmarklet?
