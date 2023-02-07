@@ -48,6 +48,10 @@ A: Most bookmarks point to a web site (e.g. <https://excellalabs.com>). A _bookm
 
 A: On many browsers, you can display a "bookmarks bar" below the main place where you enter web sites / searches. This lets you click on a bookmark directly, without going through your "bookmarks" or "favorites" folders. It makes things a little more accessible.
 
+#### Q: Where Can I Find More Help Installing or Using This?
+
+A: Ask [Sean Killeen](https://SeanKilleen.com) or the `#unanet-summarizer` channel in Slack.
+
 ## For Developers / Coders
 
 ### How it Works - Behind the Scenes
