@@ -30,7 +30,7 @@ Drag the link below to your browser's bookmarks or bookmark toolbar (you can ren
 
 Here's an animation of how that might work in a Firefox browser:
 
-> ![Demo of dragging the link to bookmarks](images/demo_adding-bookmarklet.gif)
+> ![Demo of dragging the link to bookmarks](images/demo_using-bookmarklet.gif)
 
 ### How to Use the Bookmarklet
 
