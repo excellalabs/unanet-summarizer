@@ -24,7 +24,7 @@
     "webpack": "^5.79.0",
     "webpack-bundle-analyzer": "^4.8.0",
     "webpack-cli": "^5.0.0",
-    "webpack-dev-server": "^4.13.2"
+    "webpack-dev-server": "^4.13.3"
   },
   "dependencies": {
     "@microsoft/applicationinsights-web": "^2.8.12",
