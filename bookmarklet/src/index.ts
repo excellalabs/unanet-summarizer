@@ -4,7 +4,7 @@ import { Summarizer } from "./classes/Summarizer";
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 const appInsights = new ApplicationInsights({
   config: {
-    connectionString: 'InstrumentationKey=bc4aaeaf-3165-4d05-b59a-ca9b832ee24f;IngestionEndpoint=https://eastus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus2.livediagnostics.monitor.azure.com/quickpulseservice.svc',
+    connectionString: 'InstrumentationKey=bc4aaeaf-3165-4d05-b59a-ca9b832ee24f;IngestionEndpoint=https://eastus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus2.livediagnostics.monitor.azure.com/',
     /* ...Other Configuration Options... */
   }
 });
