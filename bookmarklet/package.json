@@ -27,7 +27,7 @@
     "webpack-dev-server": "^4.15.0"
   },
   "dependencies": {
-    "@microsoft/applicationinsights-web": "^3.0.1",
+    "@microsoft/applicationinsights-web": "^3.0.2",
     "axios": "^1.4.0",
     "moment": "^2.29.4"
   },
