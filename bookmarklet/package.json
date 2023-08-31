@@ -22,7 +22,7 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.9.5",
     "webpack": "^5.88.1",
-    "webpack-bundle-analyzer": "^4.9.0",
+    "webpack-bundle-analyzer": "^4.9.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
